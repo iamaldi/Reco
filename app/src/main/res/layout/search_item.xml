@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/search_item_artist"
+        android:id="@+id/search_track_artist"
         android:layout_width="wrap_content"
-        android:textSize="25sp"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="16dp"
-        android:text="Regino Prifti"
+        android:text="Arctic Monkeys"
+        android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/search_track_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="O aldi gamietai"
+        android:layout_marginBottom="15dp"
+        android:text="Engine failure"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/search_item_artist"
-        app:layout_constraintTop_toBottomOf="@+id/search_item_artist"
-        android:layout_marginBottom="15dp"/>
+        app:layout_constraintStart_toStartOf="@+id/search_track_artist"
+        app:layout_constraintTop_toBottomOf="@+id/search_track_artist" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/search_track_addButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="36dp"

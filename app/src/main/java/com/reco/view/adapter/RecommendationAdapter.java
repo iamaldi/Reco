@@ -1,4 +1,4 @@
-package com.reco.view.ui;
+package com.reco.view.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,15 +7,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.reco.R;
 
 import java.util.ArrayList;
 
-public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAdapter.ViewHolder>{
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAdapter.ViewHolder> {
 
     private Context context;
     private ArrayList<Integer> images;
@@ -31,22 +31,20 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
     }
 
 
-
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate( R.layout.recommendation_item,parent,false );
-        ViewHolder holder =new ViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recommendation_item, parent, false);
+        ViewHolder holder = new ViewHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.name.setText( names.get( position ) );
-        holder.similarity.setText( similarities.get( position ) );
-        holder.image.setImageResource( images.get( position ) );
+        holder.name.setText(names.get(position));
+        holder.similarity.setText(similarities.get(position));
+        holder.image.setImageResource(images.get(position));
     }
 
     @Override
@@ -54,7 +52,7 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
         return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView image;
         TextView name;
@@ -62,13 +60,13 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
         ConstraintLayout layout;
 
         public ViewHolder(@NonNull View itemView) {
-            super( itemView );
+            super(itemView);
 
 
-            image=itemView.findViewById( R.id.recommendation_item_image );
-            name=itemView.findViewById( R.id.recommendation_item_name );
-            similarity=itemView.findViewById( R.id.recommendation_item_similarity );
-            layout=itemView.findViewById( R.id.recommendation_item_layout );
+            image = itemView.findViewById(R.id.recommendation_item_image);
+            name = itemView.findViewById(R.id.recommendation_item_name);
+            similarity = itemView.findViewById(R.id.recommendation_item_similarity);
+            layout = itemView.findViewById(R.id.recommendation_item_layout);
 
         }
     }

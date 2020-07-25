@@ -1,25 +1,46 @@
 package com.reco.service.repository;
 
+import com.reco.service.model.RecommendedUserModel;
+import com.reco.service.model.TrackModel;
+import com.reco.service.model.UserLoginModel;
+import com.reco.service.model.UserModel;
+import com.reco.service.model.UserRegisterModel;
+import com.reco.util.Utilities;
+
+import java.util.List;
+
 public class APIRepository {
-    // user register
+    public void userRegister(UserRegisterModel mUser) {
+    }
 
-    // user login
+    public void userLogin(UserLoginModel mUser) {
+    }
 
-    // update user profile
+    public UserModel getUserProfile() {
+        return Utilities.generateUser();
+    }
 
-    // delete user profile
+    public void updateUserProfile(UserModel mUser) {
+    }
 
-    // search tracks
+    public void deleterUserProfile() {
+    }
 
-    // get track info
+    public void addTrackToLibrary(TrackModel mTrack) {
+    }
 
-    // add track to library
+    public void removeTrackFromLibrary(int mTrackId) {
+    }
 
-    // remove track from library
+    public List<TrackModel> getUserLibrary() {
+        return Utilities.generateUserLibrary();
+    }
 
-    // list my library tracks
+    public List<RecommendedUserModel> getRecommendedUsers() {
+        return Utilities.generateRecommendedUsers();
+    }
 
-    // list recommended users
-
-    // get latest recommended users
+    public List<RecommendedUserModel> getLatestRecommendedUsers() {
+        return Utilities.generateRecommendedUsers().subList(0, 0);
+    }
 }

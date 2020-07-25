@@ -1,27 +1,39 @@
 package com.reco.view.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.os.Bundle;
-import android.widget.TextView;
 
 import com.reco.R;
 
-public class MainActivity extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
-    final boolean TEST_LOGGED_IN = true;
-    final boolean TEST_LOGGED_OUT = false;
+public class MainActivity extends AppCompatActivity {
+    final boolean LOGGED_IN = true; // test
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // test - remove anytime
-//        TextView testTextView = findViewById(R.id.textView);
-//        testTextView.setText(R.string.app_name);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // test - use fragment manager with back-stack
+        if (LOGGED_IN) {
+            SearchFragment mHomeFragment = new SearchFragment();
+
+            transaction.replace(R.id.fragment_container, mHomeFragment);
+//            transaction.addToBackStack(null);
+
+            transaction.commit(); // not very effective
+        } else {
+            LoginFragment mLoginFragment = new LoginFragment();
+
+            transaction.replace(R.id.fragment_container, mLoginFragment);
+            transaction.addToBackStack(null);
+
+            transaction.commit(); // not very effective
+        }
+
 
         // start splash screen
 
@@ -32,10 +44,5 @@ public class MainActivity extends AppCompatActivity {
 
         // - if authenticated
         // start main activity
-
-        Fragment mSearchFragment = null;
-        mSearchFragment = new SearchFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.frameLayout, mSearchFragment).commit();
     }
 }
