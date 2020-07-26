@@ -9,6 +9,11 @@ public class UserLoginModel extends UserBaseModel {
     @Expose
     private String password;
 
+    public UserLoginModel(String username, String password) {
+        super(username);
+        this.password = password;
+    }
+
     public String getPassword() {
         return password;
     }

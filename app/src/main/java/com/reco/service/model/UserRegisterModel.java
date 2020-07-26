@@ -11,6 +11,12 @@ public class UserRegisterModel extends UserLoginModel {
     @Expose
     private String repeatPassword;
 
+    public UserRegisterModel(String name, String username, String password, String repeatPassword) {
+        super(username, password);
+        this.name = name;
+        this.repeatPassword = repeatPassword;
+    }
+
     public String getName() {
         return name;
     }

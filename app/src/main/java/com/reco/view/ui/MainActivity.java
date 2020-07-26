@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity {
-    final boolean LOGGED_IN = true; // test
+    final boolean LOGGED_IN = false; // test
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,14 +19,14 @@ public class MainActivity extends AppCompatActivity {
 
         // test - use fragment manager with back-stack
         if (LOGGED_IN) {
-            SearchFragment mHomeFragment = new SearchFragment();
+            LoginFragment mHomeFragment = new LoginFragment();
 
             transaction.replace(R.id.fragment_container, mHomeFragment);
 //            transaction.addToBackStack(null);
 
             transaction.commit(); // not very effective
         } else {
-            LoginFragment mLoginFragment = new LoginFragment();
+            RegisterFragment mLoginFragment = new RegisterFragment();
 
             transaction.replace(R.id.fragment_container, mLoginFragment);
             transaction.addToBackStack(null);

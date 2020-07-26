@@ -11,7 +11,7 @@ public class UserModel extends UserBaseModel {
     private String name;
 
     public UserModel(String name, String username) {
-        super();
+        super(username);
         this.name = name;
         super.setUsername(username);
     }

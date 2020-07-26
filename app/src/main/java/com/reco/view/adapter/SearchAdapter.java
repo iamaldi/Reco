@@ -37,12 +37,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
         holder.mTrackArtist.setText(tracks.get(position).getArtist());
         holder.mTrackTitle.setText(tracks.get(position).getName());
 
-        holder.mAddButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mSearchAdapterCallback.onItemClickedCallback(tracks.get(position));
-            }
-        });
+        holder.mAddButton.setOnClickListener(view -> mSearchAdapterCallback.onItemClickedCallback(tracks.get(position)));
     }
 
     @Override

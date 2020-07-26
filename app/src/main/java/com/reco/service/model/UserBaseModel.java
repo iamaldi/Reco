@@ -9,6 +9,10 @@ public class UserBaseModel {
     @Expose
     private String username;
 
+    public UserBaseModel(String username) {
+        this.username = username;
+    }
+
     public String getUsername() {
         return username;
     }
