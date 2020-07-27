@@ -1,24 +1,39 @@
 package com.reco.view.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.widget.TextView;
 
 import com.reco.R;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+
 public class MainActivity extends AppCompatActivity {
-
-
+    final boolean LOGGED_IN = false; // test
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // test - remove anytime
-        TextView testTextView = findViewById(R.id.textView);
-        testTextView.setText(R.string.app_name);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // test - use fragment manager with back-stack
+        if (LOGGED_IN) {
+            LoginFragment mHomeFragment = new LoginFragment();
+
+            transaction.replace(R.id.fragment_container, mHomeFragment);
+//            transaction.addToBackStack(null);
+
+            transaction.commit(); // not very effective
+        } else {
+            RegisterFragment mLoginFragment = new RegisterFragment();
+
+            transaction.replace(R.id.fragment_container, mLoginFragment);
+            transaction.addToBackStack(null);
+
+            transaction.commit(); // not very effective
+        }
+
 
         // start splash screen
 
