@@ -26,6 +26,9 @@ public class Utilities {
 
         recommendedUsers.add(new RecommendedUserModel("John", "john_a_1", 15));
         recommendedUsers.add(new RecommendedUserModel("Bob", "bob_s_2", 75));
+        recommendedUsers.add(new RecommendedUserModel("Regino", "reggy29", 87));
+        recommendedUsers.add(new RecommendedUserModel("Aldi", "lol_who_me", 34));
+        recommendedUsers.add(new RecommendedUserModel("Aldi", "lol_who_me", 34));
 
         return recommendedUsers;
     }

@@ -35,7 +35,6 @@ public class SearchFragmentViewModel extends ViewModel {
 //                if(response.isSuccessful()){
 //                    mTrackSearchResults.setValue(response.body());
 //                }
-//
 //            }
 //
 //            @Override

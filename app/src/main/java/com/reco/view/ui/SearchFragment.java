@@ -81,13 +81,10 @@ public class SearchFragment extends Fragment implements SearchAdapterCallback {
         initRecyclerView();
 
         // observe data and notify adapter when it changes
-        mSearchFragmentViewModel.getGeneratedTracks().observe(this, new Observer<List<TrackModel>>() {
-            @Override
-            public void onChanged(List<TrackModel> trackModels) {
-                // test toast
-                Toast.makeText(getContext(), "List size: " + trackModels.size(), Toast.LENGTH_SHORT).show();
-                mSearchAdapter.notifyDataSetChanged();
-            }
+        mSearchFragmentViewModel.getGeneratedTracks().observe(this, trackModels -> {
+            // test toast
+            Toast.makeText(getContext(), "List size: " + trackModels.size(), Toast.LENGTH_SHORT).show();
+            mSearchAdapter.notifyDataSetChanged();
         });
 
     }
@@ -100,7 +97,7 @@ public class SearchFragment extends Fragment implements SearchAdapterCallback {
     }
 
     public void initRecyclerView() {
-        // get livedata from the viewModel - this gets a list of tracks
+        // get LiveData from the viewModel - this gets a list of tracks
         mSearchAdapter = new SearchAdapter(this, mSearchFragmentViewModel.getGeneratedTracks().getValue());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         mRecyclerView.setAdapter(mSearchAdapter);
