@@ -9,8 +9,7 @@ import android.widget.Toast;
 
 import com.reco.R;
 import com.reco.view.adapter.HomeAdapter;
-import com.reco.view.adapter.SearchAdapter;
-import com.reco.viewmodel.HomeFragmentViewModel;
+import com.reco.viewmodel.HomeViewModel;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,7 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class HomeFragment extends Fragment {
-    private HomeFragmentViewModel mHomeFragmentViewModel;
+    private HomeViewModel mHomeViewModel;
     private HomeAdapter mHomeAdapter;
     private RecyclerView mRecyclerView;
     private AppCompatImageButton mSettingsButton;
@@ -66,11 +65,11 @@ public class HomeFragment extends Fragment {
 
         mRecyclerView = view.findViewById(R.id.fragment_home_recyclerView);
 
-        mHomeFragmentViewModel = new HomeFragmentViewModel();
+        mHomeViewModel = new HomeViewModel();
 
         initRecyclerView();
 
-        mHomeFragmentViewModel.getLatestRecommendedUsers().observe(this, recommendedUserModels -> {
+        mHomeViewModel.getLatestRecommendedUsers().observe(this, recommendedUserModels -> {
             mHomeAdapter.notifyDataSetChanged();
         });
 
@@ -85,7 +84,7 @@ public class HomeFragment extends Fragment {
 
     public void initRecyclerView() {
         // get LiveData from the viewModel - this gets a list of tracks
-        mHomeAdapter = new HomeAdapter(mHomeFragmentViewModel.getLatestRecommendedUsers().getValue());
+        mHomeAdapter = new HomeAdapter(mHomeViewModel.getLatestRecommendedUsers().getValue());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         mRecyclerView.setAdapter(mHomeAdapter);
     }

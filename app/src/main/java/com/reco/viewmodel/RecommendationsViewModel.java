@@ -9,18 +9,15 @@ import java.util.List;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class HomeFragmentViewModel extends ViewModel {
+public class RecommendationsViewModel extends ViewModel {
     private final Retrofit mRetrofit;
     private final APIService mAPIService;
     private MutableLiveData<List<RecommendedUserModel>> mUsers = new MutableLiveData<>();
 
-    public HomeFragmentViewModel() {
+    public RecommendationsViewModel() {
         // retrieve data from repository and save it as mutable data
         this.mRetrofit = new Retrofit.Builder()
                 .baseUrl("https://api.url")
@@ -28,28 +25,28 @@ public class HomeFragmentViewModel extends ViewModel {
                 .build();
         mAPIService = mRetrofit.create(APIService.class);
 
-//        // get the latest recommendations by calling the API service
-//        mAPIService.getLatestRecommendedUsers().enqueue(new Callback<List<RecommendedUserModel>>() {
+//        mAPIService.getRecommendedUsers().enqueue(new Callback<List<RecommendedUserModel>>() {
 //            @Override
 //            public void onResponse(Call<List<RecommendedUserModel>> call, Response<List<RecommendedUserModel>> response) {
 //                if(response.isSuccessful()){
 //                    mUsers.setValue(response.body());
 //                } else {
-//                    // Whoops, error! Manage it...
+//                    // some error happened, let the user know - and log it
 //                }
 //            }
 //
 //            @Override
 //            public void onFailure(Call<List<RecommendedUserModel>> call, Throwable t) {
-//                // things went south, tell the user
+//                // things went south
 //            }
 //        });
 
-        // pass data to the mutable live data - testing - should be replaced with above
         mUsers.setValue(Utilities.generateRecommendedUsers());
     }
 
-    public LiveData<List<RecommendedUserModel>> getLatestRecommendedUsers() {
+    public LiveData<List<RecommendedUserModel>> getRecommendedUsers() {
         return mUsers;
     }
+
+
 }

@@ -15,10 +15,10 @@ import android.widget.Toast;
 
 import com.reco.R;
 import com.reco.view.adapter.RecommendationsAdapter;
-import com.reco.viewmodel.RecommendationsFragmentViewModel;
+import com.reco.viewmodel.RecommendationsViewModel;
 
 public class RecommendationsFragment extends Fragment {
-    private RecommendationsFragmentViewModel mRecommendationsFragmentViewModel;
+    private RecommendationsViewModel mRecommendationsViewModel;
     private RecyclerView mRecyclerView;
     private RecommendationsAdapter mRecommendationsAdapter;
 
@@ -31,11 +31,11 @@ public class RecommendationsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mRecyclerView = view.findViewById(R.id.fragment_recommendations_recycler_view);
-        mRecommendationsFragmentViewModel = new RecommendationsFragmentViewModel();
+        mRecommendationsViewModel = new RecommendationsViewModel();
 
         initRecyclerView();
 
-        mRecommendationsFragmentViewModel.getRecommendedUsers().observe(this, recommendedUserModels -> {
+        mRecommendationsViewModel.getRecommendedUsers().observe(this, recommendedUserModels -> {
             Toast.makeText(getContext(), "Users: " + recommendedUserModels.size(), Toast.LENGTH_SHORT).show();
             mRecommendationsAdapter.notifyDataSetChanged();
         });
@@ -51,7 +51,7 @@ public class RecommendationsFragment extends Fragment {
     }
 
     public void initRecyclerView() {
-        mRecommendationsAdapter = new RecommendationsAdapter(mRecommendationsFragmentViewModel.getRecommendedUsers().getValue());
+        mRecommendationsAdapter = new RecommendationsAdapter(mRecommendationsViewModel.getRecommendedUsers().getValue());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         mRecyclerView.setAdapter(mRecommendationsAdapter);
     }
