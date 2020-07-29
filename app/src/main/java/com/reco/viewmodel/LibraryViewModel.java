@@ -1,10 +1,7 @@
 package com.reco.viewmodel;
 
-import android.util.Log;
-
 import com.reco.service.model.TrackModel;
 import com.reco.service.repository.APIService;
-import com.reco.service.repository.LastFMService;
 import com.reco.util.Utilities;
 
 import java.util.List;
@@ -12,9 +9,6 @@ import java.util.List;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -23,7 +17,7 @@ public class LibraryViewModel extends ViewModel {
     private final APIService mAPIService;
     private MutableLiveData<List<TrackModel>> mTracks = new MutableLiveData<>();
 
-    public LibraryViewModel(){
+    public LibraryViewModel() {
         this.mRetrofit = new Retrofit.Builder()
                 .baseUrl("https://api.url")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -51,7 +45,7 @@ public class LibraryViewModel extends ViewModel {
 //        Log.d("RECOSIZE", "RecommendationsViewModel: " + Utilities.generateUserLibrary().size());
     }
 
-    public LiveData<List<TrackModel>> getUserLibrary(){
+    public LiveData<List<TrackModel>> getUserLibrary() {
         return mTracks;
     }
 

@@ -5,33 +5,41 @@ import android.os.Bundle;
 import com.reco.R;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity {
     final boolean LOGGED_IN = true; // test
+
+    public static void changeToFragment(AppCompatActivity activity, Fragment fragment, boolean addToBackStack, String fragmentStackName) {
+        FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        if (addToBackStack) {
+            transaction.addToBackStack(fragmentStackName);
+        }
+        transaction.commit();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         // test - use fragment manager with back-stack
-        if (LOGGED_IN) {
-            HomeFragment mHomeFragment = new HomeFragment();
+        if (findViewById(R.id.fragment_container) != null) {
 
-            transaction.replace(R.id.fragment_container, mHomeFragment);
-//            transaction.addToBackStack(null);
-
-            transaction.commit(); // not very effective
-        } else {
-            RegisterFragment mRegisterFragment = new RegisterFragment();
-
-            transaction.replace(R.id.fragment_container, mRegisterFragment);
-//            transaction.addToBackStack(null);
-
-            transaction.commit(); // not very effective
+            // However, if we're being restored from a previous state,
+            // then we don't need to do anything and should return or else
+            // we could end up with overlapping fragments.
+            if (savedInstanceState != null) {
+                return;
+            }
+            if (LOGGED_IN) {
+//                changeToFragment(this, new SearchFragment(), false, "search-from-home");
+                changeToFragment(this, new HomeFragment(), false, null);
+            } else {
+                changeToFragment(this, new RegisterFragment(), false, null);
+            }
         }
 
 

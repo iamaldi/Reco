@@ -13,9 +13,9 @@ import com.reco.viewmodel.HomeViewModel;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,10 +25,16 @@ public class HomeFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private AppCompatImageButton mSettingsButton;
     private Button mSearchButton, mMyLibraryButton;
-    private FragmentTransaction transaction;
 
     public HomeFragment() {
         // Required empty public constructor
+
+
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -38,7 +44,10 @@ public class HomeFragment extends Fragment {
         mSearchButton = view.findViewById(R.id.fragment_home_search_button);
         mMyLibraryButton = view.findViewById(R.id.fragment_home_myLib_button);
 
-        transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        mRecyclerView = view.findViewById(R.id.fragment_home_recyclerView);
+        mHomeViewModel = new HomeViewModel();
+
+        initRecyclerView();
 
         mSettingsButton.setOnClickListener(mView -> {
             Toast.makeText(mView.getContext(), "Settings", Toast.LENGTH_SHORT).show();
@@ -46,32 +55,22 @@ public class HomeFragment extends Fragment {
 
         mSearchButton.setOnClickListener(mView -> {
             Toast.makeText(mView.getContext(), "Search", Toast.LENGTH_SHORT).show();
-
-            SearchFragment mSearchFragment = new SearchFragment();
-
-            transaction.replace(R.id.fragment_container, mSearchFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
+            MainActivity.changeToFragment((AppCompatActivity) getActivity(),
+                    new SearchFragment(), true,
+                    "search-from-home");
         });
 
         mMyLibraryButton.setOnClickListener(mView -> {
             Toast.makeText(mView.getContext(), "MyLibrary", Toast.LENGTH_SHORT).show();
-            LibraryFragment mLibraryFragment = new LibraryFragment();
-
-            transaction.replace(R.id.fragment_container, mLibraryFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
+            MainActivity.changeToFragment((AppCompatActivity) getActivity(),
+                    new LibraryFragment(), true,
+                    "library-from-home");
         });
-
-        mRecyclerView = view.findViewById(R.id.fragment_home_recyclerView);
-
-        mHomeViewModel = new HomeViewModel();
-
-        initRecyclerView();
 
         mHomeViewModel.getLatestRecommendedUsers().observe(this, recommendedUserModels -> {
             mHomeAdapter.notifyDataSetChanged();
         });
+
 
     }
 
@@ -83,7 +82,6 @@ public class HomeFragment extends Fragment {
     }
 
     public void initRecyclerView() {
-        // get LiveData from the viewModel - this gets a list of tracks
         mHomeAdapter = new HomeAdapter(this, mHomeViewModel.getLatestRecommendedUsers().getValue());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         mRecyclerView.setAdapter(mHomeAdapter);

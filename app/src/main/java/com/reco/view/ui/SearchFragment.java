@@ -44,7 +44,7 @@ public class SearchFragment extends Fragment implements AdapterCallbacks {
     }
 
     @Override
-    public void onAddTrackToLibrary(TrackModel track) {
+    public void onAddTrackToLibraryCallback(TrackModel track) {
         // test - start - shows that we can open a new fragment when
         Log.d("RECOSIZE", "onClick: CLICKED");
         Toast.makeText(getContext(), "Adding to library" + track.getName(), Toast.LENGTH_SHORT).show();
@@ -68,7 +68,7 @@ public class SearchFragment extends Fragment implements AdapterCallbacks {
     }
 
     @Override
-    public void onRemoveTrackFromLibrary(TrackModel track, int position) {
+    public void onRemoveTrackFromLibraryCallback(TrackModel track, int position) {
         Log.d("RECOSIZE", "onClick: CLICKED");
         Toast.makeText(getContext(), "Removing from library: " + track.getName(), Toast.LENGTH_SHORT).show();
 

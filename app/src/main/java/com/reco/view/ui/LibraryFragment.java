@@ -1,19 +1,6 @@
 package com.reco.view.ui;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +13,18 @@ import com.reco.service.repository.APIService;
 import com.reco.view.adapter.LibraryAdapter;
 import com.reco.view.callback.AdapterCallbacks;
 import com.reco.viewmodel.LibraryViewModel;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LibraryFragment extends Fragment implements AdapterCallbacks {
     private LibraryViewModel mLibraryViewModel;
@@ -45,26 +44,32 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView = view.findViewById(R.id.fragment_myLibrary_recyclerview);
         mButton = view.findViewById(R.id.fragment_myLibrary_addMore_button);
-
         mLibraryViewModel = new LibraryViewModel();
 
         initRecyclerView();
+
+        mButton.setOnClickListener(mView -> {
+            MainActivity.changeToFragment((AppCompatActivity) getActivity(),
+                    new SearchFragment(), true,
+                    "search-from-library");
+        });
 
         mLibraryViewModel.getUserLibrary().observe(this, trackModels -> {
             Toast.makeText(getContext(), "Library: " + trackModels.size(), Toast.LENGTH_SHORT).show();
             mLibraryAdapter.notifyDataSetChanged();
         });
 
-        mButton.setOnClickListener(mView -> {
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, new SearchFragment());
-            transaction.addToBackStack("search-from-library");
-            transaction.commit();
-        });
+
     }
 
     @Override
@@ -81,11 +86,14 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks {
     }
 
     @Override
-    public void onAddTrackToLibrary(TrackModel track) {
+    public void onAddTrackToLibraryCallback(TrackModel track) {
+        mLibraryViewModel.getUserLibrary().getValue().add(track);
+        mLibraryAdapter.notifyDataSetChanged();
+
         mAPIService.addTrackToLibrary(track).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     // item added
                 } else {
                     // oops, smth went wrong
@@ -100,19 +108,19 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks {
     }
 
     @Override
-    public void onRemoveTrackFromLibrary(TrackModel track, int position) {
+    public void onRemoveTrackFromLibraryCallback(TrackModel track, int position) {
         // debug toast
         Toast.makeText(getContext(), "REMOVE", Toast.LENGTH_SHORT).show();
+
         // remove item from recycler view
         mLibraryViewModel.getUserLibrary().getValue().remove(position);
         mLibraryAdapter.notifyDataSetChanged();
-
 
         // call the API to remove item
         mAPIService.removeTrackFromLibrary(1).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     // item removed
                 } else {
                     // something went wrong
