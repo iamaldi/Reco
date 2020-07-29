@@ -34,10 +34,29 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
 
     @Override
     public void onBindViewHolder(@NonNull final SearchAdapterViewHolder holder, final int position) {
-        holder.mTrackArtist.setText(tracks.get(position).getArtist());
-        holder.mTrackTitle.setText(tracks.get(position).getName());
+        TrackModel track = tracks.get(position);
+        holder.mTrackArtist.setText(track.getArtist());
+        holder.mTrackTitle.setText(track.getName());
 
-        holder.mAddButton.setOnClickListener(view -> mAdapterCallbacks.onAddTrackToLibrary(tracks.get(position)));
+        // add default tag to all search results
+        // TODO: what about tracks already in the library?
+        holder.mButton.setTag(android.R.drawable.ic_input_add);
+
+        holder.mButton.setOnClickListener(view -> {
+            if (holder.mButton.getTag().equals(android.R.drawable.ic_delete)) {
+                // remove item from library
+                mAdapterCallbacks.onRemoveTrackFromLibrary(track, position);
+                // change button icon
+                holder.mButton.setImageResource(android.R.drawable.ic_input_add);
+                holder.mButton.setTag(android.R.drawable.ic_input_add);
+            } else {
+                // add item to library
+                mAdapterCallbacks.onAddTrackToLibrary(track);
+                // change button icon
+                holder.mButton.setImageResource(android.R.drawable.ic_delete);
+                holder.mButton.setTag(android.R.drawable.ic_delete);
+            }
+        });
     }
 
     @Override
@@ -47,13 +66,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
 
     public class SearchAdapterViewHolder extends RecyclerView.ViewHolder {
         private TextView mTrackArtist, mTrackTitle;
-        private AppCompatImageButton mAddButton;
+        private AppCompatImageButton mButton;
 
         public SearchAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
             mTrackArtist = itemView.findViewById(R.id.track_item_artist);
             mTrackTitle = itemView.findViewById(R.id.track_item_title);
-            mAddButton = itemView.findViewById(R.id.track_item_add_button);
+            mButton = itemView.findViewById(R.id.track_item_add_button);
         }
     }
 

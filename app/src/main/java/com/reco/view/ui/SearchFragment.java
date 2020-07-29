@@ -69,7 +69,21 @@ public class SearchFragment extends Fragment implements AdapterCallbacks {
 
     @Override
     public void onRemoveTrackFromLibrary(TrackModel track, int position) {
+        Log.d("RECOSIZE", "onClick: CLICKED");
+        Toast.makeText(getContext(), "Removing from library: " + track.getName(), Toast.LENGTH_SHORT).show();
 
+        // call API to remove the track
+        mAPIService.removeTrackFromLibrary(111).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
     }
 
 
