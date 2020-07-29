@@ -16,12 +16,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class SearchFragmentViewModel extends ViewModel {
+public class SearchViewModel extends ViewModel {
     private final Retrofit mRetrofit;
     private final LastFMService mLastFMService;
     private MutableLiveData<List<TrackModel>> mTrackSearchResults = new MutableLiveData<>();
 
-    public SearchFragmentViewModel() {
+    public SearchViewModel() {
         // retrieve data from repository and save it as mutable data
         this.mRetrofit = new Retrofit.Builder()
                 .baseUrl("https://api.url")
@@ -35,7 +35,6 @@ public class SearchFragmentViewModel extends ViewModel {
 //                if(response.isSuccessful()){
 //                    mTrackSearchResults.setValue(response.body());
 //                }
-//
 //            }
 //
 //            @Override

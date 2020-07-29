@@ -15,9 +15,10 @@ public class Utilities {
     public static List<TrackModel> generateUserLibrary() {
         List<TrackModel> userLibrary = new ArrayList<>();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 7; i++) {
             userLibrary.add(new TrackModel("Socks" + i, "Arctic Monkeys" + i, "https://URL/" + i, "https://IMAGEURL/" + i));
         }
+
         return userLibrary;
     }
 
@@ -26,6 +27,9 @@ public class Utilities {
 
         recommendedUsers.add(new RecommendedUserModel("John", "john_a_1", 15));
         recommendedUsers.add(new RecommendedUserModel("Bob", "bob_s_2", 75));
+        recommendedUsers.add(new RecommendedUserModel("Regino", "reggy29", 87));
+        recommendedUsers.add(new RecommendedUserModel("Aldi", "lol_who_me", 34));
+        recommendedUsers.add(new RecommendedUserModel("Aldi", "lol_who_me", 34));
 
         return recommendedUsers;
     }

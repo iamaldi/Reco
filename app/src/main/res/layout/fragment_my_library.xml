@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ui.MyLibraryFragment">
+    tools:context=".view.ui.LibraryFragment">
 
 
     <TextView
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
 
-        android:text="Library"
+        android:text="My Library"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,27 +22,32 @@
     <androidx.recyclerview.widget.RecyclerView
 
         android:id="@+id/fragment_myLibrary_recyclerview"
-        android:layout_width="match_parent"
+        android:layout_width="322dp"
 
-        android:layout_height="wrap_content"
+        android:layout_height="425dp"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="20dp"
         android:layout_marginTop="36dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintVertical_bias="0.087" />
 
     <Button
         android:id="@+id/fragment_myLibrary_addMore_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
+        android:layout_marginBottom="8dp"
         android:text="Add more"
         android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_myLibrary_recyclerview" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_myLibrary_recyclerview"
+        app:layout_constraintVertical_bias="0.872" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

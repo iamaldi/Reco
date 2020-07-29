@@ -11,15 +11,12 @@ import com.reco.R;
 import com.reco.service.model.TrackModel;
 import com.reco.service.repository.APIService;
 import com.reco.view.adapter.SearchAdapter;
-import com.reco.view.callback.SearchAdapterCallback;
-import com.reco.viewmodel.SearchFragmentViewModel;
-
-import java.util.List;
+import com.reco.view.callback.AdapterCallbacks;
+import com.reco.viewmodel.SearchViewModel;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
@@ -28,8 +25,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class SearchFragment extends Fragment implements SearchAdapterCallback {
-    private SearchFragmentViewModel mSearchFragmentViewModel;
+public class SearchFragment extends Fragment implements AdapterCallbacks {
+    private SearchViewModel mSearchViewModel;
     private SearchAdapter mSearchAdapter;
     private RecyclerView mRecyclerView;
 
@@ -47,7 +44,7 @@ public class SearchFragment extends Fragment implements SearchAdapterCallback {
     }
 
     @Override
-    public void onItemClickedCallback(TrackModel track) {
+    public void onAddTrackToLibrary(TrackModel track) {
         // test - start - shows that we can open a new fragment when
         Log.d("RECOSIZE", "onClick: CLICKED");
         Toast.makeText(getContext(), "Adding to library" + track.getName(), Toast.LENGTH_SHORT).show();
@@ -71,23 +68,40 @@ public class SearchFragment extends Fragment implements SearchAdapterCallback {
     }
 
     @Override
+    public void onRemoveTrackFromLibrary(TrackModel track, int position) {
+        Log.d("RECOSIZE", "onClick: CLICKED");
+        Toast.makeText(getContext(), "Removing from library: " + track.getName(), Toast.LENGTH_SHORT).show();
+
+        // call API to remove the track
+        mAPIService.removeTrackFromLibrary(111).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView = view.findViewById(R.id.fragment_search_recyclerView);
 
-        mSearchFragmentViewModel = new SearchFragmentViewModel();
+        mSearchViewModel = new SearchViewModel();
 
         // pass data to fragment via adapter
         initRecyclerView();
 
         // observe data and notify adapter when it changes
-        mSearchFragmentViewModel.getGeneratedTracks().observe(this, new Observer<List<TrackModel>>() {
-            @Override
-            public void onChanged(List<TrackModel> trackModels) {
-                // test toast
-                Toast.makeText(getContext(), "List size: " + trackModels.size(), Toast.LENGTH_SHORT).show();
-                mSearchAdapter.notifyDataSetChanged();
-            }
+        mSearchViewModel.getGeneratedTracks().observe(this, trackModels -> {
+            // test toast
+            Toast.makeText(getContext(), "List size: " + trackModels.size(), Toast.LENGTH_SHORT).show();
+            mSearchAdapter.notifyDataSetChanged();
         });
 
     }
@@ -100,8 +114,8 @@ public class SearchFragment extends Fragment implements SearchAdapterCallback {
     }
 
     public void initRecyclerView() {
-        // get livedata from the viewModel - this gets a list of tracks
-        mSearchAdapter = new SearchAdapter(this, mSearchFragmentViewModel.getGeneratedTracks().getValue());
+        // get LiveData from the viewModel - this gets a list of tracks
+        mSearchAdapter = new SearchAdapter(this, mSearchViewModel.getGeneratedTracks().getValue());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         mRecyclerView.setAdapter(mSearchAdapter);
     }
