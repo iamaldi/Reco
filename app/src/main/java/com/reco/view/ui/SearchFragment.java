@@ -11,7 +11,7 @@ import com.reco.R;
 import com.reco.service.model.TrackModel;
 import com.reco.service.repository.APIService;
 import com.reco.view.adapter.SearchAdapter;
-import com.reco.view.callback.SearchAdapterCallback;
+import com.reco.view.callback.AdapterCallbacks;
 import com.reco.viewmodel.SearchViewModel;
 
 import androidx.annotation.NonNull;
@@ -25,7 +25,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class SearchFragment extends Fragment implements SearchAdapterCallback {
+public class SearchFragment extends Fragment implements AdapterCallbacks {
     private SearchViewModel mSearchViewModel;
     private SearchAdapter mSearchAdapter;
     private RecyclerView mRecyclerView;
@@ -44,7 +44,7 @@ public class SearchFragment extends Fragment implements SearchAdapterCallback {
     }
 
     @Override
-    public void onItemClickedCallback(TrackModel track) {
+    public void onAddTrackToLibrary(TrackModel track) {
         // test - start - shows that we can open a new fragment when
         Log.d("RECOSIZE", "onClick: CLICKED");
         Toast.makeText(getContext(), "Adding to library" + track.getName(), Toast.LENGTH_SHORT).show();
@@ -66,6 +66,12 @@ public class SearchFragment extends Fragment implements SearchAdapterCallback {
             }
         });
     }
+
+    @Override
+    public void onRemoveTrackFromLibrary(TrackModel track, int position) {
+
+    }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.reco.R;
 import com.reco.service.model.RecommendedUserModel;
+import com.reco.view.callback.AdapterCallbacks;
+import com.reco.view.ui.HomeFragment;
 
 import java.util.List;
 
@@ -17,14 +19,14 @@ import androidx.recyclerview.widget.RecyclerView;
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeAdapterViewHolder> {
     private List<RecommendedUserModel> mRecommendedUsers;
 
-    public HomeAdapter(List<RecommendedUserModel> mRecommendedUsers) {
+    public HomeAdapter(HomeFragment mFragment, List<RecommendedUserModel> mRecommendedUsers) {
         this.mRecommendedUsers = mRecommendedUsers;
     }
 
     @NonNull
     @Override
     public HomeAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recommendation_item, parent, false);
+        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_item, parent, false);
         return new HomeAdapterViewHolder(mView);
     }
 

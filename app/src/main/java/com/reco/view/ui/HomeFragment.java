@@ -56,9 +56,9 @@ public class HomeFragment extends Fragment {
 
         mMyLibraryButton.setOnClickListener(mView -> {
             Toast.makeText(mView.getContext(), "MyLibrary", Toast.LENGTH_SHORT).show();
-            MyLibraryFragment mMyLibraryFragment = new MyLibraryFragment();
+            LibraryFragment mLibraryFragment = new LibraryFragment();
 
-            transaction.replace(R.id.fragment_container, mMyLibraryFragment);
+            transaction.replace(R.id.fragment_container, mLibraryFragment);
             transaction.addToBackStack(null);
             transaction.commit();
         });
@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment {
 
     public void initRecyclerView() {
         // get LiveData from the viewModel - this gets a list of tracks
-        mHomeAdapter = new HomeAdapter(mHomeViewModel.getLatestRecommendedUsers().getValue());
+        mHomeAdapter = new HomeAdapter(this, mHomeViewModel.getLatestRecommendedUsers().getValue());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         mRecyclerView.setAdapter(mHomeAdapter);
     }

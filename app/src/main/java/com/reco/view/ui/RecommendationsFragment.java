@@ -1,13 +1,6 @@
 package com.reco.view.ui;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +9,12 @@ import android.widget.Toast;
 import com.reco.R;
 import com.reco.view.adapter.RecommendationsAdapter;
 import com.reco.viewmodel.RecommendationsViewModel;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class RecommendationsFragment extends Fragment {
     private RecommendationsViewModel mRecommendationsViewModel;
@@ -39,8 +38,6 @@ public class RecommendationsFragment extends Fragment {
             Toast.makeText(getContext(), "Users: " + recommendedUserModels.size(), Toast.LENGTH_SHORT).show();
             mRecommendationsAdapter.notifyDataSetChanged();
         });
-
-
     }
 
     @Override

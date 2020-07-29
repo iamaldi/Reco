@@ -15,9 +15,10 @@ public class Utilities {
     public static List<TrackModel> generateUserLibrary() {
         List<TrackModel> userLibrary = new ArrayList<>();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 7; i++) {
             userLibrary.add(new TrackModel("Socks" + i, "Arctic Monkeys" + i, "https://URL/" + i, "https://IMAGEURL/" + i));
         }
+
         return userLibrary;
     }
 

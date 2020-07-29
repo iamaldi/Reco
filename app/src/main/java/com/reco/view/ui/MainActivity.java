@@ -19,17 +19,17 @@ public class MainActivity extends AppCompatActivity {
 
         // test - use fragment manager with back-stack
         if (LOGGED_IN) {
-            RecommendationsFragment mHomeFragment = new RecommendationsFragment();
+            HomeFragment mHomeFragment = new HomeFragment();
 
             transaction.replace(R.id.fragment_container, mHomeFragment);
 //            transaction.addToBackStack(null);
 
             transaction.commit(); // not very effective
         } else {
-            RegisterFragment mLoginFragment = new RegisterFragment();
+            RegisterFragment mRegisterFragment = new RegisterFragment();
 
-            transaction.replace(R.id.fragment_container, mLoginFragment);
-            transaction.addToBackStack(null);
+            transaction.replace(R.id.fragment_container, mRegisterFragment);
+//            transaction.addToBackStack(null);
 
             transaction.commit(); // not very effective
         }
