@@ -48,9 +48,9 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
 
         public RecommendationsAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
-            mImage = itemView.findViewById(R.id.recommendation_item_image);
-            mName = itemView.findViewById(R.id.recommendation_item_name);
-            mSimilarity = itemView.findViewById(R.id.recommendation_item_similarity);
+            mImage = itemView.findViewById(R.id.user_item_image);
+            mName = itemView.findViewById(R.id.user_item_name);
+            mSimilarity = itemView.findViewById(R.id.user_item_similarity);
 
         }
     }

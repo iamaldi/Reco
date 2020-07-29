@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.reco.R;
 import com.reco.service.model.RecommendedUserModel;
-import com.reco.view.callback.AdapterCallbacks;
 import com.reco.view.ui.HomeFragment;
 
 import java.util.List;
@@ -49,9 +48,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeAdapterVie
 
         public HomeAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
-            mUserImage = itemView.findViewById(R.id.recommendation_item_image);
-            mName = itemView.findViewById(R.id.recommendation_item_name);
-            mSimilarity = itemView.findViewById(R.id.recommendation_item_similarity);
+            mUserImage = itemView.findViewById(R.id.user_item_image);
+            mName = itemView.findViewById(R.id.user_item_name);
+            mSimilarity = itemView.findViewById(R.id.user_item_similarity);
         }
     }
 }
