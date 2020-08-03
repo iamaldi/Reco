@@ -49,7 +49,7 @@ public class HomeFragment extends Fragment {
 
             SearchFragment mSearchFragment = new SearchFragment();
 
-            transaction.replace(R.id.fragment_container, mSearchFragment);
+            transaction.replace(R.id.activity_main_fragment_container, mSearchFragment);
             transaction.addToBackStack(null);
             transaction.commit();
         });
@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
             Toast.makeText(mView.getContext(), "MyLibrary", Toast.LENGTH_SHORT).show();
             LibraryFragment mLibraryFragment = new LibraryFragment();
 
-            transaction.replace(R.id.fragment_container, mLibraryFragment);
+            transaction.replace(R.id.activity_main_fragment_container, mLibraryFragment);
             transaction.addToBackStack(null);
             transaction.commit();
         });

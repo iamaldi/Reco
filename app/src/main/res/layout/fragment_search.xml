@@ -19,6 +19,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <EditText
+        android:id="@+id/fragment_search_search_editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:drawableRight="@android:drawable/ic_menu_search"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:paddingLeft="20dp"
+        android:text="Search Music"
+        android:textSize="30sp"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_search_search_textview"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_search_recyclerView"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
 
 
@@ -32,5 +48,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_search_search_textview" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_search_search_editText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

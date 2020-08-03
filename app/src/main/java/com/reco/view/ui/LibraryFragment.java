@@ -61,7 +61,7 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks {
 
         mButton.setOnClickListener(mView -> {
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, new SearchFragment());
+            transaction.replace(R.id.activity_main_fragment_container, new SearchFragment());
             transaction.addToBackStack("search-from-library");
             transaction.commit();
         });
