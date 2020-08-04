@@ -69,7 +69,6 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks {
             mLibraryAdapter.notifyDataSetChanged();
         });
 
-
     }
 
     @Override

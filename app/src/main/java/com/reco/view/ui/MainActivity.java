@@ -1,9 +1,12 @@
 package com.reco.view.ui;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.reco.R;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -25,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        BottomNavigationView bottomNav=findViewById( R.id.activity_main_bottomNavigationView );
+
         // test - use fragment manager with back-stack
         if (findViewById(R.id.fragment_container) != null) {
 
@@ -35,13 +40,39 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             if (LOGGED_IN) {
-//                changeToFragment(this, new SearchFragment(), false, "search-from-home");
+  //           changeToFragment(this, new SearchFragment(), false, "search-from-home");
                 changeToFragment(this, new HomeFragment(), false, null);
             } else {
                 changeToFragment(this, new RegisterFragment(), false, null);
             }
         }
 
+
+        bottomNav.setOnNavigationItemSelectedListener( new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment selected=null;
+
+                switch (item.getItemId()){
+                    case R.id.navbar_home:
+                        selected=new HomeFragment();
+                        break;
+                    case R.id.navbar_search:
+                        selected=new SearchFragment();
+                        break;
+                    case R.id.navbar_library:
+                        selected=new LibraryFragment();
+                        break;
+                    case R.id.navbar_settings:
+                        selected=new RecommendationsFragment();
+                        break;
+                }
+
+                getSupportFragmentManager().beginTransaction().replace( R.id.activity_main_fragment_container,selected ).commit();
+
+                return true;
+            }
+        } );
 
         // start splash screen
 
@@ -53,4 +84,7 @@ public class MainActivity extends AppCompatActivity {
         // - if authenticated
         // start main activity
     }
+
+
+
 }

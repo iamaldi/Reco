@@ -55,6 +55,7 @@ public class HomeFragment extends Fragment {
 
         mSearchButton.setOnClickListener(mView -> {
             Toast.makeText(mView.getContext(), "Search", Toast.LENGTH_SHORT).show();
+
             MainActivity.changeToFragment((AppCompatActivity) getActivity(),
                     new SearchFragment(), true,
                     "search-from-home");
@@ -62,6 +63,7 @@ public class HomeFragment extends Fragment {
 
         mMyLibraryButton.setOnClickListener(mView -> {
             Toast.makeText(mView.getContext(), "MyLibrary", Toast.LENGTH_SHORT).show();
+          
             MainActivity.changeToFragment((AppCompatActivity) getActivity(),
                     new LibraryFragment(), true,
                     "library-from-home");
