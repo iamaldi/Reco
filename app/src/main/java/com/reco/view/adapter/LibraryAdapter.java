@@ -41,7 +41,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.MyLibrar
 
         holder.mButton.setImageResource(android.R.drawable.ic_delete);
         holder.mButton.setOnClickListener(view -> {
-            mAdapterCallbacks.onRemoveTrackFromLibrary(track, position);
+            mAdapterCallbacks.onRemoveTrackFromLibraryCallback(track, position);
         });
 
     }

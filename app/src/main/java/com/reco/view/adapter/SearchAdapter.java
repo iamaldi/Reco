@@ -45,13 +45,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
         holder.mButton.setOnClickListener(view -> {
             if (holder.mButton.getTag().equals(android.R.drawable.ic_delete)) {
                 // remove item from library
-                mAdapterCallbacks.onRemoveTrackFromLibrary(track, position);
+                mAdapterCallbacks.onRemoveTrackFromLibraryCallback(track, position);
                 // change button icon
                 holder.mButton.setImageResource(android.R.drawable.ic_input_add);
                 holder.mButton.setTag(android.R.drawable.ic_input_add);
             } else {
                 // add item to library
-                mAdapterCallbacks.onAddTrackToLibrary(track);
+                mAdapterCallbacks.onAddTrackToLibraryCallback(track);
                 // change button icon
                 holder.mButton.setImageResource(android.R.drawable.ic_delete);
                 holder.mButton.setTag(android.R.drawable.ic_delete);
