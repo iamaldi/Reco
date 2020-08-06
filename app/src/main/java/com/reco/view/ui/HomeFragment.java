@@ -5,10 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.reco.R;
+import com.reco.service.model.UserProfileModel;
+import com.reco.util.Utilities;
 import com.reco.view.adapter.HomeAdapter;
 import com.reco.view.callback.APIErrorCallbacks;
 import com.reco.viewmodel.HomeViewModel;
@@ -32,7 +35,7 @@ public class HomeFragment extends Fragment implements APIErrorCallbacks {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             return;
         }
         mHomeAdapter = new HomeAdapter();
@@ -41,6 +44,14 @@ public class HomeFragment extends Fragment implements APIErrorCallbacks {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // use AI to greet the user
+        TextView userGreeting = view.findViewById(R.id.fragment_home_greeting_user);
+        UserProfileModel user = Utilities.getLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()));
+
+        if (user != null) {
+            userGreeting.setText(user.getDisplayName());
+        }
 
         ImageButton settingsButton = Objects.requireNonNull(getActivity()).
                 findViewById(R.id.fragment_home_settings_imageButton);

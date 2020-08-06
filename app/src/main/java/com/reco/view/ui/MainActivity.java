@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity {
-    final boolean LOGGED_IN = false; // test
+    final boolean LOGGED_IN = true; // test
 
     public static void changeToFragment(AppCompatActivity activity, Fragment fragment, boolean addToBackStack, String fragmentStackName) {
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
