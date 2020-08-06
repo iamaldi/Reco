@@ -13,16 +13,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity {
-    final boolean LOGGED_IN = true; // test
-
-    public static void changeToFragment(AppCompatActivity activity, Fragment fragment, boolean addToBackStack, String fragmentTag) {
-        FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
-        Fragment fr = activity.getSupportFragmentManager().findFragmentByTag(fragmentTag);
-        if (fr != null) {
-            // fragment already on stack
+    public static void changeToFragment(AppCompatActivity appCompatActivity, Fragment fragment, boolean addToBackStack, String fragmentTag) {
+        FragmentTransaction transaction = appCompatActivity.getSupportFragmentManager().beginTransaction();
+        // fragment already on backstack
+        if (appCompatActivity.getSupportFragmentManager().findFragmentByTag(fragmentTag) != null) {
             // pop it
-//            activity.getSupportFragmentManager().popBackStack(fr.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            activity.getSupportFragmentManager().popBackStack();
+            appCompatActivity.getSupportFragmentManager().popBackStack();
         } else {
             transaction.replace(R.id.activity_main_fragment_container, fragment, fragmentTag);
             if (addToBackStack) {
@@ -30,10 +26,9 @@ public class MainActivity extends AppCompatActivity {
             }
             transaction.commit();
         }
-
     }
 
-    public static void removeAllFragments(AppCompatActivity appCompatActivity){
+    public static void removeAllFragments(AppCompatActivity appCompatActivity) {
         appCompatActivity.getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
@@ -42,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // TODO: implement a solution including correct fragment management
+        // TODO: check if this is necessary - and if so- where is best to be placed
         if (findViewById(R.id.activity_main_fragment_container) != null) {
             // However, if we're being restored from a previous state,
             // then we don't need to do anything and should return or else
