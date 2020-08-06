@@ -74,13 +74,13 @@ public class RegisterFragment extends Fragment {
 
             // check if input fields are not empty
             if (displayName.isEmpty()) {
-                mDisplayName.setError("This field is required.");
+                mDisplayName.setError(getString(R.string.field_required));
             } else if (username.isEmpty()) {
-                mUsername.setError("This field is required.");
+                mUsername.setError(getString(R.string.field_required));
             } else if (password.isEmpty()) {
-                mPassword.setError("This field is required.");
+                mPassword.setError(getString(R.string.field_required));
             } else if (repeatPassword.isEmpty()) {
-                mRepeatPassword.setError("This field is required.");
+                mRepeatPassword.setError(getString(R.string.field_required));
             } else {
                 // check if passwords match
                 if (password.equals(repeatPassword)) {
@@ -109,7 +109,7 @@ public class RegisterFragment extends Fragment {
                         }
                     });
                 } else {
-                    mRepeatPassword.setError("Passwords do not match.");
+                    mRepeatPassword.setError(getString(R.string.passwords_dont_match));
                 }
             }
         });

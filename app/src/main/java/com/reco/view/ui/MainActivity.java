@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             if (LOGGED_IN) {
                 changeToFragment(this, new HomeFragment(), false, null);
             } else {
-                changeToFragment(this, new RegisterFragment(), false, null);
+                changeToFragment(this, new LoginFragment(), false, null);
             }
         }
 

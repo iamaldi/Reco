@@ -15,6 +15,10 @@ import com.reco.service.model.UserProfileModel;
 import com.reco.service.repository.APIService;
 import com.reco.util.Utilities;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,11 +30,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginFragment extends Fragment {
-
-    private Retrofit mRetrofit;
     private APIService mAPIService;
-    private TextView mUsername, mPassword;
-    private Button mLoginButton;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -39,7 +39,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRetrofit = new Retrofit.Builder()
+        Retrofit mRetrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.API_URL))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -56,42 +56,57 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mUsername = view.findViewById(R.id.fragment_login_username);
-        mPassword = view.findViewById(R.id.fragment_login_password);
-        mLoginButton = view.findViewById(R.id.fragment_login_login_button);
+        TextView mUsername = view.findViewById(R.id.fragment_login_username);
+        TextView mPassword = view.findViewById(R.id.fragment_login_password);
+        Button mLoginButton = view.findViewById(R.id.fragment_login_login_button);
+        TextView mRegisterInstead = view.findViewById(R.id.fragment_login_register_instead);
 
         // hide bottom navigation menu
         // getActivity because the bottom navigation belongs to MainActivity and
         // it is not accessible from any other fragment as it is initialized there
-        BottomNavigationView mBottomNav = getActivity().findViewById(R.id.activity_main_bottomNavigationView);
+        BottomNavigationView mBottomNav = Objects.requireNonNull(getActivity()).findViewById(R.id.activity_main_bottomNavigationView);
         mBottomNav.setVisibility(View.GONE);
 
         mLoginButton.setOnClickListener(mView -> {
             String username = mUsername.getText().toString();
             String password = mPassword.getText().toString();
 
-            // call the api to login
-            mAPIService.userLogin(new UserLoginModel(username, password)).enqueue(new Callback<UserProfileModel>() {
-                @Override
-                public void onResponse(Call<UserProfileModel> call, Response<UserProfileModel> response) {
-                    if (response.isSuccessful()) {
-                        UserProfileModel user = response.body();
-                        // save user to shared preferences
-                        Utilities.saveLocalUser((AppCompatActivity) getActivity(), user);
-                        // launch home fragment
-                        MainActivity.changeToFragment((AppCompatActivity) getActivity(),
-                                new HomeFragment(), false,
-                                "home-from-login");
-                    } else {
-                        Toast.makeText(getContext(), "Invalid credentials.", Toast.LENGTH_SHORT).show();
+            // check if fields are empty
+            if (username.isEmpty()) {
+                mUsername.setError(getString(R.string.field_required));
+            } else if (password.isEmpty()) {
+                mPassword.setError(getString(R.string.field_required));
+            } else {
+                // call the api to login
+                mAPIService.userLogin(new UserLoginModel(username, password)).enqueue(new Callback<UserProfileModel>() {
+                    @Override
+                    public void onResponse(@NotNull Call<UserProfileModel> call, @NotNull Response<UserProfileModel> response) {
+                        if (response.isSuccessful()) {
+                            UserProfileModel user = response.body();
+                            // save user to shared preferences
+                            Utilities.saveLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()), user);
+                            // launch home fragment
+                            MainActivity.changeToFragment((AppCompatActivity) getActivity(),
+                                    new HomeFragment(), false,
+                                    "home-from-login");
+                        } else {
+                            Toast.makeText(getContext(), R.string.invalid_credentials, Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<UserProfileModel> call, Throwable t) {
-                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+                    @Override
+                    public void onFailure(@NotNull Call<UserProfileModel> call, @NotNull Throwable t) {
+                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+        });
+
+        mRegisterInstead.setOnClickListener(view2 -> {
+            MainActivity.changeToFragment((AppCompatActivity) getActivity(),
+                    new RegisterFragment(), true,
+                    "register-from-login");
         });
     }
 }
