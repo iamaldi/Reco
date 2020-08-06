@@ -22,10 +22,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeAdapterVie
         // empty constructor
     }
 
-    public HomeAdapter(HomeFragment mFragment, List<RecommendedUserModel> recommendedUsers) {
-        this.recommendedUsers = recommendedUsers;
-    }
-
     public void setRecommendedUsers(List<RecommendedUserModel> recommendedUsers) {
         this.recommendedUsers = recommendedUsers;
     }

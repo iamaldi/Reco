@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                     changeToFragment(this, new LibraryFragment(),
                             true, "library-from-nav");
                     break;
-                case R.id.navbar_settings:
+                case R.id.navbar_recommendations:
                     changeToFragment(this, new RecommendationsFragment(),
                             true, "recommendations-from-nav");
                     break;

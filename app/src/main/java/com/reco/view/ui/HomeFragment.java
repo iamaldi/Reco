@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -12,16 +13,17 @@ import com.reco.view.adapter.HomeAdapter;
 import com.reco.view.callback.APIErrorCallbacks;
 import com.reco.viewmodel.HomeViewModel;
 
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class HomeFragment extends Fragment implements APIErrorCallbacks {
-    private HomeViewModel mHomeViewModel;
     private HomeAdapter mHomeAdapter;
-    private RecyclerView mRecyclerView;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -40,12 +42,22 @@ public class HomeFragment extends Fragment implements APIErrorCallbacks {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ImageButton settingsButton = Objects.requireNonNull(getActivity()).
+                findViewById(R.id.fragment_home_settings_imageButton);
+
+        settingsButton.setOnClickListener(view1 -> {
+            MainActivity.changeToFragment((AppCompatActivity) getActivity(),
+                    new SettingsFragment(), true,
+                    "settings-from-home");
+        });
+
         // show bottom navigation menu
-        BottomNavigationView mBottomNav = getActivity().findViewById(R.id.activity_main_bottomNavigationView);
+        BottomNavigationView mBottomNav = Objects.requireNonNull(getActivity()).
+                findViewById(R.id.activity_main_bottomNavigationView);
         mBottomNav.setVisibility(View.VISIBLE);
 
-        mRecyclerView = view.findViewById(R.id.fragment_home_recyclerView);
-        mHomeViewModel = new HomeViewModel(this);
+        RecyclerView mRecyclerView = view.findViewById(R.id.fragment_home_recyclerView);
+        HomeViewModel mHomeViewModel = new HomeViewModel(this);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         mRecyclerView.setAdapter(mHomeAdapter);
