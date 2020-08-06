@@ -16,11 +16,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeAdapterViewHolder> {
-    private List<RecommendedUserModel> mRecommendedUsers;
+    private List<RecommendedUserModel> recommendedUsers;
 
-    public HomeAdapter(HomeFragment mFragment, List<RecommendedUserModel> mRecommendedUsers) {
-        this.mRecommendedUsers = mRecommendedUsers;
+    public HomeAdapter() {
+        // empty constructor
     }
+
+    public HomeAdapter(HomeFragment mFragment, List<RecommendedUserModel> recommendedUsers) {
+        this.recommendedUsers = recommendedUsers;
+    }
+
+    public void setRecommendedUsers(List<RecommendedUserModel> recommendedUsers) {
+        this.recommendedUsers = recommendedUsers;
+    }
+
 
     @NonNull
     @Override
@@ -31,15 +40,19 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeAdapterVie
 
     @Override
     public void onBindViewHolder(@NonNull HomeAdapterViewHolder holder, int position) {
-        // attach data to item
+        RecommendedUserModel user = recommendedUsers.get(position);
 //        holder.mUserImage.setImageIcon();
-        holder.mName.setText(mRecommendedUsers.get(position).getName());
-        holder.mSimilarity.setText(String.valueOf(mRecommendedUsers.get(position).getSimilarityMatch()) + "%");
+        holder.mName.setText(user.getDisplayName());
+        holder.mSimilarity.setText(user.getSimilarityMatch() + "%");
     }
 
     @Override
     public int getItemCount() {
-        return mRecommendedUsers.size();
+        if (recommendedUsers != null) {
+            return recommendedUsers.size();
+        } else {
+            return 0;
+        }
     }
 
     public class HomeAdapterViewHolder extends RecyclerView.ViewHolder {

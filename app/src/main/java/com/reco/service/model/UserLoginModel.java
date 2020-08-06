@@ -3,15 +3,31 @@ package com.reco.service.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserLoginModel extends UserBaseModel {
+public class UserLoginModel {
 
+    @SerializedName("username")
+    @Expose
+    private String username;
     @SerializedName("password")
     @Expose
     private String password;
 
+    /**
+     * @param password
+     * @param username
+     */
     public UserLoginModel(String username, String password) {
-        super(username);
+        super();
+        this.username = username;
         this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

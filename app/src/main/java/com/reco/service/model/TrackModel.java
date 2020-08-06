@@ -5,32 +5,29 @@ import com.google.gson.annotations.SerializedName;
 
 public class TrackModel {
 
-    @SerializedName("name")
+    @SerializedName("title")
     @Expose
-    private String name;
+    private String title;
     @SerializedName("artist")
     @Expose
     private String artist;
-    @SerializedName("url")
-    @Expose
-    private String url;
-    @SerializedName("image")
-    @Expose
-    private String image;
 
-    public TrackModel(String name, String artist, String url, String image) {
-        this.name = name;
+    /**
+     * @param artist
+     * @param title
+     */
+    public TrackModel(String title, String artist) {
+        super();
+        this.title = title;
         this.artist = artist;
-        this.url = url;
-        this.image = image;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getArtist() {
@@ -40,21 +37,4 @@ public class TrackModel {
     public void setArtist(String artist) {
         this.artist = artist;
     }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
 }

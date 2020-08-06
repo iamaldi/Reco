@@ -10,9 +10,15 @@ import android.widget.Toast;
 import com.reco.R;
 import com.reco.service.model.TrackModel;
 import com.reco.service.repository.APIService;
+import com.reco.util.Utilities;
 import com.reco.view.adapter.LibraryAdapter;
+import com.reco.view.callback.APIErrorCallbacks;
 import com.reco.view.callback.AdapterCallbacks;
 import com.reco.viewmodel.LibraryViewModel;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,7 +32,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LibraryFragment extends Fragment implements AdapterCallbacks {
+public class LibraryFragment extends Fragment implements AdapterCallbacks, APIErrorCallbacks {
     private LibraryViewModel mLibraryViewModel;
     private LibraryAdapter mLibraryAdapter;
     private RecyclerView mRecyclerView;
@@ -36,17 +42,23 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks {
     private APIService mAPIService;
 
     public LibraryFragment() {
-        this.mRetrofit = new Retrofit.Builder()
-                .baseUrl("https://api.url")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        mAPIService = mRetrofit.create(APIService.class);
+        // Required empty public constructor
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
+
+        if (savedInstanceState != null) {
+            return;
+        }
+        mRetrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.API_URL))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        mAPIService = mRetrofit.create(APIService.class);
+
+        mLibraryAdapter = new LibraryAdapter(this);
     }
 
     @Override
@@ -54,21 +66,25 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView = view.findViewById(R.id.fragment_myLibrary_recyclerview);
         mButton = view.findViewById(R.id.fragment_myLibrary_addMore_button);
-        mLibraryViewModel = new LibraryViewModel();
 
-        initRecyclerView();
+        mLibraryViewModel = new LibraryViewModel(this);
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        mRecyclerView.setAdapter(mLibraryAdapter);
+
+        mLibraryViewModel.getUserLibrary().observe(this, tracks -> {
+            if (tracks != null) {
+                mLibraryAdapter.setLibraryTracks(tracks);
+                // let the adapter know that the data changed
+                mLibraryAdapter.notifyDataSetChanged();
+            }
+        });
 
         mButton.setOnClickListener(mView -> {
-            MainActivity.changeToFragment((AppCompatActivity) getActivity(),
+            MainActivity.changeToFragment((AppCompatActivity) Objects.requireNonNull(getActivity()),
                     new SearchFragment(), true,
                     "search-from-library");
         });
-
-        mLibraryViewModel.getUserLibrary().observe(this, trackModels -> {
-            Toast.makeText(getContext(), "Library: " + trackModels.size(), Toast.LENGTH_SHORT).show();
-            mLibraryAdapter.notifyDataSetChanged();
-        });
-
     }
 
     @Override
@@ -78,58 +94,48 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks {
         return inflater.inflate(R.layout.fragment_my_library, container, false);
     }
 
-    public void initRecyclerView() {
-        mLibraryAdapter = new LibraryAdapter(this, mLibraryViewModel.getUserLibrary().getValue());
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        mRecyclerView.setAdapter(mLibraryAdapter);
-    }
-
     @Override
     public void onAddTrackToLibraryCallback(TrackModel track) {
-        mLibraryViewModel.getUserLibrary().getValue().add(track);
-        mLibraryAdapter.notifyDataSetChanged();
-
         mAPIService.addTrackToLibrary(track).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    // item added
-                } else {
-                    // oops, smth went wrong
-                }
+            public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
+                // we're not calling this from nowhere right now
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                // whoops, no internet?
+            public void onFailure(@NotNull Call<Void> call, @NotNull Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     @Override
     public void onRemoveTrackFromLibraryCallback(TrackModel track, int position) {
-        // debug toast
-        Toast.makeText(getContext(), "REMOVE", Toast.LENGTH_SHORT).show();
-
-        // remove item from recycler view
-        mLibraryViewModel.getUserLibrary().getValue().remove(position);
-        mLibraryAdapter.notifyDataSetChanged();
-
         // call the API to remove item
-        mAPIService.removeTrackFromLibrary(1).enqueue(new Callback<Void>() {
+        mAPIService.removeTrackFromLibrary(position).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
+                // if item was removed remotely
                 if (response.isSuccessful()) {
-                    // item removed
+                    // remove it from the local library
+                    Utilities.removeFromLocalLibrary((AppCompatActivity) getActivity(), track);
+                    // remove item from recycler view
+                    Objects.requireNonNull(mLibraryViewModel.getUserLibrary().getValue()).remove(position);
+                    mLibraryAdapter.notifyDataSetChanged();
                 } else {
-                    // something went wrong
+                    Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                // things went a bit south
+            public void onFailure(@NotNull Call<Void> call, @NotNull Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onAPIError(String errorMsg) {
+        Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
     }
 }

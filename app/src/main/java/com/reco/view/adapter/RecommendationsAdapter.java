@@ -15,12 +15,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class RecommendationsAdapter extends RecyclerView.Adapter<RecommendationsAdapter.RecommendationsAdapterViewHolder> {
-    private List<RecommendedUserModel> mRecommendedUsers;
+    private List<RecommendedUserModel> recommendedUsers;
 
-    public RecommendationsAdapter(List<RecommendedUserModel> mRecommendedUsers) {
-        this.mRecommendedUsers = mRecommendedUsers;
+    public RecommendationsAdapter() {
+        // empty constructor
     }
 
+    public void setRecommendedUsers(List<RecommendedUserModel> recommendedUsers) {
+        this.recommendedUsers = recommendedUsers;
+    }
 
     @NonNull
     @Override
@@ -31,14 +34,20 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
 
     @Override
     public void onBindViewHolder(@NonNull RecommendationsAdapterViewHolder holder, int position) {
+        RecommendedUserModel user = recommendedUsers.get(position);
 //        holder.image.setImageResource(images.get(position));
-        holder.mName.setText(mRecommendedUsers.get(position).getName());
-        holder.mSimilarity.setText(String.valueOf(mRecommendedUsers.get(position).getSimilarityMatch()) + "%");
+        holder.mName.setText(user.getDisplayName());
+        // TODO: use percentage placeholder on the user item
+        holder.mSimilarity.setText(user.getSimilarityMatch() + "%");
     }
 
     @Override
     public int getItemCount() {
-        return mRecommendedUsers.size();
+        if (recommendedUsers != null) {
+            return recommendedUsers.size();
+        } else {
+            return 0;
+        }
     }
 
     public class RecommendationsAdapterViewHolder extends RecyclerView.ViewHolder {

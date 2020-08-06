@@ -3,34 +3,78 @@ package com.reco.service.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserRegisterModel extends UserLoginModel {
-    @SerializedName("name")
+public class UserRegisterModel {
+
+    @SerializedName("username")
     @Expose
-    private String name;
-    @SerializedName("repeat_password")
+    private String username;
+    @SerializedName("display_name")
     @Expose
-    private String repeatPassword;
+    private String displayName;
+    @SerializedName("messenger_url")
+    @Expose
+    private String messengerUrl;
+    @SerializedName("password")
+    @Expose
+    private String password;
+    @SerializedName("password_repeat")
+    @Expose
+    private String passwordRepeat;
 
-    public UserRegisterModel(String name, String username, String password, String repeatPassword) {
-        super(username, password);
-        this.name = name;
-        this.repeatPassword = repeatPassword;
+    /**
+     * @param password
+     * @param displayName
+     * @param messengerUrl
+     * @param passwordRepeat
+     * @param username
+     */
+    public UserRegisterModel(String username, String displayName, String messengerUrl, String password, String passwordRepeat) {
+        super();
+        this.username = username;
+        this.displayName = displayName;
+        this.messengerUrl = messengerUrl;
+        this.password = password;
+        this.passwordRepeat = passwordRepeat;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getRepeatPassword() {
-        return repeatPassword;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setRepeatPassword(String repeatPassword) {
-        this.repeatPassword = repeatPassword;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
+
+    public String getMessengerUrl() {
+        return messengerUrl;
+    }
+
+    public void setMessengerUrl(String messengerUrl) {
+        this.messengerUrl = messengerUrl;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPasswordRepeat() {
+        return passwordRepeat;
+    }
+
+    public void setPasswordRepeat(String passwordRepeat) {
+        this.passwordRepeat = passwordRepeat;
+    }
+
 }
-
