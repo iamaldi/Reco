@@ -31,7 +31,6 @@ public class SettingsFragment extends Fragment {
         if (savedInstanceState != null) {
             return;
         }
-
     }
 
 

@@ -35,10 +35,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LibraryFragment extends Fragment implements AdapterCallbacks, APIErrorCallbacks {
     private LibraryViewModel mLibraryViewModel;
     private LibraryAdapter mLibraryAdapter;
-    private RecyclerView mRecyclerView;
-    private Button mButton;
-
-    private Retrofit mRetrofit;
     private APIService mAPIService;
 
     public LibraryFragment() {
@@ -52,7 +48,7 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks, APIEr
         if (savedInstanceState != null) {
             return;
         }
-        mRetrofit = new Retrofit.Builder()
+        Retrofit mRetrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.API_URL))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -64,8 +60,8 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks, APIEr
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView = view.findViewById(R.id.fragment_myLibrary_recyclerview);
-        mButton = view.findViewById(R.id.fragment_myLibrary_addMore_button);
+        RecyclerView mRecyclerView = view.findViewById(R.id.fragment_myLibrary_recyclerview);
+        Button mButton = view.findViewById(R.id.fragment_myLibrary_addMore_button);
 
         mLibraryViewModel = new LibraryViewModel(this);
 
