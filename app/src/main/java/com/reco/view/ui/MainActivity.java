@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity {
-    final boolean LOGGED_IN = true; // test
+    final boolean LOGGED_IN = false; // test
 
     public static void changeToFragment(AppCompatActivity activity, Fragment fragment, boolean addToBackStack, String fragmentStackName) {
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             if (LOGGED_IN) {
                 changeToFragment(this, new HomeFragment(), false, null);
             } else {
-                changeToFragment(this, new LoginFragment(), false, null);
+                changeToFragment(this, new RegisterFragment(), false, null);
             }
         }
 

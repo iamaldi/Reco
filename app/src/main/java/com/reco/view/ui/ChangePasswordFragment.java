@@ -66,15 +66,15 @@ public class ChangePasswordFragment extends Fragment {
             } else if (repeatPass.isEmpty()) {
                 repeatPassword.setError("This field is required.");
             } else {
-                if(oldPass.equals(newPass)){
+                if (oldPass.equals(newPass)) {
                     Toast.makeText(getContext(), "New password cannot be the same as the old one.", Toast.LENGTH_SHORT).show();
-                } else if(!newPass.equals(repeatPass)){
+                } else if (!newPass.equals(repeatPass)) {
                     repeatPassword.setError("Passwords do not match.");
                 } else {
                     apiService.changeUserPassword(new UserPasswordChangeModel(oldPass, newPass)).enqueue(new Callback<Void>() {
                         @Override
                         public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
-                            if(response.isSuccessful()){
+                            if (response.isSuccessful()) {
                                 Toast.makeText(getContext(), "Password changed successfully!", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();

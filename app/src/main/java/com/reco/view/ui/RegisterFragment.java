@@ -15,6 +15,10 @@ import com.reco.service.model.UserRegisterModel;
 import com.reco.service.repository.APIService;
 import com.reco.util.Utilities;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,10 +30,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterFragment extends Fragment {
-    private Retrofit mRetrofit;
     private APIService mAPIService;
-    private TextView mName, mUsername, mPassword, mRepeatPassword;
-    private Button mRegisterButton;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -38,7 +39,7 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRetrofit = new Retrofit.Builder()
+        Retrofit mRetrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.API_URL))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -49,53 +50,75 @@ public class RegisterFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mName = view.findViewById(R.id.fragment_register_name);
-        mUsername = view.findViewById(R.id.fragment_register_username);
-        mPassword = view.findViewById(R.id.fragment_register_password);
-        mRepeatPassword = view.findViewById(R.id.fragment_register_repeat_password);
-        mRegisterButton = view.findViewById(R.id.fragment_register_signup_button);
+        TextView mDisplayName = view.findViewById(R.id.fragment_register_name);
+        TextView mUsername = view.findViewById(R.id.fragment_register_username);
+        TextView mMessengerUrl = view.findViewById(R.id.fragment_register_messengerURL);
+        TextView mPassword = view.findViewById(R.id.fragment_register_password);
+        TextView mRepeatPassword = view.findViewById(R.id.fragment_register_repeat_password);
+        TextView mLoginInstead = view.findViewById(R.id.fragment_register_go_to_login);
+        Button mRegisterButton = view.findViewById(R.id.fragment_register_signup_button);
 
         // hide bottom navigation menu
         // getActivity because the navbar belongs to MainActivity and
         // it is not accessible from any other fragment as it is initialized in MainActivity
-        BottomNavigationView mBottomNav = getActivity().findViewById(R.id.activity_main_bottomNavigationView);
+        BottomNavigationView mBottomNav = Objects.requireNonNull(getActivity()).
+                findViewById(R.id.activity_main_bottomNavigationView);
         mBottomNav.setVisibility(View.GONE);
 
-        String username = mUsername.getText().toString();
-        String name = mName.getText().toString();
-
-        String messengerUrl = ""; // get this from fragment
-
-        String password = mPassword.getText().toString();
-        String repeatPassword = mRepeatPassword.getText().toString();
-
         mRegisterButton.setOnClickListener(mView -> {
+            String username = mUsername.getText().toString();
+            String displayName = mDisplayName.getText().toString();
+            String messengerUrl = mMessengerUrl.getText().toString();
+            String password = mPassword.getText().toString();
+            String repeatPassword = mRepeatPassword.getText().toString();
+
             // check if input fields are not empty
+            if (displayName.isEmpty()) {
+                mDisplayName.setError("This field is required.");
+            } else if (username.isEmpty()) {
+                mUsername.setError("This field is required.");
+            } else if (password.isEmpty()) {
+                mPassword.setError("This field is required.");
+            } else if (repeatPassword.isEmpty()) {
+                mRepeatPassword.setError("This field is required.");
+            } else {
+                // check if passwords match
+                if (password.equals(repeatPassword)) {
+                    // call the api to register
+                    mAPIService.userRegister(new UserRegisterModel(username, displayName, messengerUrl, password, repeatPassword)).enqueue(new Callback<UserProfileModel>() {
+                        @Override
+                        public void onResponse(@NotNull Call<UserProfileModel> call, @NotNull Response<UserProfileModel> response) {
+                            if (response.isSuccessful()) {
+                                UserProfileModel user = response.body();
+                                // delete any previous we might have saved data locally
+                                Utilities.clearLocalData((AppCompatActivity) Objects.requireNonNull(getActivity()));
+                                // save user to shared preferences
+                                Utilities.saveLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()), user);
+                                // launch home fragment
+                                MainActivity.changeToFragment((AppCompatActivity) getActivity(),
+                                        new HomeFragment(), false,
+                                        "home-from-register");
+                            } else {
+                                Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
 
-            // call the api to register
-            mAPIService.userRegister(new UserRegisterModel(username, name, messengerUrl, password, repeatPassword)).enqueue(new Callback<UserProfileModel>() {
-                @Override
-                public void onResponse(Call<UserProfileModel> call, Response<UserProfileModel> response) {
-                    if (response.isSuccessful()) {
-                        UserProfileModel user = response.body();
-                        // save user to shared preferences
-                        Utilities.saveLocalUser((AppCompatActivity) getActivity(), user);
-                        // launch home fragment
-                        MainActivity.changeToFragment((AppCompatActivity) getActivity(),
-                                new HomeFragment(), false,
-                                "home-from-register");
-                    } else {
-                        Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
-                    }
+                        @Override
+                        public void onFailure(@NotNull Call<UserProfileModel> call, @NotNull Throwable t) {
+                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    mRepeatPassword.setError("Passwords do not match.");
                 }
-
-                @Override
-                public void onFailure(Call<UserProfileModel> call, Throwable t) {
-                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+            }
         });
 
+        mLoginInstead.setOnClickListener(view2 -> {
+            MainActivity.changeToFragment((AppCompatActivity) getActivity(),
+                    new LoginFragment(), true,
+                    "login-from-register");
+        });
     }
 
     @Override

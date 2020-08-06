@@ -21,6 +21,13 @@ public class Utilities {
         return getLocalUser(mActivity) != null;
     }
 
+    public static void clearLocalData(AppCompatActivity appCompatActivity){
+        SharedPreferences mPrefs;
+        mPrefs = appCompatActivity.getPreferences(Context.MODE_PRIVATE);
+        // clear everything we've saved locally
+        mPrefs.edit().clear().apply();
+    }
+
     public static void saveLocalUser(AppCompatActivity mActivity, UserProfileModel user) {
         SharedPreferences mPrefs;
         SharedPreferences.Editor mPrefsEditor;
