@@ -1,5 +1,6 @@
 package com.reco.view.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +36,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
     @Override
     public void onBindViewHolder(@NonNull final SearchAdapterViewHolder holder, final int position) {
         TrackModel track = tracks.get(position);
+        Log.d("RECO-Search", String.valueOf(tracks.size()));
         holder.mTrackArtist.setText(track.getArtist());
-        holder.mTrackTitle.setText(track.getName());
+        holder.mTrackTitle.setText(track.getTitle());
 
         // add default tag to all search results
         // TODO: what about tracks already in the library?
@@ -61,7 +63,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
 
     @Override
     public int getItemCount() {
-        return tracks.size();
+        if (tracks != null) {
+            return tracks.size();
+        } else {
+            return 0;
+        }
+
     }
 
     public class SearchAdapterViewHolder extends RecyclerView.ViewHolder {
@@ -70,8 +77,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
 
         public SearchAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
-            mTrackArtist = itemView.findViewById(R.id.track_item_artist);
-            mTrackTitle = itemView.findViewById(R.id.track_item_title);
+            mTrackArtist = itemView.findViewById(R.id.track_item_title);
+            mTrackTitle = itemView.findViewById(R.id.track_item_artist);
             mButton = itemView.findViewById(R.id.track_item_add_button);
         }
     }

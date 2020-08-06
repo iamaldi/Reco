@@ -1,7 +1,5 @@
 package com.reco.viewmodel;
 
-import android.util.Log;
-
 import com.reco.service.model.RecommendedUserModel;
 import com.reco.service.repository.APIService;
 import com.reco.util.Utilities;

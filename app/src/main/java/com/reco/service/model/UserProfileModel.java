@@ -3,7 +3,7 @@ package com.reco.service.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class RecommendedUserModel {
+public class UserProfileModel {
 
     @SerializedName("username")
     @Expose
@@ -17,25 +17,20 @@ public class RecommendedUserModel {
     @SerializedName("messenger_url")
     @Expose
     private String messengerUrl;
-    @SerializedName("similarity_match")
-    @Expose
-    private Integer similarityMatch;
-
 
     /**
+     *
      * @param imgUrl
      * @param displayName
      * @param messengerUrl
-     * @param similarityMatch
      * @param username
      */
-    public RecommendedUserModel(String username, String displayName, String imgUrl, String messengerUrl, Integer similarityMatch) {
+    public UserProfileModel(String username, String displayName, String imgUrl, String messengerUrl) {
         super();
         this.username = username;
         this.displayName = displayName;
         this.imgUrl = imgUrl;
         this.messengerUrl = messengerUrl;
-        this.similarityMatch = similarityMatch;
     }
 
     public String getUsername() {
@@ -68,14 +63,6 @@ public class RecommendedUserModel {
 
     public void setMessengerUrl(String messengerUrl) {
         this.messengerUrl = messengerUrl;
-    }
-
-    public Integer getSimilarityMatch() {
-        return similarityMatch;
-    }
-
-    public void setSimilarityMatch(Integer similarityMatch) {
-        this.similarityMatch = similarityMatch;
     }
 
 }

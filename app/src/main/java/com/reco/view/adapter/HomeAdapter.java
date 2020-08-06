@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.reco.R;
 import com.reco.service.model.RecommendedUserModel;
+import com.reco.view.callback.APIErrorCallbacks;
 import com.reco.view.ui.HomeFragment;
 
 import java.util.List;
@@ -31,15 +32,19 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeAdapterVie
 
     @Override
     public void onBindViewHolder(@NonNull HomeAdapterViewHolder holder, int position) {
-        // attach data to item
+        RecommendedUserModel user = mRecommendedUsers.get(position);
 //        holder.mUserImage.setImageIcon();
-        holder.mName.setText(mRecommendedUsers.get(position).getName());
-        holder.mSimilarity.setText(String.valueOf(mRecommendedUsers.get(position).getSimilarityMatch()) + "%");
+        holder.mName.setText(user.getDisplayName());
+        holder.mSimilarity.setText(user.getSimilarityMatch() + "%");
     }
 
     @Override
     public int getItemCount() {
-        return mRecommendedUsers.size();
+        if(mRecommendedUsers != null){
+            return mRecommendedUsers.size();
+        } else {
+            return 0;
+        }
     }
 
     public class HomeAdapterViewHolder extends RecyclerView.ViewHolder {
