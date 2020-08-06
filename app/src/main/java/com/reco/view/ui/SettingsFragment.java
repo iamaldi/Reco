@@ -109,7 +109,9 @@ public class SettingsFragment extends Fragment {
                     if (response.isSuccessful()) {
                         // clear user object locally
                         Utilities.deleteLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()));
-                        // TODO: clear all previous fragments
+                        // clear all previous fragments
+                        MainActivity.removeAllFragments((AppCompatActivity) getActivity());
+                        // show login fragment - doesn't add it to the backstack
                         MainActivity.changeToFragment((AppCompatActivity) getActivity(),
                                 new LoginFragment(), false,
                                 "login-fragment");

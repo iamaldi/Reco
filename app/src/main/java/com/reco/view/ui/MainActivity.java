@@ -33,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public static void removeAllFragments(AppCompatActivity appCompatActivity){
+        appCompatActivity.getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
