@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment implements APIErrorCallbacks {
         settingsButton.setOnClickListener(view1 -> {
             MainActivity.changeToFragment((AppCompatActivity) getActivity(),
                     new SettingsFragment(), true,
-                    "settings-from-home");
+                    "settings-fragment");
         });
 
         // show bottom navigation menu

@@ -89,7 +89,7 @@ public class LoginFragment extends Fragment {
                             // launch home fragment
                             MainActivity.changeToFragment((AppCompatActivity) getActivity(),
                                     new HomeFragment(), false,
-                                    "home-from-login");
+                                    "home-fragment");
                         } else {
                             Toast.makeText(getContext(), R.string.invalid_credentials, Toast.LENGTH_SHORT).show();
                         }
@@ -107,7 +107,7 @@ public class LoginFragment extends Fragment {
         mRegisterInstead.setOnClickListener(view2 -> {
             MainActivity.changeToFragment((AppCompatActivity) getActivity(),
                     new RegisterFragment(), true,
-                    "register-from-login");
+                    "register-fragment");
         });
     }
 }

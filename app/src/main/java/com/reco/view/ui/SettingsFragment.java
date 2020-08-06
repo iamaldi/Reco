@@ -83,7 +83,7 @@ public class SettingsFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<UserProfileModel> call, Throwable t) {
+                public void onFailure(@NotNull Call<UserProfileModel> call, @NotNull Throwable t) {
                     Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
@@ -92,7 +92,7 @@ public class SettingsFragment extends Fragment {
         mChangePasswordButton.setOnClickListener(mView -> {
             MainActivity.changeToFragment((AppCompatActivity) getActivity(),
                     new ChangePasswordFragment(), true,
-                    "change-password-from-settings");
+                    "change-password-fragment");
         });
 
         mLogoutButton.setOnClickListener(view2 -> {
@@ -106,7 +106,7 @@ public class SettingsFragment extends Fragment {
                         // TODO: clear all previous fragments
                         MainActivity.changeToFragment((AppCompatActivity) getActivity(),
                                 new LoginFragment(), false,
-                                "login-from-settings-logout");
+                                "login-fragment");
                     } else {
                         Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
                     }

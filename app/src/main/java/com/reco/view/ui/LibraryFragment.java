@@ -79,7 +79,7 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks, APIEr
         mButton.setOnClickListener(mView -> {
             MainActivity.changeToFragment((AppCompatActivity) Objects.requireNonNull(getActivity()),
                     new SearchFragment(), true,
-                    "search-from-library");
+                    "search-fragment");
         });
     }
 

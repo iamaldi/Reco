@@ -9,18 +9,28 @@ import com.reco.util.Utilities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity {
     final boolean LOGGED_IN = true; // test
 
-    public static void changeToFragment(AppCompatActivity activity, Fragment fragment, boolean addToBackStack, String fragmentStackName) {
+    public static void changeToFragment(AppCompatActivity activity, Fragment fragment, boolean addToBackStack, String fragmentTag) {
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.activity_main_fragment_container, fragment);
-        if (addToBackStack) {
-            transaction.addToBackStack(fragmentStackName);
+        Fragment fr = activity.getSupportFragmentManager().findFragmentByTag(fragmentTag);
+        if (fr != null) {
+            // fragment already on stack
+            // pop it
+//            activity.getSupportFragmentManager().popBackStack(fr.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            activity.getSupportFragmentManager().popBackStack();
+        } else {
+            transaction.replace(R.id.activity_main_fragment_container, fragment, fragmentTag);
+            if (addToBackStack) {
+                transaction.addToBackStack(fragmentTag);
+            }
+            transaction.commit();
         }
-        transaction.commit();
+
     }
 
     @Override
@@ -49,19 +59,19 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.navbar_home:
                         changeToFragment(this, new HomeFragment(),
-                                true, "home-from-nav");
+                                true, "home-fragment");
                         break;
                     case R.id.navbar_search:
                         changeToFragment(this, new SearchFragment(),
-                                true, "search-from-nav");
+                                true, "search-fragment");
                         break;
                     case R.id.navbar_library:
                         changeToFragment(this, new LibraryFragment(),
-                                true, "library-from-nav");
+                                true, "library-fragment");
                         break;
                     case R.id.navbar_recommendations:
                         changeToFragment(this, new RecommendationsFragment(),
-                                true, "recommendations-from-nav");
+                                true, "recommendations-fragment");
                         break;
                 }
 
@@ -70,10 +80,10 @@ public class MainActivity extends AppCompatActivity {
 
             // show home fragment
             changeToFragment(this, new HomeFragment(),
-                    false, null);
+                    false, "home-fragment");
         } else {
             // point to login fragment
-            changeToFragment(this, new LoginFragment(), false, null);
+            changeToFragment(this, new LoginFragment(), false, "login-fragment");
         }
 
         // start splash screen
