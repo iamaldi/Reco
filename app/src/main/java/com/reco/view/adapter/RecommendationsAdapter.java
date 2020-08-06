@@ -31,14 +31,20 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
 
     @Override
     public void onBindViewHolder(@NonNull RecommendationsAdapterViewHolder holder, int position) {
+        RecommendedUserModel user = mRecommendedUsers.get(position);
+
 //        holder.image.setImageResource(images.get(position));
-        holder.mName.setText(mRecommendedUsers.get(position).getDisplayName());
-        holder.mSimilarity.setText(String.valueOf(mRecommendedUsers.get(position).getSimilarityMatch()) + "%");
+        holder.mName.setText(user.getDisplayName());
+        holder.mSimilarity.setText(user.getSimilarityMatch() + "%");
     }
 
     @Override
     public int getItemCount() {
-        return mRecommendedUsers.size();
+        if (mRecommendedUsers != null) {
+            return mRecommendedUsers.size();
+        } else {
+            return 0;
+        }
     }
 
     public class RecommendationsAdapterViewHolder extends RecyclerView.ViewHolder {

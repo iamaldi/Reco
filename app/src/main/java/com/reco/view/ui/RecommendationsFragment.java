@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.reco.R;
 import com.reco.view.adapter.RecommendationsAdapter;
+import com.reco.view.callback.APIErrorCallbacks;
 import com.reco.viewmodel.RecommendationsViewModel;
 
 import androidx.annotation.NonNull;
@@ -16,7 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class RecommendationsFragment extends Fragment {
+public class RecommendationsFragment extends Fragment implements APIErrorCallbacks {
     private RecommendationsViewModel mRecommendationsViewModel;
     private RecyclerView mRecyclerView;
     private RecommendationsAdapter mRecommendationsAdapter;
@@ -28,14 +29,15 @@ public class RecommendationsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         mRecyclerView = view.findViewById(R.id.fragment_recommendations_recycler_view);
-        mRecommendationsViewModel = new RecommendationsViewModel();
+        mRecommendationsViewModel = new RecommendationsViewModel(this);
 
-        initRecyclerView();
+        mRecommendationsViewModel.getRecommendedUsers().observe(this, recommendedUsers -> {
+            Toast.makeText(getContext(), "Users: " + recommendedUsers.size(), Toast.LENGTH_SHORT).show();
+            mRecommendationsAdapter = new RecommendationsAdapter(recommendedUsers);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+            mRecyclerView.setAdapter(mRecommendationsAdapter);
 
-        mRecommendationsViewModel.getRecommendedUsers().observe(this, recommendedUserModels -> {
-            Toast.makeText(getContext(), "Users: " + recommendedUserModels.size(), Toast.LENGTH_SHORT).show();
             mRecommendationsAdapter.notifyDataSetChanged();
         });
     }
@@ -47,9 +49,8 @@ public class RecommendationsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_recommendations, container, false);
     }
 
-    public void initRecyclerView() {
-        mRecommendationsAdapter = new RecommendationsAdapter(mRecommendationsViewModel.getRecommendedUsers().getValue());
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        mRecyclerView.setAdapter(mRecommendationsAdapter);
+    @Override
+    public void onAPIError(String errorMsg) {
+        Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
     }
 }
