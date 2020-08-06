@@ -43,6 +43,9 @@ public interface APIService {
     @PATCH("/users/password")
     Call<Void> changeUserPassword(@Body UserPasswordChangeModel user);
 
+    @POST("/users/logout")
+    Call<Void> logoutUser();
+
     // search tracks
     @GET("/search")
     Call<List<TrackModel>> searchTracks(@Query("q") String query);

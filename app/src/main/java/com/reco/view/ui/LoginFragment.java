@@ -64,7 +64,8 @@ public class LoginFragment extends Fragment {
         // hide bottom navigation menu
         // getActivity because the bottom navigation belongs to MainActivity and
         // it is not accessible from any other fragment as it is initialized there
-        BottomNavigationView mBottomNav = Objects.requireNonNull(getActivity()).findViewById(R.id.activity_main_bottomNavigationView);
+        BottomNavigationView mBottomNav = Objects.requireNonNull(getActivity()).
+                findViewById(R.id.activity_main_bottomNavigationView);
         mBottomNav.setVisibility(View.GONE);
 
         mLoginButton.setOnClickListener(mView -> {

@@ -50,6 +50,12 @@ public class Utilities {
         return user;
     }
 
+    public static void deleteLocalUser(AppCompatActivity appCompatActivity){
+        SharedPreferences mPrefs;
+        mPrefs = appCompatActivity.getPreferences(Context.MODE_PRIVATE);
+        mPrefs.edit().remove("user").apply();
+    }
+
     public static void saveLocalLibrary(AppCompatActivity appCompatActivity, List<TrackModel> tracks) {
         SharedPreferences mPrefs;
         SharedPreferences.Editor mPrefsEditor;
