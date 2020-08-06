@@ -51,6 +51,11 @@ public class HomeFragment extends Fragment {
 
         mSettingsButton.setOnClickListener(mView -> {
             Toast.makeText(mView.getContext(), "Settings", Toast.LENGTH_SHORT).show();
+
+            MainActivity.changeToFragment((AppCompatActivity) getActivity(),
+                    new SetingsFragment(), true,
+                    "settings-from-home");
+
         });
 
         mSearchButton.setOnClickListener(mView -> {

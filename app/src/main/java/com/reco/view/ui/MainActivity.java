@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static void changeToFragment(AppCompatActivity activity, Fragment fragment, boolean addToBackStack, String fragmentStackName) {
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
+        transaction.replace(R.id.activity_main_fragment_container, fragment);
         if (addToBackStack) {
             transaction.addToBackStack(fragmentStackName);
         }
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav=findViewById( R.id.activity_main_bottomNavigationView );
 
         // test - use fragment manager with back-stack
-        if (findViewById(R.id.fragment_container) != null) {
+        if (findViewById(R.id.activity_main_fragment_container) != null) {
 
             // However, if we're being restored from a previous state,
             // then we don't need to do anything and should return or else
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.navbar_library:
                         selected=new LibraryFragment();
                         break;
-                    case R.id.navbar_settings:
+                    case R.id.navbar_recommendations:
                         selected=new RecommendationsFragment();
                         break;
                 }
