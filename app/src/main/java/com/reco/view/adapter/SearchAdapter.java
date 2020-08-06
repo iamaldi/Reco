@@ -21,8 +21,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
     private AdapterCallbacks mAdapterCallbacks;
     private List<TrackModel> tracks;
 
-    public SearchAdapter(SearchFragment mFragment, List<TrackModel> tracks) {
+    public SearchAdapter(SearchFragment mFragment) {
         this.mAdapterCallbacks = mFragment;
+    }
+
+    public void setTracks(List<TrackModel> tracks) {
         this.tracks = tracks;
     }
 

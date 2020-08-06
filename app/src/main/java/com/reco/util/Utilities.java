@@ -2,6 +2,7 @@ package com.reco.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -69,12 +70,15 @@ public class Utilities {
 
     public static void addToLocalLibrary(AppCompatActivity appCompatActivity, TrackModel track) {
         // get current copy of library
-        List<TrackModel> tracks = getLocalLibrary(appCompatActivity);
+        List<TrackModel> tracksList = getLocalLibrary(appCompatActivity);
         // add the track to the copy
-        if (tracks != null) {
-            tracks.add(track);
-            // save the new copy
-            saveLocalLibrary(appCompatActivity, tracks);
+        if (tracksList != null) {
+            // check if track already exists
+            if(tracksList.stream().noneMatch(trackModel -> trackModel.getTitle().equalsIgnoreCase(track.getTitle()))){
+                tracksList.add(track);
+                // save the new copy
+                saveLocalLibrary(appCompatActivity, tracksList);
+            }
         }
     }
 

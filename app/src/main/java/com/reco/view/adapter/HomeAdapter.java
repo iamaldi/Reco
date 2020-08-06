@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.reco.R;
 import com.reco.service.model.RecommendedUserModel;
-import com.reco.view.callback.APIErrorCallbacks;
 import com.reco.view.ui.HomeFragment;
 
 import java.util.List;
@@ -17,11 +16,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeAdapterViewHolder> {
-    private List<RecommendedUserModel> mRecommendedUsers;
+    private List<RecommendedUserModel> recommendedUsers;
 
-    public HomeAdapter(HomeFragment mFragment, List<RecommendedUserModel> mRecommendedUsers) {
-        this.mRecommendedUsers = mRecommendedUsers;
+    public HomeAdapter() {
+        // empty constructor
     }
+
+    public HomeAdapter(HomeFragment mFragment, List<RecommendedUserModel> recommendedUsers) {
+        this.recommendedUsers = recommendedUsers;
+    }
+
+    public void setRecommendedUsers(List<RecommendedUserModel> recommendedUsers) {
+        this.recommendedUsers = recommendedUsers;
+    }
+
 
     @NonNull
     @Override
@@ -32,7 +40,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeAdapterVie
 
     @Override
     public void onBindViewHolder(@NonNull HomeAdapterViewHolder holder, int position) {
-        RecommendedUserModel user = mRecommendedUsers.get(position);
+        RecommendedUserModel user = recommendedUsers.get(position);
 //        holder.mUserImage.setImageIcon();
         holder.mName.setText(user.getDisplayName());
         holder.mSimilarity.setText(user.getSimilarityMatch() + "%");
@@ -40,8 +48,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeAdapterVie
 
     @Override
     public int getItemCount() {
-        if(mRecommendedUsers != null){
-            return mRecommendedUsers.size();
+        if (recommendedUsers != null) {
+            return recommendedUsers.size();
         } else {
             return 0;
         }

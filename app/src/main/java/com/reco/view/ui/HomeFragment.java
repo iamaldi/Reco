@@ -30,6 +30,10 @@ public class HomeFragment extends Fragment implements APIErrorCallbacks {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState != null){
+            return;
+        }
+        mHomeAdapter = new HomeAdapter();
     }
 
     @Override
@@ -43,12 +47,12 @@ public class HomeFragment extends Fragment implements APIErrorCallbacks {
         mRecyclerView = view.findViewById(R.id.fragment_home_recyclerView);
         mHomeViewModel = new HomeViewModel(this);
 
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        mRecyclerView.setAdapter(mHomeAdapter);
+
         mHomeViewModel.getLatestRecommendedUsers().observe(this, recommendedUsers -> {
             if (recommendedUsers != null) {
-                mHomeAdapter = new HomeAdapter(this, recommendedUsers);
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-                mRecyclerView.setAdapter(mHomeAdapter);
-
+                mHomeAdapter.setRecommendedUsers(recommendedUsers);
                 // let the fragment know that we just added some data to it
                 mHomeAdapter.notifyDataSetChanged();
             }

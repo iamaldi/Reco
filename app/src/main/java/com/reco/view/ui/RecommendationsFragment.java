@@ -27,18 +27,28 @@ public class RecommendationsFragment extends Fragment implements APIErrorCallbac
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            return;
+        }
+        mRecommendationsAdapter = new RecommendationsAdapter();
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView = view.findViewById(R.id.fragment_recommendations_recycler_view);
         mRecommendationsViewModel = new RecommendationsViewModel(this);
 
-        mRecommendationsViewModel.getRecommendedUsers().observe(this, recommendedUsers -> {
-            Toast.makeText(getContext(), "Users: " + recommendedUsers.size(), Toast.LENGTH_SHORT).show();
-            mRecommendationsAdapter = new RecommendationsAdapter(recommendedUsers);
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-            mRecyclerView.setAdapter(mRecommendationsAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        mRecyclerView.setAdapter(mRecommendationsAdapter);
 
-            mRecommendationsAdapter.notifyDataSetChanged();
+        mRecommendationsViewModel.getRecommendedUsers().observe(this, recommendedUsers -> {
+            if (recommendedUsers != null) {
+                mRecommendationsAdapter.setRecommendedUsers(recommendedUsers);
+                mRecommendationsAdapter.notifyDataSetChanged();
+            }
         });
     }
 

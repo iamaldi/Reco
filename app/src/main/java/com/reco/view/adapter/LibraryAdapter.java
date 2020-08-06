@@ -18,11 +18,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.MyLibraryAdapterViewHolder> {
     private AdapterCallbacks mAdapterCallbacks;
-    private List<TrackModel> mTracks;
+    private List<TrackModel> libraryTracks;
 
-    public LibraryAdapter(LibraryFragment mFragment, List<TrackModel> mTracks) {
+    public LibraryAdapter(LibraryFragment mFragment) {
         this.mAdapterCallbacks = mFragment;
-        this.mTracks = mTracks;
+    }
+
+    public void setLibraryTracks(List<TrackModel> libraryTracks) {
+        this.libraryTracks = libraryTracks;
     }
 
     @NonNull
@@ -34,7 +37,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.MyLibrar
 
     @Override
     public void onBindViewHolder(@NonNull final MyLibraryAdapterViewHolder holder, final int position) {
-        TrackModel track = mTracks.get(position);
+        TrackModel track = libraryTracks.get(position);
 
         holder.mTitle.setText(track.getTitle());
         holder.mArtist.setText(track.getArtist());
@@ -47,8 +50,8 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.MyLibrar
 
     @Override
     public int getItemCount() {
-        if (mTracks != null) {
-            return mTracks.size();
+        if (libraryTracks != null) {
+            return libraryTracks.size();
         } else {
             return 0;
         }

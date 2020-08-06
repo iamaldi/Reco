@@ -48,11 +48,17 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks, APIEr
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            return;
+        }
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.API_URL))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         mAPIService = mRetrofit.create(APIService.class);
+
+        mLibraryAdapter = new LibraryAdapter(this);
     }
 
     @Override
@@ -63,13 +69,15 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks, APIEr
 
         mLibraryViewModel = new LibraryViewModel(this);
 
-        mLibraryViewModel.getUserLibrary().observe(this, tracks -> {
-            mLibraryAdapter = new LibraryAdapter(this, tracks);
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-            mRecyclerView.setAdapter(mLibraryAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        mRecyclerView.setAdapter(mLibraryAdapter);
 
-            // let the adapter know that the data changed
-            mLibraryAdapter.notifyDataSetChanged();
+        mLibraryViewModel.getUserLibrary().observe(this, tracks -> {
+            if (tracks != null) {
+                mLibraryAdapter.setLibraryTracks(tracks);
+                // let the adapter know that the data changed
+                mLibraryAdapter.notifyDataSetChanged();
+            }
         });
 
         mButton.setOnClickListener(mView -> {

@@ -33,10 +33,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchFragment extends Fragment implements AdapterCallbacks, APIErrorCallbacks {
     private SearchAdapter mSearchAdapter;
-    private RecyclerView mRecyclerView;
-    private SearchView searchView;
-
-    private Retrofit mRetrofit;
     private APIService mAPIService;
 
     public SearchFragment() {
@@ -46,18 +42,26 @@ public class SearchFragment extends Fragment implements AdapterCallbacks, APIErr
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.mRetrofit = new Retrofit.Builder()
+        if (savedInstanceState != null) {
+            return;
+        }
+        Retrofit mRetrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.API_URL))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         mAPIService = mRetrofit.create(APIService.class);
+
+        mSearchAdapter = new SearchAdapter(this);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView = view.findViewById(R.id.fragment_search_recyclerView);
-        searchView = view.findViewById(R.id.fragment_search_searchView);
+        RecyclerView mRecyclerView = view.findViewById(R.id.fragment_search_recyclerView);
+        SearchView searchView = view.findViewById(R.id.fragment_search_searchView);
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setAdapter(mSearchAdapter);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -73,7 +77,10 @@ public class SearchFragment extends Fragment implements AdapterCallbacks, APIErr
                     public void onResponse(@NotNull Call<List<TrackModel>> call, @NotNull Response<List<TrackModel>> response) {
                         if (response.isSuccessful()) {
                             List<TrackModel> tracks = response.body();
-                            addTrackToLibrary(tracks);
+                            if (tracks != null) {
+                                mSearchAdapter.setTracks(tracks);
+                                mSearchAdapter.notifyDataSetChanged();
+                            }
                         } else {
                             Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
                         }
@@ -87,15 +94,6 @@ public class SearchFragment extends Fragment implements AdapterCallbacks, APIErr
                 return false;
             }
         });
-    }
-
-    public void addTrackToLibrary(List<TrackModel> tracks) {
-        mSearchAdapter = new SearchAdapter(this, tracks);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(mSearchAdapter);
-
-        // let the fragment know that data changed
-        mSearchAdapter.notifyDataSetChanged();
     }
 
     @Override
