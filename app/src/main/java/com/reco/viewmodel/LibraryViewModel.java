@@ -3,11 +3,13 @@ package com.reco.viewmodel;
 import com.reco.R;
 import com.reco.service.model.TrackModel;
 import com.reco.service.repository.APIService;
+import com.reco.util.Utilities;
 import com.reco.view.callback.APIErrorCallbacks;
 import com.reco.view.ui.LibraryFragment;
 
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -31,24 +33,34 @@ public class LibraryViewModel extends ViewModel {
         mAPIService = mRetrofit.create(APIService.class);
         apiErrorCallbacks = libraryFragment;
 
-        // retrieve library data from API
-        mAPIService.getUserLibrary().enqueue(new Callback<List<TrackModel>>() {
-            @Override
-            public void onResponse(Call<List<TrackModel>> call, Response<List<TrackModel>> response) {
-                if (response.isSuccessful()) {
-                    mTracks.setValue(response.body());
-                } else {
-                    apiErrorCallbacks.onAPIError(response.message());
+        List<TrackModel> tracks = Utilities.getLocalLibrary((AppCompatActivity) libraryFragment.getActivity());
+
+        // check if we have a local copy of the library
+        if (tracks != null) {
+            mTracks.setValue(tracks);
+        } else {
+            // retrieve library data from API
+            mAPIService.getUserLibrary().enqueue(new Callback<List<TrackModel>>() {
+                @Override
+                public void onResponse(Call<List<TrackModel>> call, Response<List<TrackModel>> response) {
+                    if (response.isSuccessful()) {
+                        List<TrackModel> tracks = response.body();
+                        mTracks.setValue(tracks);
+                        // save data locally
+                        Utilities.saveLocalLibrary((AppCompatActivity) libraryFragment.getActivity(), tracks);
+                    } else {
+                        apiErrorCallbacks.onAPIError(response.message());
+                        mTracks.setValue(null);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<TrackModel>> call, Throwable t) {
+                    apiErrorCallbacks.onAPIError(t.getMessage());
                     mTracks.setValue(null);
                 }
-            }
-
-            @Override
-            public void onFailure(Call<List<TrackModel>> call, Throwable t) {
-                apiErrorCallbacks.onAPIError(t.getMessage());
-                mTracks.setValue(null);
-            }
-        });
+            });
+        }
     }
 
     public LiveData<List<TrackModel>> getUserLibrary() {

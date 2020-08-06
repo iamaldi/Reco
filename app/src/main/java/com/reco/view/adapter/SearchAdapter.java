@@ -36,7 +36,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
     @Override
     public void onBindViewHolder(@NonNull final SearchAdapterViewHolder holder, final int position) {
         TrackModel track = tracks.get(position);
-        Log.d("RECO-Search", String.valueOf(tracks.size()));
         holder.mTrackArtist.setText(track.getArtist());
         holder.mTrackTitle.setText(track.getTitle());
 

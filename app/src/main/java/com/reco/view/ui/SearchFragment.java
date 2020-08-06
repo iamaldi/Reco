@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.reco.R;
 import com.reco.service.model.TrackModel;
 import com.reco.service.repository.APIService;
+import com.reco.util.Utilities;
 import com.reco.view.adapter.SearchAdapter;
 import com.reco.view.callback.APIErrorCallbacks;
 import com.reco.view.callback.AdapterCallbacks;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -107,10 +109,11 @@ public class SearchFragment extends Fragment implements AdapterCallbacks, APIErr
     public void onAddTrackToLibraryCallback(TrackModel track) {
         // call repository to save the track/song to library
         mAPIService.addTrackToLibrary(track).enqueue(new Callback<Void>() {
-
             @Override
             public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
                 if (response.isSuccessful()) {
+                    // add track to local library
+                    Utilities.addToLocalLibrary((AppCompatActivity) getActivity(), track);
                     Toast.makeText(getContext(), "Added to library!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
@@ -132,6 +135,8 @@ public class SearchFragment extends Fragment implements AdapterCallbacks, APIErr
             @Override
             public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
                 if (response.isSuccessful()) {
+                    // remove track from local library
+                    Utilities.removeFromLocalLibrary((AppCompatActivity) getActivity(), track);
                     Toast.makeText(getContext(), "Removed from library!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();

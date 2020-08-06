@@ -77,7 +77,7 @@ public class LoginFragment extends Fragment {
                     if (response.isSuccessful()) {
                         UserProfileModel user = response.body();
                         // save user to shared preferences
-                        Utilities.saveUser((AppCompatActivity) getActivity(), user);
+                        Utilities.saveLocalUser((AppCompatActivity) getActivity(), user);
                         // launch home fragment
                         MainActivity.changeToFragment((AppCompatActivity) getActivity(),
                                 new HomeFragment(), false,

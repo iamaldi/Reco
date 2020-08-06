@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.reco.R;
 import com.reco.service.model.TrackModel;
 import com.reco.service.repository.APIService;
+import com.reco.util.Utilities;
 import com.reco.view.adapter.LibraryAdapter;
 import com.reco.view.callback.APIErrorCallbacks;
 import com.reco.view.callback.AdapterCallbacks;
@@ -106,7 +107,10 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks, APIEr
         mAPIService.removeTrackFromLibrary(position).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
+                // if item was removed remotely
                 if (response.isSuccessful()) {
+                    // remove it from the local library
+                    Utilities.removeFromLocalLibrary((AppCompatActivity) getActivity(), track);
                     // remove item from recycler view
                     Objects.requireNonNull(mLibraryViewModel.getUserLibrary().getValue()).remove(position);
                     mLibraryAdapter.notifyDataSetChanged();
