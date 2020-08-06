@@ -34,9 +34,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.SplashScreenTheme);
-        super.onCreate(savedInstanceState);
+        // reset to original theme after splash screen
         setTheme(R.style.AppTheme);
+        super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_main);
 
         // TODO: check if this is necessary - and if so- where is best to be placed
