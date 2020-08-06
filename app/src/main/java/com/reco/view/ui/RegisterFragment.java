@@ -59,8 +59,6 @@ public class RegisterFragment extends Fragment {
         Button mRegisterButton = view.findViewById(R.id.fragment_register_signup_button);
 
         // hide bottom navigation menu
-        // getActivity because the navbar belongs to MainActivity and
-        // it is not accessible from any other fragment as it is initialized in MainActivity
         BottomNavigationView mBottomNav = Objects.requireNonNull(getActivity()).
                 findViewById(R.id.activity_main_bottomNavigationView);
         mBottomNav.setVisibility(View.GONE);

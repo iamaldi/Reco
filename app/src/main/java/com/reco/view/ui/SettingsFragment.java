@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.reco.R;
 import com.reco.service.model.UserProfileModel;
 import com.reco.service.repository.APIService;
@@ -56,6 +57,11 @@ public class SettingsFragment extends Fragment {
         TextView mMessengerURL = view.findViewById(R.id.fragment_settings_editText_messenger_url);
         Button mChangePasswordButton = view.findViewById(R.id.fragment_settings_button_change_password);
         Button mLogoutButton = view.findViewById(R.id.fragment_settings_logout_button);
+
+        // hide bottom navigation menu
+        BottomNavigationView mBottomNav = Objects.requireNonNull(getActivity()).
+                findViewById(R.id.activity_main_bottomNavigationView);
+        mBottomNav.setVisibility(View.GONE);
 
         UserProfileModel user = Utilities.getLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()));
 

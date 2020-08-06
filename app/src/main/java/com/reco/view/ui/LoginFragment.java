@@ -62,8 +62,6 @@ public class LoginFragment extends Fragment {
         TextView mRegisterInstead = view.findViewById(R.id.fragment_login_register_instead);
 
         // hide bottom navigation menu
-        // getActivity because the bottom navigation belongs to MainActivity and
-        // it is not accessible from any other fragment as it is initialized there
         BottomNavigationView mBottomNav = Objects.requireNonNull(getActivity()).
                 findViewById(R.id.activity_main_bottomNavigationView);
         mBottomNav.setVisibility(View.GONE);
