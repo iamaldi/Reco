@@ -1,7 +1,6 @@
 package com.reco.view.ui;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import com.reco.viewmodel.LibraryViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -127,7 +125,7 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks, APIEr
                 // if item was removed remotely
                 if (response.isSuccessful()) {
                     // remove it from the local library
-                    Utilities.removeFromLocalLibrary((AppCompatActivity) getActivity(), track);
+                    Utilities.removeTrackFromLocalLibrary((AppCompatActivity) getActivity(), track);
                     // remove item from recycler view
                     Objects.requireNonNull(mLibraryViewModel.getUserLibrary().getValue()).remove(position);
                     mLibraryAdapter.notifyDataSetChanged();

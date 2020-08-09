@@ -81,7 +81,7 @@ public class Utilities {
         return tracks;
     }
 
-    public static void addToLocalLibrary(AppCompatActivity appCompatActivity, TrackModel track) {
+    public static void addTrackToLocalLibrary(AppCompatActivity appCompatActivity, TrackModel track) {
         // get current copy of library
         List<TrackModel> tracksList = getLocalLibrary(appCompatActivity);
         // add the track to the copy
@@ -95,7 +95,7 @@ public class Utilities {
         }
     }
 
-    public static void removeFromLocalLibrary(AppCompatActivity appCompatActivity, TrackModel track) {
+    public static void removeTrackFromLocalLibrary(AppCompatActivity appCompatActivity, TrackModel track) {
         // get current copy of library
         List<TrackModel> tracksList = getLocalLibrary(appCompatActivity);
         // remove the track to the copy

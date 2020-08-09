@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdapterViewHolder> {
     private AdapterCallbacks mAdapterCallbacks;
-    private List<TrackModel> searchTracksList, localLibrary;
+    private List<TrackModel> searchTracksList;
     private int DELETE_TAG = 0;
     private int ADD_TAG = 1;
 
@@ -29,10 +29,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
 
     public void setSearchTracksList(List<TrackModel> searchTracksList) {
         this.searchTracksList = searchTracksList;
-    }
-
-    public void setLocalLibrary(List<TrackModel> localLibrary) {
-        this.localLibrary = localLibrary;
     }
 
     @NonNull
@@ -47,22 +43,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
         TrackModel track = searchTracksList.get(position);
         holder.mTrackArtist.setText(track.getArtist());
         holder.mTrackTitle.setText(track.getTitle());
-
-
-        // if a track is already in the local library show delete icon
-        if (localLibrary != null && searchTracksList != null) {
-//            Log.d("RECO-RemoveAAdd", "Library not empty");
-            for (TrackModel tr : localLibrary) {
-                TrackModel sss = searchTracksList.get(position);
-                if (sss.getTitle().equals(tr.getTitle())) {
-                    holder.mButton.setImageResource(android.R.drawable.ic_delete);
-                    holder.mButton.setTag(DELETE_TAG);
-                    Log.d("RECO-RemoveAAdd", "DELETE icon added");
-                    Log.d("RECO-RemoveAAdd", sss.getTitle());
-                    Log.d("RECO-RemoveAAdd", sss.getArtist());
-                }
-            }
-        }
 
         holder.mButton.setOnClickListener(view -> {
             if (holder.mButton.getTag().equals(DELETE_TAG)) {
@@ -89,7 +69,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
         } else {
             return 0;
         }
-
     }
 
     public static class SearchAdapterViewHolder extends RecyclerView.ViewHolder {
@@ -101,8 +80,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
             mTrackTitle = itemView.findViewById(R.id.track_item_title);
             mTrackArtist = itemView.findViewById(R.id.track_item_artist);
             mButton = itemView.findViewById(R.id.track_item_add_button);
-
-            mButton.setTag(1);
         }
     }
 
