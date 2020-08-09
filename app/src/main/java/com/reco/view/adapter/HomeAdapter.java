@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.reco.R;
 import com.reco.service.model.RecommendedUserModel;
-import com.reco.view.ui.HomeFragment;
 
 import java.util.List;
 
@@ -51,7 +50,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeAdapterVie
         }
     }
 
-    public class HomeAdapterViewHolder extends RecyclerView.ViewHolder {
+    public static class HomeAdapterViewHolder extends RecyclerView.ViewHolder {
         private ImageView mUserImage;
         private TextView mName, mSimilarity;
 

@@ -1,5 +1,6 @@
 package com.reco.view.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,6 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.MyLibrar
     @Override
     public void onBindViewHolder(@NonNull final MyLibraryAdapterViewHolder holder, final int position) {
         TrackModel track = libraryTracks.get(position);
-
         holder.mTitle.setText(track.getTitle());
         holder.mArtist.setText(track.getArtist());
 
@@ -57,7 +57,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.MyLibrar
         }
     }
 
-    public class MyLibraryAdapterViewHolder extends RecyclerView.ViewHolder {
+    public static class MyLibraryAdapterViewHolder extends RecyclerView.ViewHolder {
         private TextView mArtist, mTitle;
         private AppCompatImageButton mButton;
 

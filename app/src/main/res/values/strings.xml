@@ -7,4 +7,5 @@
     <string name="invalid_credentials">Invalid credentials.</string>
     <string name="field_required">This field is required.</string>
     <string name="passwords_dont_match">Passwords do not match.</string>
+    <string name="suggest_registration">Don\'t have an account?</string>
 </resources>

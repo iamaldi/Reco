@@ -11,6 +11,7 @@ import com.reco.R;
 import com.reco.service.model.TrackModel;
 import com.reco.service.repository.APIService;
 import com.reco.util.Utilities;
+import com.reco.view.adapter.LibraryAdapter;
 import com.reco.view.adapter.SearchAdapter;
 import com.reco.view.callback.APIErrorCallbacks;
 import com.reco.view.callback.AdapterCallbacks;

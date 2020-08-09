@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment implements APIErrorCallbacks {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        TextView noRecommendationsMessage = view.findViewById(R.id.fragment_home_no_data_msg_textView);
         // use AI to greet the user
         TextView userGreeting = view.findViewById(R.id.fragment_home_greeting_user);
         UserProfileModel user = Utilities.getLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()));
@@ -78,6 +78,18 @@ public class HomeFragment extends Fragment implements APIErrorCallbacks {
                 mHomeAdapter.setRecommendedUsers(recommendedUsers);
                 // let the fragment know that we just added some data to it
                 mHomeAdapter.notifyDataSetChanged();
+            }
+        });
+
+        mHomeAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                if(mHomeAdapter.getItemCount() == 0){
+                    noRecommendationsMessage.setVisibility(View.VISIBLE);
+                } else {
+                    noRecommendationsMessage.setVisibility(View.GONE);
+                }
             }
         });
     }

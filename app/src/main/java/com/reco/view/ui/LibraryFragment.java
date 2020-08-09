@@ -1,10 +1,12 @@
 package com.reco.view.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.reco.R;
@@ -18,6 +20,7 @@ import com.reco.viewmodel.LibraryViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -44,7 +47,6 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks, APIEr
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (savedInstanceState != null) {
             return;
         }
@@ -53,7 +55,6 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks, APIEr
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         mAPIService = mRetrofit.create(APIService.class);
-
         mLibraryAdapter = new LibraryAdapter(this);
     }
 
@@ -62,17 +63,29 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks, APIEr
         super.onViewCreated(view, savedInstanceState);
         RecyclerView mRecyclerView = view.findViewById(R.id.fragment_myLibrary_recyclerview);
         Button mButton = view.findViewById(R.id.fragment_myLibrary_addMore_button);
+        TextView noDataAvailableMessage = view.findViewById(R.id.library_fragment_no_data_msg_textView);
 
         mLibraryViewModel = new LibraryViewModel(this);
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         mRecyclerView.setAdapter(mLibraryAdapter);
 
         mLibraryViewModel.getUserLibrary().observe(this, tracks -> {
             if (tracks != null) {
+                // pass data to and let the adapter know
                 mLibraryAdapter.setLibraryTracks(tracks);
-                // let the adapter know that the data changed
                 mLibraryAdapter.notifyDataSetChanged();
+            }
+        });
+
+        mLibraryAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                if (mLibraryAdapter.getItemCount() == 0) {
+                    noDataAvailableMessage.setVisibility(View.VISIBLE);
+                } else {
+                    noDataAvailableMessage.setVisibility(View.GONE);
+                }
             }
         });
 
