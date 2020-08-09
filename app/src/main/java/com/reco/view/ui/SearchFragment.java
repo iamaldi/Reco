@@ -135,7 +135,7 @@ public class SearchFragment extends Fragment implements AdapterCallbacks, APIErr
     @Override
     public void onRemoveTrackFromLibraryCallback(TrackModel track, int position) {
         // call API to remove the track
-        mAPIService.removeTrackFromLibrary(111).enqueue(new Callback<Void>() {
+        mAPIService.removeTrackFromLibrary(position).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
                 if (response.isSuccessful()) {
