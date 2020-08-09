@@ -11,7 +11,6 @@ import com.reco.R;
 import com.reco.service.model.TrackModel;
 import com.reco.service.repository.APIService;
 import com.reco.util.Utilities;
-import com.reco.view.adapter.LibraryAdapter;
 import com.reco.view.adapter.SearchAdapter;
 import com.reco.view.callback.APIErrorCallbacks;
 import com.reco.view.callback.AdapterCallbacks;
@@ -52,7 +51,6 @@ public class SearchFragment extends Fragment implements AdapterCallbacks, APIErr
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         mAPIService = mRetrofit.create(APIService.class);
-
         mSearchAdapter = new SearchAdapter(this);
     }
 
@@ -67,33 +65,40 @@ public class SearchFragment extends Fragment implements AdapterCallbacks, APIErr
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public boolean onQueryTextSubmit(String query) {
+                if (!query.isEmpty()) {
+                    // query the api for tracks as user is typing
+                    mAPIService.searchTracks(query).enqueue(new Callback<List<TrackModel>>() {
+                        @Override
+                        public void onResponse(@NotNull Call<List<TrackModel>> call, @NotNull Response<List<TrackModel>> response) {
+                            if (response.isSuccessful()) {
+                                List<TrackModel> tracks = response.body();
+                                if (tracks != null) {
+                                    mSearchAdapter.setLocalLibrary(Utilities.getLocalLibrary((AppCompatActivity) Objects.requireNonNull(getActivity())));
+                                    mSearchAdapter.setSearchTracksList(tracks);
+                                    mSearchAdapter.notifyDataSetChanged();
+                                }
+                            } else {
+                                Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(@NotNull Call<List<TrackModel>> call, @NotNull Throwable t) {
+                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return true;
+                }
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
-                // query the api for tracks as user is typing
-                mAPIService.searchTracks(query).enqueue(new Callback<List<TrackModel>>() {
-                    @Override
-                    public void onResponse(@NotNull Call<List<TrackModel>> call, @NotNull Response<List<TrackModel>> response) {
-                        if (response.isSuccessful()) {
-                            List<TrackModel> tracks = response.body();
-                            if (tracks != null) {
-                                mSearchAdapter.setLocalLibrary(Utilities.getLocalLibrary((AppCompatActivity) Objects.requireNonNull(getActivity())));
-                                mSearchAdapter.setSearchTracksList(tracks);
-                                mSearchAdapter.notifyDataSetChanged();
-                            }
-                        } else {
-                            Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(@NotNull Call<List<TrackModel>> call, @NotNull Throwable t) {
-                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if (query.isEmpty()) {
+                    mSearchAdapter.setSearchTracksList(null);
+                    mSearchAdapter.notifyDataSetChanged();
+                }
                 return false;
             }
         });
