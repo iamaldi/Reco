@@ -107,7 +107,7 @@ public class RegisterFragment extends Fragment {
                         }
                     });
                 } else {
-                    mRepeatPassword.setError(getString(R.string.passwords_dont_match));
+                    mRepeatPassword.setError(getString(R.string.passwords_do_not_match));
                 }
             }
         });

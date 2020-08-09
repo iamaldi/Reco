@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Reco</string>
     <string name="fragment_search_title_search">Search</string>
-    <string name="API_URL">http://10.10.13.36:8000/</string>
-    <string name="password_hint">******</string>
+    <string name="API_URL">https://demo-reco-api.herokuapp.com</string>
     <string name="username_hint">demo</string>
+    <string name="password_hint">******</string>
     <string name="invalid_credentials">Invalid credentials.</string>
     <string name="field_required">This field is required.</string>
-    <string name="passwords_dont_match">Passwords do not match.</string>
+    <string name="passwords_do_not_match">Passwords do not match.</string>
     <string name="suggest_registration">Don\'t have an account?</string>
 </resources>
