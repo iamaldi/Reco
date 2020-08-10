@@ -56,6 +56,7 @@ public class SettingsFragment extends Fragment {
         TextView mName = view.findViewById(R.id.fragment_settings_editText_name);
         TextView mMessengerURL = view.findViewById(R.id.fragment_settings_editText_messenger_url);
         Button mChangePasswordButton = view.findViewById(R.id.fragment_settings_button_change_password);
+        Button mUpdateProfileButton = view.findViewById( R.id.fragment_settings_button_update );
         Button mLogoutButton = view.findViewById(R.id.fragment_settings_logout_button);
 
         // hide bottom navigation menu
@@ -99,6 +100,13 @@ public class SettingsFragment extends Fragment {
             MainActivity.changeToFragment((AppCompatActivity) getActivity(),
                     new ChangePasswordFragment(), true,
                     "change-password-fragment");
+        });
+
+
+        mUpdateProfileButton.setOnClickListener(mView -> {
+            MainActivity.changeToFragment((AppCompatActivity) getActivity(),
+                    new UpdateProfileFragment(), true,
+                    "update-profile-fragment");
         });
 
         mLogoutButton.setOnClickListener(view2 -> {
