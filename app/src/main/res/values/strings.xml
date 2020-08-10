@@ -8,4 +8,6 @@
     <string name="field_required">This field is required.</string>
     <string name="passwords_do_not_match">Passwords do not match.</string>
     <string name="suggest_registration">Don\'t have an account?</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

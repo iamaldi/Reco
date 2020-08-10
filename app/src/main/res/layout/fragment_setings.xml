@@ -148,15 +148,17 @@
 
     <Button
         android:id="@+id/fragment_settings_logout_button"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="141dp"
         android:layout_marginTop="7dp"
         android:layout_marginEnd="182dp"
+        android:textSize="25sp"
+        android:textAllCaps="false"
         android:text="Logout"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_settings_button_delete_profile"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_settings_button_update" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/fragment_settings_button_delete_profile"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_settings_button_delete_profile" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
