@@ -101,7 +101,7 @@ public class UpdateProfileFragment extends Fragment {
                         if (response.isSuccessful()) {
                             UserProfileModel userProfile = response.body();
                             // update current local user
-                            if (Utilities.saveLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()), userProfile)) {
+                            if (Utilities.saveLocalUser((AppCompatActivity) getActivity(), userProfile)) {
                                 Toast.makeText(getContext(), R.string.profile_updated_successfully, Toast.LENGTH_SHORT).show();
                                 navController.navigateUp();
                             }
