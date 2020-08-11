@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,8 +24,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
@@ -62,9 +59,7 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks, APIEr
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         RecyclerView mRecyclerView = view.findViewById(R.id.fragment_myLibrary_recyclerview);
-        Button mButton = view.findViewById(R.id.fragment_myLibrary_addMore_button);
         TextView noDataAvailableMessage = view.findViewById(R.id.library_fragment_no_data_msg_textView);
-        NavController navController = Navigation.findNavController(view);
 
         mLibraryViewModel = new LibraryViewModel(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -89,17 +84,13 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks, APIEr
                 }
             }
         });
-
-        mButton.setOnClickListener(mView -> {
-            navController.navigate(R.id.action_navbar_library_to_navbar_search);
-        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_library, container, false);
+        return inflater.inflate(R.layout.fragment_library, container, false);
     }
 
     @Override

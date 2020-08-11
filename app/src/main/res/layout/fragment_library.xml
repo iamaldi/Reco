@@ -36,21 +36,6 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <Button
-        android:id="@+id/fragment_myLibrary_addMore_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:layout_marginBottom="8dp"
-        android:text="Search Music"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_myLibrary_recyclerview"
-        app:layout_constraintVertical_bias="0.872" />
-
     <TextView
         android:id="@+id/library_fragment_no_data_msg_textView"
         android:layout_width="260dp"

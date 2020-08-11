@@ -28,7 +28,7 @@
         android:id="@+id/navbar_library"
         android:name="com.reco.view.ui.LibraryFragment"
         android:label="fragment_my_library"
-        tools:layout="@layout/fragment_my_library">
+        tools:layout="@layout/fragment_library">
         <action
             android:id="@+id/action_navbar_library_to_navbar_search"
             app:destination="@id/navbar_search" />
