@@ -46,9 +46,9 @@ public class HomeFragment extends Fragment implements APIErrorCallbacks {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TextView noRecommendationsMessage = view.findViewById(R.id.fragment_home_no_data_msg_textView);
+        TextView noRecommendationsMessage = view.findViewById(R.id.fragment_home_no_data_message);
         TextView userGreeting = view.findViewById(R.id.fragment_home_greeting_message);
-        ImageButton settingsButton = Objects.requireNonNull(getActivity()).findViewById(R.id.fragment_home_settings_imageButton);
+        ImageButton settingsButton = Objects.requireNonNull(getActivity()).findViewById(R.id.fragment_home_settings_button);
         RecyclerView mRecyclerView = view.findViewById(R.id.fragment_home_recyclerView);
         NavController navController = Navigation.findNavController(view);
 

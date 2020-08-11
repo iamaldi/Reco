@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
 
-        android:text="My Library"
+        android:text="@string/my_library"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +21,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
 
-        android:id="@+id/fragment_myLibrary_recyclerview"
+        android:id="@+id/fragment_library_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="15dp"
@@ -31,17 +31,17 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
-        android:id="@+id/library_fragment_no_data_msg_textView"
+        android:id="@+id/library_fragment_no_data_message"
         android:layout_width="260dp"
         android:layout_height="30dp"
         android:layout_marginTop="200dp"
-        android:text="Looks like your library is empty!"
+        android:text="@string/looks_like_your_library_is_empty"
         android:textSize="18sp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fragment_myLibrary_recyclerview" />
+        app:layout_constraintTop_toTopOf="@+id/fragment_library_recyclerview" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

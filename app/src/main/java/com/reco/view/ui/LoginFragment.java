@@ -58,10 +58,10 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TextView mUsername = view.findViewById(R.id.fragment_login_username);
-        TextView mPassword = view.findViewById(R.id.fragment_login_password);
+        TextView mUsername = view.findViewById(R.id.fragment_login_username_edit_text);
+        TextView mPassword = view.findViewById(R.id.fragment_login_password_edit_text);
         Button mLoginButton = view.findViewById(R.id.fragment_login_login_button);
-        TextView mRegisterInstead = view.findViewById(R.id.fragment_login_register_instead);
+        TextView mRegisterInstead = view.findViewById(R.id.fragment_login_register_instead_button);
 
         NavController navController = Navigation.findNavController(view);
 

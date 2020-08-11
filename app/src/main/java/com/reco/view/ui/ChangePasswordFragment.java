@@ -52,7 +52,7 @@ public class ChangePasswordFragment extends Fragment {
         TextView oldPassword = view.findViewById(R.id.fragment_change_password_current_password);
         TextView newPassword = view.findViewById(R.id.fragment_change_password_new_password);
         TextView repeatPassword = view.findViewById(R.id.fragment_change_password_repeat_password);
-        AppCompatButton changePasswordButton = view.findViewById(R.id.fragment_change_password_button_change_pass);
+        AppCompatButton changePasswordButton = view.findViewById(R.id.fragment_change_password_change_password_button);
         NavController navController = Navigation.findNavController(view);
 
         changePasswordButton.setOnClickListener(view1 -> {

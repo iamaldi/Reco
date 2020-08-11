@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".view.ui.SearchFragment">
 
-
     <TextView
         android:id="@+id/fragment_search_search_textview"
         android:layout_width="wrap_content"
@@ -21,8 +20,6 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-
-
         android:id="@+id/fragment_search_recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -30,16 +27,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_search_searchView"/>
-
-
+        app:layout_constraintTop_toBottomOf="@+id/fragment_search_searchView" />
 
     <TextView
-        android:id="@+id/fragment_search_no_data_msg_textView"
+        android:id="@+id/fragment_search_no_search_results_message"
         android:layout_width="260dp"
         android:layout_height="30dp"
         android:layout_marginTop="200dp"
-        android:text="No search results!"
+        android:text="@string/no_search_results"
         android:textSize="18sp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,9 +47,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:queryBackground="@android:color/transparent"
         android:layout_marginHorizontal="15dp"
         android:iconifiedByDefault="false"
+        android:queryBackground="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/fragment_search_recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

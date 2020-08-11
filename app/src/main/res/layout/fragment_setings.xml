@@ -12,13 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <TextView
-            android:id="@+id/fragment_settings_TextView1"
+            android:id="@+id/fragment_settings_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:text="Settings"
+            android:text="@string/settings_title"
             android:textSize="35sp"
             app:layout_constraintBottom_toBottomOf="@+id/fragment_settings_back_button"
             app:layout_constraintEnd_toStartOf="@+id/fragment_settings_edit_profile_button"
@@ -27,7 +25,7 @@
             app:layout_constraintTop_toTopOf="@+id/fragment_settings_back_button" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/fragment_settings_circleimage"
+            android:id="@+id/fragment_settings_profile_circleimage"
             android:layout_width="90dp"
             android:layout_height="90dp"
 
@@ -36,72 +34,72 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_settings_TextView1" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_settings_title" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/fragment_settings_name_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="40dp"
-            android:text="Display Name"
+            android:text="@string/name_title"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_settings_circleimage" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_settings_profile_circleimage" />
 
         <TextView
-            android:id="@+id/fragment_settings_editText_name"
-            android:layout_width="374dp"
-            android:layout_height="34dp"
-
+            android:id="@+id/fragment_settings_name_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="20dp"
             android:layout_marginTop="10dp"
             android:background="@null"
-            android:textSize="25sp"
-            app:layout_constraintStart_toStartOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/fragment_settings_name_title"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_settings_name_title"
             tools:text="demo" />
 
         <TextView
-            android:id="@+id/settings_fragment_messenger_title"
+            android:id="@+id/settings_fragment_messenger_url_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:text="Messenger Profile"
+            android:text="@string/messenger_url_title"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/fragment_settings_editText_name"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_settings_editText_name" />
+            app:layout_constraintStart_toStartOf="@+id/fragment_settings_name_edit_text"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_settings_name_edit_text" />
 
         <TextView
-            android:id="@+id/fragment_settings_editText_messenger_url"
+            android:id="@+id/fragment_settings_messenger_url_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="10dp"
             android:background="@null"
-
-            android:textSize="25sp"
-            app:layout_constraintStart_toStartOf="@+id/settings_fragment_messenger_title"
-            app:layout_constraintTop_toBottomOf="@+id/settings_fragment_messenger_title"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/settings_fragment_messenger_url_title"
+            app:layout_constraintTop_toBottomOf="@+id/settings_fragment_messenger_url_title"
             tools:text="https://m.me/demo-profile" />
 
         <Button
-
             android:id="@+id/fragment_settings_change_password_button"
-
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="120dp"
-            android:gravity="left"
-            android:text="Change Password"
+            android:gravity="start"
+            android:text="@string/change_password"
             android:textAllCaps="false"
-
-            android:textSize="25sp"
-            app:layout_constraintStart_toStartOf="@+id/fragment_settings_editText_messenger_url"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_settings_editText_messenger_url" />
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/fragment_settings_messenger_url_edit_text"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_settings_messenger_url_edit_text" />
 
         <Button
             android:id="@+id/fragment_settings_delete_account_button"
@@ -110,13 +108,11 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="10dp"
-
-            android:gravity="left"
-            android:text="Delete Account"
-
+            android:gravity="start"
+            android:text="@string/delete_account"
             android:textAllCaps="false"
             android:textColor="@color/design_default_color_error"
-            android:textSize="25sp"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/fragment_settings_change_password_button"
             app:layout_constraintTop_toBottomOf="@+id/fragment_settings_change_password_button" />
@@ -138,9 +134,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Logout"
+            android:text="@string/logout"
             android:textAllCaps="false"
-            android:textSize="25sp"
+            android:textSize="24sp"
             app:layout_constraintStart_toStartOf="@+id/fragment_settings_delete_account_button"
             app:layout_constraintTop_toBottomOf="@+id/fragment_settings_delete_account_button" />
 

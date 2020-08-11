@@ -58,8 +58,8 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks, APIEr
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView mRecyclerView = view.findViewById(R.id.fragment_myLibrary_recyclerview);
-        TextView noDataAvailableMessage = view.findViewById(R.id.library_fragment_no_data_msg_textView);
+        RecyclerView mRecyclerView = view.findViewById(R.id.fragment_library_recyclerview);
+        TextView noDataAvailableMessage = view.findViewById(R.id.library_fragment_no_data_message);
 
         mLibraryViewModel = new LibraryViewModel(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));

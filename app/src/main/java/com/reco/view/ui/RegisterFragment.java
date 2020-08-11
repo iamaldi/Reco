@@ -51,7 +51,7 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TextView mDisplayName = view.findViewById(R.id.fragment_register_displayName);
+        TextView mDisplayName = view.findViewById(R.id.fragment_register_display_name);
         TextView mUsername = view.findViewById(R.id.fragment_register_username);
         TextView mMessengerUrl = view.findViewById(R.id.fragment_register_messengerURL);
         TextView mPassword = view.findViewById(R.id.fragment_register_password);

@@ -68,8 +68,8 @@ public class UpdateProfileFragment extends Fragment {
         cancelButton = view.findViewById(R.id.fragment_update_profile_cancel_button);
         applyChangesButton = view.findViewById(R.id.fragment_update_profile_apply_changes_button);
         changePhotoButton = view.findViewById(R.id.fragment_update_profile_change_photo_button);
-        displayName = view.findViewById(R.id.fragment_update_profile_editText_name);
-        messengerURL = view.findViewById(R.id.fragment_update_profile_editText_URL);
+        displayName = view.findViewById(R.id.fragment_update_profile_name_edit_text);
+        messengerURL = view.findViewById(R.id.fragment_update_profile_messenger_url_edit_text);
 
         NavController navController = Navigation.findNavController(view);
 

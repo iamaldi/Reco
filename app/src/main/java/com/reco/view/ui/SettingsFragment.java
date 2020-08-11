@@ -58,8 +58,8 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TextView displayName = view.findViewById(R.id.fragment_settings_editText_name);
-        TextView messengerURL = view.findViewById(R.id.fragment_settings_editText_messenger_url);
+        TextView displayName = view.findViewById(R.id.fragment_settings_name_edit_text);
+        TextView messengerURL = view.findViewById(R.id.fragment_settings_messenger_url_edit_text);
         Button changePasswordButton = view.findViewById(R.id.fragment_settings_change_password_button);
         AppCompatImageButton backButton = view.findViewById(R.id.fragment_settings_back_button);
         AppCompatImageButton editProfileButton = view.findViewById(R.id.fragment_settings_edit_profile_button);
