@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_nav_graph"
+    app:startDestination="@id/navbar_home">
+
+    <fragment
+        android:id="@+id/navbar_home"
+        android:name="com.reco.view.ui.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/navbar_search"
+        android:name="com.reco.view.ui.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/navbar_recommendations"
+        android:name="com.reco.view.ui.RecommendationsFragment"
+        android:label="fragment_recommendations"
+        tools:layout="@layout/fragment_recommendations" />
+    <fragment
+        android:id="@+id/navbar_library"
+        android:name="com.reco.view.ui.LibraryFragment"
+        android:label="fragment_my_library"
+        tools:layout="@layout/fragment_my_library">
+        <action
+            android:id="@+id/action_navbar_library_to_navbar_search"
+            app:destination="@id/navbar_search" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.reco.view.ui.SettingsFragment"
+        android:label="fragment_setings"
+        tools:layout="@layout/fragment_setings">
+        <action
+            android:id="@+id/action_settingsFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_updateProfileFragment2"
+            app:destination="@id/updateProfileFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.reco.view.ui.ChangePasswordFragment"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_change_password" >
+        <action
+            android:id="@+id/action_changePasswordFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateProfileFragment2"
+        android:name="com.reco.view.ui.UpdateProfileFragment"
+        android:label="fragment_update_profile"
+        tools:layout="@layout/fragment_update_profile" >
+        <action
+            android:id="@+id/action_updateProfileFragment2_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+</navigation>

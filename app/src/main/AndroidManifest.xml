@@ -15,6 +15,7 @@
             android:name=".view.ui.MainActivity"
             android:exported="true"
             android:theme="@style/SplashScreenTheme" />
+        <activity android:name=".view.ui.HomeActivity"/>
     </application>
 
 </manifest>

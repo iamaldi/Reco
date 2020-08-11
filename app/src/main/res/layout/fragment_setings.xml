@@ -8,19 +8,6 @@
     tools:context=".view.ui.SettingsFragment">
 
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Name"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_settings_editText_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.057"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_settings_circleimage"
-        app:layout_constraintVertical_bias="0.788" />
-
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/fragment_settings_circleimage"
         android:layout_width="90dp"
@@ -33,6 +20,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_settings_editText_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.057"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_settings_circleimage"
+        app:layout_constraintVertical_bias="0.788" />
 
     <TextView
         android:id="@+id/fragment_settings_editText_name"
@@ -78,7 +78,7 @@
         android:background="@null"
         android:paddingHorizontal="10dp"
         android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_settings_button_change_password"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_settings_change_password_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,34 +86,14 @@
         tools:text="https://m.me/demo-profile" />
 
     <Button
-        android:id="@+id/fragment_settings_button_update"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="27dp"
-        android:gravity="left"
-        android:paddingHorizontal="10dp"
-        android:text="Update Profile"
-        android:textAllCaps="false"
 
-        android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_settings_button_delete_profile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_settings_button_change_password" />
-
-    <Button
-
-        android:id="@+id/fragment_settings_button_change_password"
+        android:id="@+id/fragment_settings_change_password_button"
 
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="144dp"
         android:gravity="left"
         android:paddingHorizontal="10dp"
         android:text="Change Password"
@@ -121,30 +101,40 @@
         android:textSize="25sp"
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_settings_editText_messenger_url" />
 
     <Button
-        android:id="@+id/fragment_settings_button_delete_profile"
+        android:id="@+id/fragment_settings_delete_account_button"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="28dp"
         android:layout_marginBottom="97dp"
         android:gravity="left"
         android:paddingHorizontal="10dp"
         android:text="Delete Account"
         android:textAllCaps="false"
 
+        android:textColor="@color/design_default_color_error"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/fragment_settings_edit_profile_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_edit"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_settings_circleimage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_settings_button_update"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.761" />
 
     <Button
         android:id="@+id/fragment_settings_logout_button"
@@ -158,7 +148,7 @@
         android:text="Logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/fragment_settings_button_delete_profile"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_settings_button_delete_profile" />
+        app:layout_constraintStart_toStartOf="@+id/fragment_settings_delete_account_button"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_settings_delete_account_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

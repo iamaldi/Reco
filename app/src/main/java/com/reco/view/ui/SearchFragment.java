@@ -1,9 +1,12 @@
 package com.reco.view.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -18,6 +21,7 @@ import com.reco.view.callback.AdapterCallbacks;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -57,14 +61,18 @@ public class SearchFragment extends Fragment implements AdapterCallbacks, APIErr
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         RecyclerView mRecyclerView = view.findViewById(R.id.fragment_search_recyclerView);
-        SearchView searchView = view.findViewById(R.id.fragment_search_searchView);
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mSearchAdapter);
+        mRecyclerView.setVisibility(View.INVISIBLE);
+
+        SearchView searchView = view.findViewById(R.id.fragment_search_searchView);
+        searchView.setQueryHint(getString(R.string.search_bar_hint));
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                // hide keyboard when query is submitted
+                searchView.clearFocus();
                 if (!query.isEmpty()) {
                     // query the api for results
                     mAPIService.searchTracks(query).enqueue(new Callback<List<TrackModel>>() {
@@ -75,6 +83,7 @@ public class SearchFragment extends Fragment implements AdapterCallbacks, APIErr
                                 if (tracks != null) {
                                     mSearchAdapter.setSearchTracksList(tracks);
                                     mSearchAdapter.notifyDataSetChanged();
+                                    mRecyclerView.setVisibility(View.VISIBLE);
                                 }
                             } else {
                                 Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
@@ -96,6 +105,7 @@ public class SearchFragment extends Fragment implements AdapterCallbacks, APIErr
                 if (query.isEmpty()) {
                     mSearchAdapter.setSearchTracksList(null);
                     mSearchAdapter.notifyDataSetChanged();
+                    mRecyclerView.setVisibility(View.INVISIBLE);
                 }
                 return false;
             }

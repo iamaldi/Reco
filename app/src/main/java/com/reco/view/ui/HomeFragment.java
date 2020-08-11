@@ -22,6 +22,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,38 +47,29 @@ public class HomeFragment extends Fragment implements APIErrorCallbacks {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         TextView noRecommendationsMessage = view.findViewById(R.id.fragment_home_no_data_msg_textView);
-        // use AI to greet the user
         TextView userGreeting = view.findViewById(R.id.fragment_home_greeting_user);
-        UserProfileModel user = Utilities.getLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()));
+        ImageButton settingsButton = Objects.requireNonNull(getActivity()).findViewById(R.id.fragment_home_settings_imageButton);
+        RecyclerView mRecyclerView = view.findViewById(R.id.fragment_home_recyclerView);
+        NavController navController = Navigation.findNavController(view);
 
-        if (user != null) {
-            userGreeting.setText(user.getDisplayName());
-        }
-
-        ImageButton settingsButton = Objects.requireNonNull(getActivity()).
-                findViewById(R.id.fragment_home_settings_imageButton);
-
-        settingsButton.setOnClickListener(view1 -> {
-            MainActivity.changeToFragment((AppCompatActivity) getActivity(),
-                    new SettingsFragment(), true,
-                    "settings-fragment");
-        });
+        HomeViewModel mHomeViewModel = new HomeViewModel(this);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        mRecyclerView.setAdapter(mHomeAdapter);
 
         // show bottom navigation menu
         BottomNavigationView mBottomNav = Objects.requireNonNull(getActivity()).
                 findViewById(R.id.activity_main_bottomNavigationView);
         mBottomNav.setVisibility(View.VISIBLE);
 
-        RecyclerView mRecyclerView = view.findViewById(R.id.fragment_home_recyclerView);
-        HomeViewModel mHomeViewModel = new HomeViewModel(this);
-
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        mRecyclerView.setAdapter(mHomeAdapter);
+        // use AI/ML to greet the user
+        UserProfileModel user = Utilities.getLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()));
+        if (user != null) {
+            userGreeting.setText(user.getDisplayName());
+        }
 
         mHomeViewModel.getLatestRecommendedUsers().observe(this, recommendedUsers -> {
             if (recommendedUsers != null) {
                 mHomeAdapter.setRecommendedUsers(recommendedUsers);
-                // let the fragment know that we just added some data to it
                 mHomeAdapter.notifyDataSetChanged();
             }
         });
@@ -85,12 +78,16 @@ public class HomeFragment extends Fragment implements APIErrorCallbacks {
             @Override
             public void onChanged() {
                 super.onChanged();
-                if(mHomeAdapter.getItemCount() == 0){
+                if (mHomeAdapter.getItemCount() == 0) {
                     noRecommendationsMessage.setVisibility(View.VISIBLE);
                 } else {
                     noRecommendationsMessage.setVisibility(View.GONE);
                 }
             }
+        });
+
+        settingsButton.setOnClickListener(view1 -> {
+            navController.navigate(R.id.action_homeFragment_to_settingsFragment);
         });
     }
 
@@ -103,6 +100,8 @@ public class HomeFragment extends Fragment implements APIErrorCallbacks {
 
     @Override
     public void onAPIError(String errorMsg) {
-        Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+        if (!errorMsg.isEmpty()) {
+            Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+        }
     }
 }

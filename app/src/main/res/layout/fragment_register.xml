@@ -34,7 +34,7 @@
 
 
         <EditText
-            android:id="@+id/fragment_register_name"
+            android:id="@+id/fragment_register_displayName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -55,8 +55,8 @@
         android:layout_marginTop="20dp"
         android:text="Username"
         android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="@id/fragment_register_name"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_register_name" />
+        app:layout_constraintStart_toStartOf="@id/fragment_register_displayName"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_register_displayName" />
 
         <EditText
             android:id="@+id/fragment_register_username"

@@ -25,6 +25,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
@@ -62,6 +64,7 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks, APIEr
         RecyclerView mRecyclerView = view.findViewById(R.id.fragment_myLibrary_recyclerview);
         Button mButton = view.findViewById(R.id.fragment_myLibrary_addMore_button);
         TextView noDataAvailableMessage = view.findViewById(R.id.library_fragment_no_data_msg_textView);
+        NavController navController = Navigation.findNavController(view);
 
         mLibraryViewModel = new LibraryViewModel(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -88,9 +91,7 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks, APIEr
         });
 
         mButton.setOnClickListener(mView -> {
-            MainActivity.changeToFragment((AppCompatActivity) Objects.requireNonNull(getActivity()),
-                    new SearchFragment(), true,
-                    "search-fragment");
+            navController.navigate(R.id.action_navbar_library_to_navbar_search);
         });
     }
 

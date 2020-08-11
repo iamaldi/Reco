@@ -2,7 +2,6 @@ package com.reco.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -17,68 +16,53 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Utilities {
     public static boolean isUserLoggedIn(AppCompatActivity mActivity) {
-        // do we have a user object locally
         return getLocalUser(mActivity) != null;
     }
 
-    public static void clearLocalData(AppCompatActivity appCompatActivity){
-        SharedPreferences mPrefs;
-        mPrefs = appCompatActivity.getPreferences(Context.MODE_PRIVATE);
+    public static void clearLocalData(AppCompatActivity appCompatActivity) {
         // clear everything we've saved locally
-        mPrefs.edit().clear().apply();
+        appCompatActivity.getSharedPreferences("user", Context.MODE_PRIVATE)
+                .edit().clear().apply();
+
+        appCompatActivity.getSharedPreferences("library", Context.MODE_PRIVATE)
+                .edit().clear().apply();
     }
 
     public static void saveLocalUser(AppCompatActivity mActivity, UserProfileModel user) {
-        SharedPreferences mPrefs;
-        SharedPreferences.Editor mPrefsEditor;
-
-        mPrefs = mActivity.getPreferences(Context.MODE_PRIVATE);
-
-        mPrefsEditor = mPrefs.edit();
-        mPrefsEditor.putString("user", new Gson().toJson(user));
-
-        mPrefsEditor.apply();
+        mActivity.getSharedPreferences("user", Context.MODE_PRIVATE)
+                .edit()
+                .putString("user", new Gson().toJson(user))
+                .apply();
     }
 
     public static UserProfileModel getLocalUser(AppCompatActivity mActivity) {
         SharedPreferences mPrefs;
-        mPrefs = mActivity.getPreferences(Context.MODE_PRIVATE);
-
-        UserProfileModel user;
-        user = new Gson().fromJson(mPrefs.getString("user", ""), UserProfileModel.class);
-
-        return user;
+        mPrefs = mActivity.getSharedPreferences("user", Context.MODE_PRIVATE);
+        return new Gson().fromJson(mPrefs.getString("user", ""), UserProfileModel.class);
     }
 
-    public static void deleteLocalUser(AppCompatActivity appCompatActivity){
-        SharedPreferences mPrefs;
-        mPrefs = appCompatActivity.getPreferences(Context.MODE_PRIVATE);
-        mPrefs.edit().remove("user").apply();
+    public static void deleteLocalUser(AppCompatActivity appCompatActivity) {
+        appCompatActivity.getSharedPreferences("user", Context.MODE_PRIVATE)
+                .edit()
+                .remove("user")
+                .apply();
     }
 
     public static void saveLocalLibrary(AppCompatActivity appCompatActivity, List<TrackModel> tracks) {
-        SharedPreferences mPrefs;
-        SharedPreferences.Editor mPrefsEditor;
-
-        mPrefs = appCompatActivity.getPreferences(Context.MODE_PRIVATE);
-        mPrefsEditor = mPrefs.edit();
-
-        mPrefsEditor.putString("library", new Gson().toJson(tracks));
-        mPrefsEditor.apply();
+        appCompatActivity.getSharedPreferences("library", Context.MODE_PRIVATE)
+                .edit()
+                .putString("library", new Gson().toJson(tracks))
+                .apply();
     }
 
     public static List<TrackModel> getLocalLibrary(AppCompatActivity appCompatActivity) {
         SharedPreferences mPrefs;
-        mPrefs = appCompatActivity.getPreferences(Context.MODE_PRIVATE);
-        List<TrackModel> tracks;
-
+        mPrefs = appCompatActivity.getSharedPreferences("library", Context.MODE_PRIVATE);
         // get type of TrackModel class - needed by Gson
         Type trackListType = new TypeToken<ArrayList<TrackModel>>() {
         }.getType();
 
-        tracks = new Gson().fromJson(mPrefs.getString("library", ""), trackListType);
-
-        return tracks;
+        return new Gson().fromJson(mPrefs.getString("library", ""), trackListType);
     }
 
     public static void addTrackToLocalLibrary(AppCompatActivity appCompatActivity, TrackModel track) {
@@ -87,7 +71,7 @@ public class Utilities {
         // add the track to the copy
         if (tracksList != null) {
             // check if track already exists
-            if(tracksList.stream().noneMatch(trackModel -> trackModel.getTitle().equalsIgnoreCase(track.getTitle()))){
+            if (tracksList.stream().noneMatch(trackModel -> trackModel.getTitle().equalsIgnoreCase(track.getTitle()))) {
                 tracksList.add(track);
                 // save the new copy
                 saveLocalLibrary(appCompatActivity, tracksList);

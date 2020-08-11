@@ -1,5 +1,6 @@
 package com.reco.view.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.reco.R;
 import com.reco.service.model.UserLoginModel;
 import com.reco.service.model.UserProfileModel;
@@ -23,6 +23,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,12 +63,9 @@ public class LoginFragment extends Fragment {
         Button mLoginButton = view.findViewById(R.id.fragment_login_login_button);
         TextView mRegisterInstead = view.findViewById(R.id.fragment_login_register_instead);
 
-        // hide bottom navigation menu
-        BottomNavigationView mBottomNav = Objects.requireNonNull(getActivity()).
-                findViewById(R.id.activity_main_bottomNavigationView);
-        mBottomNav.setVisibility(View.GONE);
+        NavController navController = Navigation.findNavController(view);
 
-        mLoginButton.setOnClickListener(mView -> {
+        mLoginButton.setOnClickListener(view1 -> {
             String username = mUsername.getText().toString();
             String password = mPassword.getText().toString();
 
@@ -84,10 +83,9 @@ public class LoginFragment extends Fragment {
                             UserProfileModel user = response.body();
                             // save user to shared preferences
                             Utilities.saveLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()), user);
-                            // launch home fragment
-                            MainActivity.changeToFragment((AppCompatActivity) getActivity(),
-                                    new HomeFragment(), false,
-                                    "home-fragment");
+                            // start home activity
+                            startActivity(new Intent(getActivity(), HomeActivity.class));
+                            getActivity().finish();
                         } else {
                             Toast.makeText(getContext(), R.string.invalid_credentials, Toast.LENGTH_SHORT).show();
                         }
@@ -103,9 +101,7 @@ public class LoginFragment extends Fragment {
         });
 
         mRegisterInstead.setOnClickListener(view2 -> {
-            MainActivity.changeToFragment((AppCompatActivity) getActivity(),
-                    new RegisterFragment(), true,
-                    "register-fragment");
+            navController.navigate(R.id.action_loginFragment_to_registerFragment);
         });
     }
 }

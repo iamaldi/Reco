@@ -10,4 +10,13 @@
     <string name="suggest_registration">Don\'t have an account?</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="passwords_cannot_be_same">New password cannot be the same as the old one.</string>
+    <string name="password_changed_successfully">Password changed successfully!</string>
+    <string name="account_deleted">Account deleted!</string>
+    <string name="delete_account_dialog_title">Are you sure you want to delete your account?</string>
+    <string name="delete_account_dialog_message">We will miss you, though!</string>
+    <string name="delete_account_dialog_option_cancel">Cancel</string>
+    <string name="delete_account_dialog_option_delete">DELETE</string>
+    <string name="profile_updated_successfully">Profile updated successfully!</string>
+    <string name="search_bar_hint">Search for music...</string>
 </resources>

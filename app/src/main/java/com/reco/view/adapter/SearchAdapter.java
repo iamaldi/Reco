@@ -44,19 +44,36 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
         holder.mTrackArtist.setText(track.getArtist());
         holder.mTrackTitle.setText(track.getTitle());
 
+        holder.mButton.setTag(android.R.drawable.ic_input_add);
+
+//        // if a track is already in the local library show delete icon
+//        if (localLibrary != null && searchTracksList != null) {
+////            Log.d("RECO-RemoveAAdd", "Library not empty");
+//            for (TrackModel tr : localLibrary) {
+//                TrackModel sss = searchTracksList.get(position);
+//                if (sss.getTitle().equals(tr.getTitle())) {
+//                    holder.mButton.setImageResource(android.R.drawable.ic_delete);
+//                    holder.mButton.setTag(DELETE_TAG);
+//                    Log.d("RECO-RemoveAAdd", "DELETE icon added");
+//                    Log.d("RECO-RemoveAAdd", sss.getTitle());
+//                    Log.d("RECO-RemoveAAdd", sss.getArtist());
+//                }
+//            }
+//        }
+
         holder.mButton.setOnClickListener(view -> {
             if (holder.mButton.getTag().equals(DELETE_TAG)) {
                 // remove item from library
                 mAdapterCallbacks.onRemoveTrackFromLibraryCallback(track, position);
                 // change button icon
                 holder.mButton.setImageResource(android.R.drawable.ic_input_add);
-                holder.mButton.setTag(ADD_TAG);
-            } else if (holder.mButton.getTag().equals(ADD_TAG)) {
+                holder.mButton.setTag(android.R.drawable.ic_input_add);
+            } else if (holder.mButton.getTag().equals(android.R.drawable.ic_input_add)) {
                 // add item to library
                 mAdapterCallbacks.onAddTrackToLibraryCallback(track);
                 // change button icon
                 holder.mButton.setImageResource(android.R.drawable.ic_delete);
-                holder.mButton.setTag(DELETE_TAG);
+                holder.mButton.setTag(android.R.drawable.ic_delete);
                 Log.d("RECO-SEARCH", "DELETE icon added");
             }
         });

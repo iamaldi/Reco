@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,32 +52,33 @@ public class ChangePasswordFragment extends Fragment {
         TextView oldPassword = view.findViewById(R.id.fragment_change_password_current_password);
         TextView newPassword = view.findViewById(R.id.fragment_change_password_new_password);
         TextView repeatPassword = view.findViewById(R.id.fragment_change_password_repeat_password);
-        AppCompatButton changePassButton = view.findViewById(R.id.fragment_change_password_button_change_pass);
+        AppCompatButton changePasswordButton = view.findViewById(R.id.fragment_change_password_button_change_pass);
+        NavController navController = Navigation.findNavController(view);
 
-
-        changePassButton.setOnClickListener(view1 -> {
+        changePasswordButton.setOnClickListener(view1 -> {
             String oldPass, newPass, repeatPass;
             oldPass = oldPassword.getText().toString();
             newPass = newPassword.getText().toString();
             repeatPass = repeatPassword.getText().toString();
 
             if (oldPass.isEmpty()) {
-                oldPassword.setError("This field is required.");
+                oldPassword.setError(getResources().getString(R.string.field_required));
             } else if (newPass.isEmpty()) {
-                newPassword.setError("This field is required.");
+                newPassword.setError(getResources().getString(R.string.field_required));
             } else if (repeatPass.isEmpty()) {
-                repeatPassword.setError("This field is required.");
+                repeatPassword.setError(getResources().getString(R.string.field_required));
             } else {
                 if (oldPass.equals(newPass)) {
-                    Toast.makeText(getContext(), "New password cannot be the same as the old one.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.passwords_cannot_be_same, Toast.LENGTH_SHORT).show();
                 } else if (!newPass.equals(repeatPass)) {
-                    repeatPassword.setError("Passwords do not match.");
+                    repeatPassword.setError(getResources().getString(R.string.passwords_do_not_match));
                 } else {
                     apiService.changeUserPassword(new UserPasswordChangeModel(oldPass, newPass)).enqueue(new Callback<Void>() {
                         @Override
                         public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
                             if (response.isSuccessful()) {
-                                Toast.makeText(getContext(), "Password changed successfully!", Toast.LENGTH_SHORT).show();
+                                navController.navigateUp();
+                                Toast.makeText(getContext(), R.string.password_changed_successfully, Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
                             }
