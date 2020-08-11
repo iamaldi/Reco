@@ -86,10 +86,11 @@ public class SettingsFragment extends Fragment {
                         UserProfileModel userProfile = response.body();
                         if (userProfile != null) {
                             // save user locally
-                            Utilities.saveLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()), userProfile);
-                            // update the fields
-                            displayName.setText(userProfile.getDisplayName());
-                            messengerURL.setText(userProfile.getMessengerUrl());
+                            if (Utilities.saveLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()), userProfile)) {
+                                // update the fields
+                                displayName.setText(userProfile.getDisplayName());
+                                messengerURL.setText(userProfile.getMessengerUrl());
+                            }
                         }
                     } else {
                         Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();

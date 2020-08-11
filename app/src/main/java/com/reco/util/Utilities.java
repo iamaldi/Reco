@@ -28,11 +28,11 @@ public class Utilities {
                 .edit().clear().apply();
     }
 
-    public static void saveLocalUser(AppCompatActivity mActivity, UserProfileModel user) {
-        mActivity.getSharedPreferences("user", Context.MODE_PRIVATE)
+    public static boolean saveLocalUser(AppCompatActivity mActivity, UserProfileModel user) {
+        return mActivity.getSharedPreferences("user", Context.MODE_PRIVATE)
                 .edit()
                 .putString("user", new Gson().toJson(user))
-                .apply();
+                .commit();
     }
 
     public static UserProfileModel getLocalUser(AppCompatActivity mActivity) {

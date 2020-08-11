@@ -82,10 +82,11 @@ public class LoginFragment extends Fragment {
                         if (response.isSuccessful()) {
                             UserProfileModel user = response.body();
                             // save user to shared preferences
-                            Utilities.saveLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()), user);
-                            // start home activity
-                            startActivity(new Intent(getActivity(), HomeActivity.class));
-                            getActivity().finish();
+                            if (Utilities.saveLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()), user)) {
+                                // start home activity
+                                startActivity(new Intent(getActivity(), HomeActivity.class));
+                                getActivity().finish();
+                            }
                         } else {
                             Toast.makeText(getContext(), R.string.invalid_credentials, Toast.LENGTH_SHORT).show();
                         }

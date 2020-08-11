@@ -88,10 +88,11 @@ public class RegisterFragment extends Fragment {
                                 // delete any previous we might have saved data locally
                                 Utilities.clearLocalData((AppCompatActivity) Objects.requireNonNull(getActivity()));
                                 // save user to shared preferences
-                                Utilities.saveLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()), user);
-                                // start home activity
-                                startActivity(new Intent(getActivity(), HomeActivity.class));
-                                getActivity().finish();
+                                if (Utilities.saveLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()), user)) {
+                                    // start home activity
+                                    startActivity(new Intent(getActivity(), HomeActivity.class));
+                                    getActivity().finish();
+                                }
                             } else {
                                 Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
                             }
