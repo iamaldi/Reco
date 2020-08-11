@@ -56,6 +56,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
                 } else {
                     holder.mButton.setImageResource(android.R.drawable.ic_input_add);
                     holder.mButton.setTag(android.R.drawable.ic_input_add);
+                    break;
                 }
             }
         } else {
