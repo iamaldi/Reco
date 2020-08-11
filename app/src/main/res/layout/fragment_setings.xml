@@ -46,8 +46,8 @@
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/fragment_settings_editText_messenger_url"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@id/fragment_settings_circleimage"
         tools:text="demo" />
 
@@ -150,5 +150,15 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/fragment_settings_delete_account_button"
         app:layout_constraintTop_toBottomOf="@+id/fragment_settings_delete_account_button" />
+
+    <ImageButton
+        android:id="@+id/fragment_settings_back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_baseline_arrow_back_ios_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
