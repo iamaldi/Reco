@@ -82,6 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="No recommendations available."
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_home_recyclerView"
         app:layout_constraintEnd_toEndOf="@+id/fragment_home_recyclerView"
         app:layout_constraintStart_toStartOf="@+id/fragment_home_recyclerView"

@@ -57,7 +57,7 @@
         android:layout_height="30dp"
         android:text="Looks like your library is empty!"
         android:textSize="18sp"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_myLibrary_recyclerview"
         app:layout_constraintEnd_toEndOf="@+id/fragment_myLibrary_recyclerview"
         app:layout_constraintHorizontal_bias="0.483"
