@@ -18,6 +18,7 @@ import com.reco.view.callback.AdapterCallbacks;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -77,6 +78,7 @@ public class SearchFragment extends Fragment implements AdapterCallbacks, APIErr
                             if (response.isSuccessful()) {
                                 List<TrackModel> tracks = response.body();
                                 if (tracks != null) {
+                                    mSearchAdapter.setLocalLibrary(Utilities.getLocalLibrary((AppCompatActivity) Objects.requireNonNull(getActivity())));
                                     mSearchAdapter.setSearchTracksList(tracks);
                                     mSearchAdapter.notifyDataSetChanged();
                                     mRecyclerView.setVisibility(View.VISIBLE);
