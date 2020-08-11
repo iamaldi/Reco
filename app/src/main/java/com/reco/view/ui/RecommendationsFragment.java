@@ -18,8 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class RecommendationsFragment extends Fragment implements APIErrorCallbacks {
-    private RecommendationsViewModel mRecommendationsViewModel;
-    private RecyclerView mRecyclerView;
     private RecommendationsAdapter mRecommendationsAdapter;
 
     public RecommendationsFragment() {
@@ -38,8 +36,8 @@ public class RecommendationsFragment extends Fragment implements APIErrorCallbac
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView = view.findViewById(R.id.fragment_recommendations_recycler_view);
-        mRecommendationsViewModel = new RecommendationsViewModel(this);
+        RecyclerView mRecyclerView = view.findViewById(R.id.fragment_recommendations_recycler_view);
+        RecommendationsViewModel mRecommendationsViewModel = new RecommendationsViewModel(this);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         mRecyclerView.setAdapter(mRecommendationsAdapter);
