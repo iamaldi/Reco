@@ -10,7 +10,7 @@
         android:title="Search"/>
 
     <item android:id="@+id/navbar_library"
-    android:icon="@drawable/ic_baseline_local_library_24"
+    android:icon="@drawable/ic_baseline_library_music_24"
     android:title="Library"/>
 
     <item android:id="@+id/navbar_recommendations"
