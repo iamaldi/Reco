@@ -72,28 +72,37 @@ public class LoginFragment extends Fragment {
             // check if fields are empty
             if (username.isEmpty()) {
                 mUsername.setError(getString(R.string.field_required));
+                mUsername.requestFocus();
             } else if (password.isEmpty()) {
                 mPassword.setError(getString(R.string.field_required));
+                mPassword.requestFocus();
             } else {
+                // disable the button
+                mLoginButton.setEnabled(false);
                 // call the api to login
                 mAPIService.userLogin(new UserLoginModel(username, password)).enqueue(new Callback<UserProfileModel>() {
                     @Override
                     public void onResponse(@NotNull Call<UserProfileModel> call, @NotNull Response<UserProfileModel> response) {
                         if (response.isSuccessful()) {
-                            UserProfileModel user = response.body();
-                            // save user to shared preferences
-                            if (Utilities.saveLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()), user)) {
+                            if (getActivity() != null) {
+                                UserProfileModel user = response.body();
+                                // save user to shared preferences
+                                Utilities.saveLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()), user);
                                 // start home activity
                                 startActivity(new Intent(getActivity(), HomeActivity.class));
                                 getActivity().finish();
                             }
                         } else {
+                            // enable the button
+                            mLoginButton.setEnabled(true);
                             Toast.makeText(getContext(), R.string.invalid_credentials, Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(@NotNull Call<UserProfileModel> call, @NotNull Throwable t) {
+                        // enable the button
+                        mLoginButton.setEnabled(true);
                         Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -102,6 +111,8 @@ public class LoginFragment extends Fragment {
         });
 
         mRegisterInstead.setOnClickListener(view2 -> {
+            // disable the button
+            mRegisterInstead.setEnabled(false);
             navController.navigate(R.id.action_loginFragment_to_registerFragment);
         });
     }

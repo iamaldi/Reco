@@ -116,11 +116,14 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks, APIEr
             public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
                 // if item was removed remotely
                 if (response.isSuccessful()) {
-                    // remove it from the local library
-                    Utilities.removeTrackFromLocalLibrary((AppCompatActivity) getActivity(), track);
-                    // remove item from recycler view
-                    Objects.requireNonNull(mLibraryViewModel.getUserLibrary().getValue()).remove(position);
-                    mLibraryAdapter.notifyDataSetChanged();
+                    if (getActivity() != null) {
+                        // remove it from the local library
+                        Utilities.removeTrackFromLocalLibrary((AppCompatActivity) getActivity(), track);
+                        // remove item from recycler view
+                        Objects.requireNonNull(mLibraryViewModel.getUserLibrary().getValue()).remove(position);
+                        mLibraryAdapter.notifyDataSetChanged();
+                        Toast.makeText(getContext(), "Removed from library!", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
                 }

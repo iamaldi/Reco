@@ -70,6 +70,7 @@ public class SearchFragment extends Fragment implements AdapterCallbacks, APIErr
             public boolean onQueryTextSubmit(String query) {
                 // hide keyboard when query is submitted
                 searchView.clearFocus();
+                searchView.setEnabled(false);
                 if (!query.isEmpty()) {
                     // query the api for results
                     mAPIService.searchTracks(query).enqueue(new Callback<List<TrackModel>>() {
@@ -78,18 +79,23 @@ public class SearchFragment extends Fragment implements AdapterCallbacks, APIErr
                             if (response.isSuccessful()) {
                                 List<TrackModel> tracks = response.body();
                                 if (tracks != null) {
-                                    mSearchAdapter.setLocalLibrary(Utilities.getLocalLibrary((AppCompatActivity) Objects.requireNonNull(getActivity())));
-                                    mSearchAdapter.setSearchTracksList(tracks);
-                                    mSearchAdapter.notifyDataSetChanged();
-                                    mRecyclerView.setVisibility(View.VISIBLE);
+                                    if (getActivity() != null) {
+                                        mSearchAdapter.setLocalLibrary(Utilities.getLocalLibrary((AppCompatActivity) Objects.requireNonNull(getActivity())));
+                                        mSearchAdapter.setSearchTracksList(tracks);
+                                        mSearchAdapter.notifyDataSetChanged();
+                                        mRecyclerView.setVisibility(View.VISIBLE);
+                                        searchView.setEnabled(true);
+                                    }
                                 }
                             } else {
+                                searchView.setEnabled(true);
                                 Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
                             }
                         }
 
                         @Override
                         public void onFailure(@NotNull Call<List<TrackModel>> call, @NotNull Throwable t) {
+                            searchView.setEnabled(true);
                             Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -104,6 +110,7 @@ public class SearchFragment extends Fragment implements AdapterCallbacks, APIErr
                     mSearchAdapter.setSearchTracksList(null);
                     mSearchAdapter.notifyDataSetChanged();
                     mRecyclerView.setVisibility(View.INVISIBLE);
+                    searchView.setEnabled(true);
                 }
                 return false;
             }
@@ -124,9 +131,11 @@ public class SearchFragment extends Fragment implements AdapterCallbacks, APIErr
             @Override
             public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
                 if (response.isSuccessful()) {
-                    // add track to local library
-                    Utilities.addTrackToLocalLibrary((AppCompatActivity) getActivity(), track);
-                    Toast.makeText(getContext(), "Added to library!", Toast.LENGTH_SHORT).show();
+                    if (getActivity() != null) {
+                        // add track to local library
+                        Utilities.addTrackToLocalLibrary((AppCompatActivity) getActivity(), track);
+                        Toast.makeText(getContext(), "Added to library!", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
                 }
@@ -147,9 +156,11 @@ public class SearchFragment extends Fragment implements AdapterCallbacks, APIErr
             @Override
             public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
                 if (response.isSuccessful()) {
-                    // remove track from local library
-                    Utilities.removeTrackFromLocalLibrary((AppCompatActivity) getActivity(), track);
-                    Toast.makeText(getContext(), "Removed from library!", Toast.LENGTH_SHORT).show();
+                    if (getActivity() != null) {
+                        // remove track from local library
+                        Utilities.removeTrackFromLocalLibrary((AppCompatActivity) getActivity(), track);
+                        Toast.makeText(getContext(), "Removed from library!", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
                 }
@@ -164,6 +175,5 @@ public class SearchFragment extends Fragment implements AdapterCallbacks, APIErr
 
     @Override
     public void onAPIError(String errorMsg) {
-
     }
 }

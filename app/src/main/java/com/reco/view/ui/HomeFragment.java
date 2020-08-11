@@ -64,7 +64,12 @@ public class HomeFragment extends Fragment implements APIErrorCallbacks {
         // use AI/ML to greet the user
         UserProfileModel user = Utilities.getLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()));
         if (user != null) {
-            userGreeting.setText(String.format(getResources().getString(R.string.welcome_message_placeholder), user.getDisplayName()));
+            String displayName = user.getDisplayName();
+            userGreeting.setText(String.format(getResources().getString(R.string.welcome_message_placeholder),
+                    displayName.substring(0, 1).toUpperCase() +
+                            displayName.substring(1).split(" ")[0]));
+        } else {
+            userGreeting.setText(String.format(getResources().getString(R.string.welcome_message_placeholder), "User"));
         }
 
         mHomeViewModel.getLatestRecommendedUsers().observe(this, recommendedUsers -> {

@@ -82,6 +82,7 @@ public class UpdateProfileFragment extends Fragment {
         }
 
         cancelButton.setOnClickListener(view2 -> {
+            cancelButton.setEnabled(false);
             navController.navigateUp();
         });
 
@@ -93,25 +94,32 @@ public class UpdateProfileFragment extends Fragment {
             if (userDisplayName.isEmpty()) {
                 displayName.setError(getResources().getString(R.string.field_required));
             } else {
+                // disable the button once passed checks - fixes null pointer exception
+                applyChangesButton.setEnabled(false);
                 UserProfileUpdateModel updateUser = new UserProfileUpdateModel(userDisplayName, null, userMessengerURL);
                 // call api to update user
                 apiService.updateUserProfile(updateUser).enqueue(new Callback<UserProfileModel>() {
                     @Override
                     public void onResponse(@NotNull Call<UserProfileModel> call, @NotNull Response<UserProfileModel> response) {
                         if (response.isSuccessful()) {
-                            UserProfileModel userProfile = response.body();
-                            // update current local user
-                            if (Utilities.saveLocalUser((AppCompatActivity) getActivity(), userProfile)) {
+                            if (getActivity() != null) {
+                                UserProfileModel userProfile = response.body();
+                                // update current local user
+                                Utilities.saveLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()), userProfile);
                                 Toast.makeText(getContext(), R.string.profile_updated_successfully, Toast.LENGTH_SHORT).show();
                                 navController.navigateUp();
                             }
                         } else {
+                            // enable button if server returned an error
+                            applyChangesButton.setEnabled(true);
                             Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(@NotNull Call<UserProfileModel> call, @NotNull Throwable t) {
+                        // enable button if server returned an error
+                        applyChangesButton.setEnabled(true);
                         Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -119,7 +127,7 @@ public class UpdateProfileFragment extends Fragment {
         });
 
         changePhotoButton.setOnClickListener(view4 -> {
-            Toast.makeText(getContext(), "change photo", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Change photo", Toast.LENGTH_SHORT).show();
         });
     }
 }

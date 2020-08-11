@@ -85,8 +85,9 @@ public class SettingsFragment extends Fragment {
                     if (response.isSuccessful()) {
                         UserProfileModel userProfile = response.body();
                         if (userProfile != null) {
-                            // save user locally
-                            if (Utilities.saveLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()), userProfile)) {
+                            if (getActivity() != null) {
+                                // save user locally
+                                Utilities.saveLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()), userProfile);
                                 // update the fields
                                 displayName.setText(userProfile.getDisplayName());
                                 messengerURL.setText(userProfile.getMessengerUrl());
@@ -105,13 +106,16 @@ public class SettingsFragment extends Fragment {
         }
 
         backButton.setOnClickListener(view1 -> {
+            backButton.setEnabled(false);
             navController.navigateUp();
         });
         editProfileButton.setOnClickListener(view2 -> {
+            editProfileButton.setEnabled(false);
             navController.navigate(R.id.action_settingsFragment_to_updateProfileFragment2);
         });
 
         changePasswordButton.setOnClickListener(view3 -> {
+            changePasswordButton.setEnabled(false);
             navController.navigate(R.id.action_settingsFragment_to_changePasswordFragment);
         });
 
@@ -127,12 +131,14 @@ public class SettingsFragment extends Fragment {
                     @Override
                     public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
                         if (response.isSuccessful()) {
-                            // delete every bit of local data
-                            Utilities.clearLocalData((AppCompatActivity) Objects.requireNonNull(getActivity()));
-                            // show message then main activity / login
-                            Toast.makeText(getContext(), R.string.account_deleted, Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getActivity(), MainActivity.class));
-                            getActivity().finish();
+                            if (getActivity() != null) {
+                                // delete every bit of local data
+                                Utilities.clearLocalData((AppCompatActivity) Objects.requireNonNull(getActivity()));
+                                // show message then main activity / login
+                                Toast.makeText(getContext(), R.string.account_deleted, Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getActivity(), MainActivity.class));
+                                getActivity().finish();
+                            }
                         } else {
                             // couldn't delete account for some reason
                             Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
@@ -148,23 +154,28 @@ public class SettingsFragment extends Fragment {
         });
 
         logoutButton.setOnClickListener(view4 -> {
+            logoutButton.setEnabled(false);
             // call api to logout
             apiService.logoutUser().enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
                     if (response.isSuccessful()) {
-                        // delete any local user data
-                        Utilities.deleteLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()));
-                        // start main activity / login
-                        startActivity(new Intent(getActivity(), MainActivity.class));
-                        getActivity().finish();
+                        if (getActivity() != null) {
+                            // delete any local user data
+                            Utilities.deleteLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()));
+                            // start main activity / login
+                            startActivity(new Intent(getActivity(), MainActivity.class));
+                            getActivity().finish();
+                        }
                     } else {
+                        logoutButton.setEnabled(true);
                         Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(@NotNull Call<Void> call, @NotNull Throwable t) {
+                    logoutButton.setEnabled(true);
                     Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });

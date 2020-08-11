@@ -45,10 +45,12 @@ public class LibraryViewModel extends ViewModel {
                 @Override
                 public void onResponse(@NotNull Call<List<TrackModel>> call, @NotNull Response<List<TrackModel>> response) {
                     if (response.isSuccessful()) {
-                        List<TrackModel> tracks = response.body();
-                        mTracks.setValue(tracks);
-                        // save data locally
-                        Utilities.saveLocalLibrary((AppCompatActivity) libraryFragment.getActivity(), tracks);
+                        if (libraryFragment.getActivity() != null) {
+                            List<TrackModel> tracks = response.body();
+                            mTracks.setValue(tracks);
+                            // save data locally
+                            Utilities.saveLocalLibrary((AppCompatActivity) libraryFragment.getActivity(), tracks);
+                        }
                     } else {
                         mTracks.setValue(null);
                         apiErrorCallbacks.onAPIError(response.message());

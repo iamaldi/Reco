@@ -21,4 +21,8 @@
     <string name="search_bar_hint">Search for music…</string>
     <string name="similarity_placeholder">Matched by %1$d%%</string>
     <string name="welcome_message_placeholder">Welcome back, %1$s</string>
+    <string name="nav_menu_recommendations_item_title">Recomendations</string>
+    <string name="nav_menu_library_item_title">Library</string>
+    <string name="nav_menu_search_item_title">Search</string>
+    <string name="nav_menu_home_item_title">Home</string>
 </resources>

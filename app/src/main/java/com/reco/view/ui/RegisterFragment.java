@@ -70,46 +70,61 @@ public class RegisterFragment extends Fragment {
             // check if input fields are not empty
             if (displayName.isEmpty()) {
                 mDisplayName.setError(getString(R.string.field_required));
+                mDisplayName.requestFocus();
             } else if (username.isEmpty()) {
                 mUsername.setError(getString(R.string.field_required));
+                mUsername.requestFocus();
             } else if (password.isEmpty()) {
                 mPassword.setError(getString(R.string.field_required));
+                mPassword.requestFocus();
             } else if (repeatPassword.isEmpty()) {
                 mRepeatPassword.setError(getString(R.string.field_required));
+                mRepeatPassword.requestFocus();
             } else {
                 // check if passwords match
                 if (password.equals(repeatPassword)) {
+                    // disable the button
+                    mRegisterButton.setEnabled(false);
                     // call the api to register
                     mAPIService.userRegister(new UserRegisterModel(username, displayName, messengerUrl, password, repeatPassword)).enqueue(new Callback<UserProfileModel>() {
                         @Override
                         public void onResponse(@NotNull Call<UserProfileModel> call, @NotNull Response<UserProfileModel> response) {
                             if (response.isSuccessful()) {
-                                UserProfileModel user = response.body();
-                                // delete any previous we might have saved data locally
-                                Utilities.clearLocalData((AppCompatActivity) Objects.requireNonNull(getActivity()));
-                                // save user to shared preferences
-                                if (Utilities.saveLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()), user)) {
+                                if (getActivity() != null) {
+                                    UserProfileModel user = response.body();
+                                    // delete any previous we might have saved data locally
+                                    Utilities.clearLocalData((AppCompatActivity) Objects.requireNonNull(getActivity()));
+                                    // save user to shared preferences
+                                    Utilities.saveLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()), user);
                                     // start home activity
                                     startActivity(new Intent(getActivity(), HomeActivity.class));
                                     getActivity().finish();
+
                                 }
                             } else {
+                                // enable the button
+                                mRegisterButton.setEnabled(true);
                                 Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
                             }
                         }
 
                         @Override
                         public void onFailure(@NotNull Call<UserProfileModel> call, @NotNull Throwable t) {
+                            // enable the button
+                            mRegisterButton.setEnabled(true);
                             Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 } else {
                     mRepeatPassword.setError(getString(R.string.passwords_do_not_match));
+                    mRepeatPassword.requestFocus();
                 }
             }
         });
 
         mLoginInstead.setOnClickListener(view2 -> {
+            // disable the button
+            mLoginInstead.setEnabled(false);
             navController.navigate(R.id.action_registerFragment_to_loginFragment);
         });
     }
