@@ -12,7 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.reco.R;
 import com.reco.service.model.UserProfileModel;
 import com.reco.util.Utilities;
-import com.reco.view.adapter.HomeAdapter;
+import com.reco.view.adapter.RecommendationsAdapter;
 import com.reco.view.callback.APIErrorCallbacks;
 import com.reco.viewmodel.HomeViewModel;
 
@@ -28,7 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class HomeFragment extends Fragment implements APIErrorCallbacks {
-    private HomeAdapter mHomeAdapter;
+    private RecommendationsAdapter recommendationsAdapter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment implements APIErrorCallbacks {
         if (savedInstanceState != null) {
             return;
         }
-        mHomeAdapter = new HomeAdapter();
+        recommendationsAdapter = new RecommendationsAdapter();
     }
 
     @Override
@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment implements APIErrorCallbacks {
 
         HomeViewModel mHomeViewModel = new HomeViewModel(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        mRecyclerView.setAdapter(mHomeAdapter);
+        mRecyclerView.setAdapter(recommendationsAdapter);
 
         // show bottom navigation menu
         BottomNavigationView mBottomNav = Objects.requireNonNull(getActivity()).
@@ -69,16 +69,16 @@ public class HomeFragment extends Fragment implements APIErrorCallbacks {
 
         mHomeViewModel.getLatestRecommendedUsers().observe(this, recommendedUsers -> {
             if (recommendedUsers != null) {
-                mHomeAdapter.setRecommendedUsers(recommendedUsers);
-                mHomeAdapter.notifyDataSetChanged();
+                recommendationsAdapter.setRecommendedUsers(recommendedUsers);
+                recommendationsAdapter.notifyDataSetChanged();
             }
         });
 
-        mHomeAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+        recommendationsAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
                 super.onChanged();
-                if (mHomeAdapter.getItemCount() == 0) {
+                if (recommendationsAdapter.getItemCount() == 0) {
                     noRecommendationsMessage.setVisibility(View.VISIBLE);
                 } else {
                     noRecommendationsMessage.setVisibility(View.GONE);

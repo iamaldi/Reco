@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.reco.R;
 import com.reco.service.model.RecommendedUserModel;
@@ -12,6 +13,7 @@ import com.reco.service.model.RecommendedUserModel;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class RecommendationsAdapter extends RecyclerView.Adapter<RecommendationsAdapter.RecommendationsAdapterViewHolder> {
@@ -39,6 +41,11 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
         holder.mName.setText(user.getDisplayName());
         // TODO: use percentage placeholder on the user item
         holder.mSimilarity.setText(user.getSimilarityMatch() + "%");
+        // TODO: implement this - open messenger app when clicked.
+        holder.sendMessageButton.setOnClickListener(view -> {
+            Toast.makeText(view.getContext(), "DEBUG: SEND MESSAGE", Toast.LENGTH_SHORT).show();
+        });
+
     }
 
     @Override
@@ -50,17 +57,17 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
         }
     }
 
-    public class RecommendationsAdapterViewHolder extends RecyclerView.ViewHolder {
-
+    public static class RecommendationsAdapterViewHolder extends RecyclerView.ViewHolder {
         private ImageView mImage;
         private TextView mName, mSimilarity;
+        private AppCompatImageButton sendMessageButton;
 
         public RecommendationsAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
             mImage = itemView.findViewById(R.id.user_item_image);
             mName = itemView.findViewById(R.id.user_item_name);
             mSimilarity = itemView.findViewById(R.id.user_item_similarity);
-
+            sendMessageButton = itemView.findViewById(R.id.user_item_send_message_button);
         }
     }
 }
