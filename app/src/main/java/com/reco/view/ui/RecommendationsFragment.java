@@ -32,7 +32,7 @@ public class RecommendationsFragment extends Fragment implements APIErrorCallbac
         if (savedInstanceState != null) {
             return;
         }
-        mRecommendationsAdapter = new RecommendationsAdapter();
+        mRecommendationsAdapter = new RecommendationsAdapter(getContext());
     }
 
     @Override

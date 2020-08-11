@@ -18,5 +18,7 @@
     <string name="delete_account_dialog_option_cancel">Cancel</string>
     <string name="delete_account_dialog_option_delete">DELETE</string>
     <string name="profile_updated_successfully">Profile updated successfully!</string>
-    <string name="search_bar_hint">Search for music...</string>
+    <string name="search_bar_hint">Search for music…</string>
+    <string name="similarity_placeholder">%1$d%%</string>
+    <string name="welcome_message_placeholder">Welcome back, %1$s</string>
 </resources>

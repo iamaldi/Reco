@@ -40,14 +40,14 @@ public class HomeFragment extends Fragment implements APIErrorCallbacks {
         if (savedInstanceState != null) {
             return;
         }
-        recommendationsAdapter = new RecommendationsAdapter();
+        recommendationsAdapter = new RecommendationsAdapter(getContext());
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         TextView noRecommendationsMessage = view.findViewById(R.id.fragment_home_no_data_msg_textView);
-        TextView userGreeting = view.findViewById(R.id.fragment_home_greeting_user);
+        TextView userGreeting = view.findViewById(R.id.fragment_home_greeting_message);
         ImageButton settingsButton = Objects.requireNonNull(getActivity()).findViewById(R.id.fragment_home_settings_imageButton);
         RecyclerView mRecyclerView = view.findViewById(R.id.fragment_home_recyclerView);
         NavController navController = Navigation.findNavController(view);
@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment implements APIErrorCallbacks {
         // use AI/ML to greet the user
         UserProfileModel user = Utilities.getLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()));
         if (user != null) {
-            userGreeting.setText(user.getDisplayName());
+            userGreeting.setText(String.format(getResources().getString(R.string.welcome_message_placeholder), user.getDisplayName()));
         }
 
         mHomeViewModel.getLatestRecommendedUsers().observe(this, recommendedUsers -> {
@@ -81,7 +81,7 @@ public class HomeFragment extends Fragment implements APIErrorCallbacks {
                 if (recommendationsAdapter.getItemCount() == 0) {
                     noRecommendationsMessage.setVisibility(View.VISIBLE);
                 } else {
-                    noRecommendationsMessage.setVisibility(View.GONE);
+                    noRecommendationsMessage.setVisibility(View.INVISIBLE);
                 }
             }
         });

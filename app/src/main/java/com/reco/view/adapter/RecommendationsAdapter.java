@@ -1,5 +1,6 @@
 package com.reco.view.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class RecommendationsAdapter extends RecyclerView.Adapter<RecommendationsAdapter.RecommendationsAdapterViewHolder> {
     private List<RecommendedUserModel> recommendedUsers;
+    private Context context;
 
-    public RecommendationsAdapter() {
-        // empty constructor
+    public RecommendationsAdapter(Context context) {
+        this.context = context;
     }
 
     public void setRecommendedUsers(List<RecommendedUserModel> recommendedUsers) {
@@ -40,7 +42,8 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
 //        holder.image.setImageResource(images.get(position));
         holder.mName.setText(user.getDisplayName());
         // TODO: use percentage placeholder on the user item
-        holder.mSimilarity.setText(user.getSimilarityMatch() + "%");
+//        holder.mSimilarity.setText(user.getSimilarityMatch() + "%");
+        holder.mSimilarity.setText(String.format(context.getString(R.string.similarity_placeholder), user.getSimilarityMatch()));
         // TODO: implement this - open messenger app when clicked.
         holder.sendMessageButton.setOnClickListener(view -> {
             Toast.makeText(view.getContext(), "DEBUG: SEND MESSAGE", Toast.LENGTH_SHORT).show();
