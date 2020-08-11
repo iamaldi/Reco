@@ -42,7 +42,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.MyLibrar
         holder.mTitle.setText(track.getTitle());
         holder.mArtist.setText(track.getArtist());
 
-        holder.mButton.setImageResource(android.R.drawable.ic_delete);
+        holder.mButton.setImageResource(R.drawable.ic_baseline_remove_24);
         holder.mButton.setOnClickListener(view -> {
             mAdapterCallbacks.onRemoveTrackFromLibraryCallback(track, position);
         });

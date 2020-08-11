@@ -46,33 +46,33 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
         holder.mTrackArtist.setText(track.getArtist());
         holder.mTrackTitle.setText(track.getTitle());
 
-        holder.mButton.setImageResource(android.R.drawable.ic_input_add);
-        holder.mButton.setTag(android.R.drawable.ic_input_add);
+        holder.mButton.setImageResource(R.drawable.ic_baseline_add_24);
+        holder.mButton.setTag(R.drawable.ic_baseline_add_24);
 
         // if a track is already in the local library show delete icon
         if (localLibrary != null) {
             for (TrackModel trackModel : localLibrary) {
                 if (trackModel.getTitle().equals(track.getTitle()) && trackModel.getArtist().equals(track.getArtist())) {
-                    holder.mButton.setImageResource(android.R.drawable.ic_delete);
-                    holder.mButton.setTag(android.R.drawable.ic_delete);
+                    holder.mButton.setImageResource(R.drawable.ic_baseline_remove_24);
+                    holder.mButton.setTag(R.drawable.ic_baseline_remove_24);
                     break; // so we don't alter the same item more than once
                 }
             }
         }
 
         holder.mButton.setOnClickListener(view -> {
-            if (holder.mButton.getTag().equals(android.R.drawable.ic_delete)) {
+            if (holder.mButton.getTag().equals(R.drawable.ic_baseline_remove_24)) {
                 // remove item from library
                 mAdapterCallbacks.onRemoveTrackFromLibraryCallback(track, position);
                 // change button icon
-                holder.mButton.setImageResource(android.R.drawable.ic_input_add);
-                holder.mButton.setTag(android.R.drawable.ic_input_add);
-            } else if (holder.mButton.getTag().equals(android.R.drawable.ic_input_add)) {
+                holder.mButton.setImageResource(R.drawable.ic_baseline_add_24);
+                holder.mButton.setTag(R.drawable.ic_baseline_add_24);
+            } else if (holder.mButton.getTag().equals(R.drawable.ic_baseline_add_24)) {
                 // add item to library
                 mAdapterCallbacks.onAddTrackToLibraryCallback(track);
                 // change button icon
-                holder.mButton.setImageResource(android.R.drawable.ic_delete);
-                holder.mButton.setTag(android.R.drawable.ic_delete);
+                holder.mButton.setImageResource(R.drawable.ic_baseline_remove_24);
+                holder.mButton.setTag(R.drawable.ic_baseline_remove_24);
             }
         });
     }
