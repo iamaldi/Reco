@@ -46,6 +46,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
         holder.mTrackArtist.setText(track.getArtist());
         holder.mTrackTitle.setText(track.getTitle());
 
+        holder.mButton.setImageResource(android.R.drawable.ic_input_add);
+        holder.mButton.setTag(android.R.drawable.ic_input_add);
+
         // if a track is already in the local library show delete icon
         if (localLibrary != null) {
             for (TrackModel trackModel : localLibrary) {
@@ -53,15 +56,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
                     holder.mButton.setImageResource(android.R.drawable.ic_delete);
                     holder.mButton.setTag(android.R.drawable.ic_delete);
                     break; // so we don't alter the same item more than once
-                } else {
-                    holder.mButton.setImageResource(android.R.drawable.ic_input_add);
-                    holder.mButton.setTag(android.R.drawable.ic_input_add);
-                    break;
                 }
             }
-        } else {
-            holder.mButton.setImageResource(android.R.drawable.ic_input_add);
-            holder.mButton.setTag(android.R.drawable.ic_input_add);
         }
 
         holder.mButton.setOnClickListener(view -> {
