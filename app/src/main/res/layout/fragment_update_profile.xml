@@ -7,120 +7,128 @@
     tools:context=".view.ui.UpdateProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
-   <androidx.constraintlayout.widget.ConstraintLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-       <TextView
-           android:id="@+id/fragment_update_profile_TextView1"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="16dp"
+        <TextView
+            android:id="@+id/fragment_update_profile_TextView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
 
-           android:text="Update Profile"
-           android:textSize="30sp"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toTopOf="parent" />
+            android:text="Update Profile"
+            android:textSize="35sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-       <ImageButton
-           android:id="@+id/fragment_update_profile_cancel_button"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_marginStart="16dp"
-           android:src="@drawable/ic_baseline_close_24"
-           android:visibility="visible"
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toTopOf="@+id/fragment_update_profile_TextView1" />
-
-
-       <ImageButton
-           android:id="@+id/fragment_update_profile_apply_changes_button"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_marginEnd="16dp"
-           android:src="@drawable/ic_baseline_check_24"
-           android:visibility="visible"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintTop_toTopOf="@+id/fragment_update_profile_TextView1" />
-
-       <de.hdodenhof.circleimageview.CircleImageView
-
-           android:id="@+id/fragment_update_profile_profile_photo"
-           android:layout_width="90dp"
-           android:layout_height="90dp"
-           android:layout_marginTop="56dp"
-           android:src="@drawable/download"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintHorizontal_bias="0.498"
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toBottomOf="@+id/fragment_update_profile_TextView1" />
-
-       <Button
-           android:id="@+id/fragment_update_profile_change_photo_button"
-           style="?android:attr/borderlessButtonStyle"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="Change Photo"
-           android:textAllCaps="false"
-           android:textSize="15sp"
-           android:visibility="visible"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toBottomOf="@+id/fragment_update_profile_profile_photo" />
+        <ImageButton
+            android:id="@+id/fragment_update_profile_cancel_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:background="@null"
+            android:src="@drawable/ic_baseline_close_24"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/fragment_update_profile_TextView1" />
 
 
-       <TextView
-           android:id="@+id/fragment_update_profile_TextView2"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_marginStart="16dp"
-           android:layout_marginTop="44dp"
-           android:text="Name"
-           android:textSize="25sp"
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toBottomOf="@id/fragment_update_profile_change_photo_button" />
+        <ImageButton
+            android:id="@+id/fragment_update_profile_apply_changes_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@null"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_baseline_check_24"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/fragment_update_profile_TextView1" />
 
-       <EditText
-           android:id="@+id/fragment_update_profile_editText_name"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginHorizontal="20dp"
-           android:layout_marginTop="12dp"
-           android:maxLength="25"
-           android:textIsSelectable="false"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintHorizontal_bias="0.0"
-           app:layout_constraintStart_toStartOf="@+id/fragment_update_profile_TextView2"
-           app:layout_constraintTop_toBottomOf="@+id/fragment_update_profile_TextView2" />
+        <de.hdodenhof.circleimageview.CircleImageView
 
+            android:id="@+id/fragment_update_profile_profile_photo"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="56dp"
+            android:src="@drawable/download"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_update_profile_TextView1" />
 
-
-       <TextView
-           android:id="@+id/fragment_update_profile_TextView3"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_marginStart="16dp"
-           android:layout_marginTop="44dp"
-           android:text="Messenger URL"
-           android:textSize="25sp"
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toBottomOf="@id/fragment_update_profile_editText_name" />
-
-       <EditText
-           android:id="@+id/fragment_update_profile_editText_URL"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginHorizontal="20dp"
-           android:layout_marginTop="12dp"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintHorizontal_bias="0.0"
-           app:layout_constraintStart_toStartOf="@+id/fragment_update_profile_TextView3"
-           app:layout_constraintTop_toBottomOf="@+id/fragment_update_profile_TextView3" />
+        <Button
+            android:id="@+id/fragment_update_profile_change_photo_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change Photo"
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_update_profile_profile_photo" />
 
 
+        <TextView
+            android:id="@+id/fragment_update_profile_TextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="45dp"
+            android:text="Name"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_update_profile_change_photo_button" />
 
-   </androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/fragment_update_profile_editText_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="12dp"
+            android:maxLength="25"
+            android:singleLine="true"
+            android:textIsSelectable="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/fragment_update_profile_TextView2"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_update_profile_TextView2" />
+
+
+        <TextView
+            android:id="@+id/fragment_update_profile_TextView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="45dp"
+            android:text="Messenger URL"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_update_profile_editText_name" />
+
+        <EditText
+            android:id="@+id/fragment_update_profile_editText_URL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="15dp"
+            android:singleLine="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/fragment_update_profile_TextView3"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_update_profile_TextView3" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
