@@ -26,7 +26,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,6 +61,7 @@ public class SettingsFragment extends Fragment {
         TextView displayName = view.findViewById(R.id.fragment_settings_editText_name);
         TextView messengerURL = view.findViewById(R.id.fragment_settings_editText_messenger_url);
         Button changePasswordButton = view.findViewById(R.id.fragment_settings_change_password_button);
+        AppCompatImageButton backButton = view.findViewById(R.id.fragment_settings_back_button);
         AppCompatImageButton editProfileButton = view.findViewById(R.id.fragment_settings_edit_profile_button);
         Button deleteAccountButton = view.findViewById(R.id.fragment_settings_delete_account_button);
         Button logoutButton = view.findViewById(R.id.fragment_settings_logout_button);
@@ -103,16 +103,18 @@ public class SettingsFragment extends Fragment {
             });
         }
 
-        changePasswordButton.setOnClickListener(view1 -> {
-            navController.navigate(R.id.action_settingsFragment_to_changePasswordFragment);
+        backButton.setOnClickListener(view1 -> {
+            navController.navigateUp();
         });
-
-
         editProfileButton.setOnClickListener(view2 -> {
             navController.navigate(R.id.action_settingsFragment_to_updateProfileFragment2);
         });
 
-        deleteAccountButton.setOnClickListener(view3 -> {
+        changePasswordButton.setOnClickListener(view3 -> {
+            navController.navigate(R.id.action_settingsFragment_to_changePasswordFragment);
+        });
+
+        deleteAccountButton.setOnClickListener(view4 -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle(R.string.delete_account_dialog_title)
                     .setMessage(R.string.delete_account_dialog_message)
