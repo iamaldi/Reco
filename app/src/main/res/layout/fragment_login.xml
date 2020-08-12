@@ -16,7 +16,7 @@
             android:layout_height="127dp"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="60dp"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_register_name_title"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_login_username_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -24,7 +24,7 @@
 
 
         <TextView
-            android:id="@+id/fragment_register_name_title"
+            android:id="@+id/fragment_login_username_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -38,7 +38,7 @@
             app:layout_constraintTop_toBottomOf="@+id/fragment_login_app_logo" />
 
         <EditText
-            android:id="@+id/fragment_login_username_edit_text"
+            android:id="@id/fragment_login_username"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -49,13 +49,13 @@
             android:hint="@string/username_hint"
             android:inputType="textPersonName"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="@+id/fragment_register_name_title"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_login_username_title"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/fragment_register_name_title"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_register_name_title" />
+            app:layout_constraintStart_toStartOf="@+id/fragment_login_username_title"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_login_username_title" />
 
         <TextView
-            android:id="@+id/fragment_home_latest_title"
+            android:id="@+id/fragment_login_password_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -63,13 +63,13 @@
             android:text="@string/password"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/fragment_login_username_edit_text"
-            app:layout_constraintLeft_toLeftOf="@id/fragment_login_username_edit_text"
-            app:layout_constraintStart_toStartOf="@+id/fragment_login_username_edit_text"
-            app:layout_constraintTop_toBottomOf="@id/fragment_login_username_edit_text" />
+            app:layout_constraintEnd_toEndOf="@+id/fragment_login_username"
+            app:layout_constraintLeft_toLeftOf="@id/fragment_login_username"
+            app:layout_constraintStart_toStartOf="@+id/fragment_login_username"
+            app:layout_constraintTop_toBottomOf="@id/fragment_login_username" />
 
         <EditText
-            android:id="@+id/fragment_login_password_edit_text"
+            android:id="@id/fragment_login_password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -81,10 +81,10 @@
             android:importantForAutofill="no"
             android:inputType="textPassword"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="@+id/fragment_home_latest_title"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_login_password_title"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/fragment_home_latest_title"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_home_latest_title" />
+            app:layout_constraintStart_toStartOf="@+id/fragment_login_password_title"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_login_password_title" />
 
         <Button
             android:id="@+id/fragment_login_login_button"
@@ -97,7 +97,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_login_password_edit_text" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_login_password" />
 
         <TextView
             android:id="@+id/fragment_login_register_suggestion"
@@ -106,7 +106,7 @@
             android:layout_marginTop="40dp"
             android:text="@string/suggest_registration"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="@+id/fragment_login_password_edit_text"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_login_password"
             app:layout_constraintHorizontal_bias="0.941"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_login_login_button" />
@@ -121,7 +121,8 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/fragment_login_register_suggestion"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_login_register_suggestion" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_login_register_suggestion"
+            android:focusable="true" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
