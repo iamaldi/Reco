@@ -44,7 +44,6 @@
     <string name="password">Password</string>
     <string name="username">Username</string>
     <string name="recommendations">Recommendations</string>
-    <string name="looks_like_you_have_no_recommendations">Looks like you have no recommendations.</string>
     <string name="looks_like_your_library_is_empty">Looks like your library is empty!</string>
     <string name="my_library">My Library</string>
     <string name="current_password">Current Password</string>
