@@ -53,7 +53,7 @@ public class RegisterFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         TextView mDisplayName = view.findViewById(R.id.fragment_register_display_name);
         TextView mUsername = view.findViewById(R.id.fragment_register_username);
-        TextView mMessengerUrl = view.findViewById(R.id.fragment_register_messengerURL);
+        TextView mMessengerUrl = view.findViewById(R.id.fragment_register_messenger_url);
         TextView mPassword = view.findViewById(R.id.fragment_register_password);
         TextView mRepeatPassword = view.findViewById(R.id.fragment_register_repeat_password);
         TextView mLoginInstead = view.findViewById(R.id.fragment_register_go_to_login);
