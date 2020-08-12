@@ -4,15 +4,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.reco.R;
+import com.reco.util.Utilities;
 import com.reco.view.adapter.RecommendationsAdapter;
 import com.reco.view.callback.APIErrorCallbacks;
 import com.reco.viewmodel.RecommendationsViewModel;
 
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +43,7 @@ public class RecommendationsFragment extends Fragment implements APIErrorCallbac
         super.onViewCreated(view, savedInstanceState);
         RecyclerView mRecyclerView = view.findViewById(R.id.fragment_recommendations_recycler_view);
         RecommendationsViewModel mRecommendationsViewModel = new RecommendationsViewModel(this);
+        TextView noRecommendationsMessage = view.findViewById(R.id.fragment_recommendations_no_recommendations_message);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         mRecyclerView.setAdapter(mRecommendationsAdapter);
@@ -46,6 +52,20 @@ public class RecommendationsFragment extends Fragment implements APIErrorCallbac
             if (recommendedUsers != null) {
                 mRecommendationsAdapter.setRecommendedUsers(recommendedUsers);
                 mRecommendationsAdapter.notifyDataSetChanged();
+            }
+        });
+
+        mRecommendationsAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                if (mRecommendationsAdapter.getItemCount() == 0 || Utilities.getLocalLibrary((AppCompatActivity) Objects.requireNonNull(getActivity())).isEmpty()) {
+                    mRecyclerView.setVisibility(View.INVISIBLE);
+                    noRecommendationsMessage.setVisibility(View.VISIBLE);
+                } else {
+                    noRecommendationsMessage.setVisibility(View.INVISIBLE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

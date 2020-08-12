@@ -83,10 +83,12 @@ public class HomeFragment extends Fragment implements APIErrorCallbacks {
             @Override
             public void onChanged() {
                 super.onChanged();
-                if (recommendationsAdapter.getItemCount() == 0) {
+                if (recommendationsAdapter.getItemCount() == 0 || Utilities.getLocalLibrary((AppCompatActivity) Objects.requireNonNull(getActivity())).isEmpty()) {
+                    mRecyclerView.setVisibility(View.INVISIBLE);
                     noRecommendationsMessage.setVisibility(View.VISIBLE);
                 } else {
                     noRecommendationsMessage.setVisibility(View.INVISIBLE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
                 }
             }
         });
