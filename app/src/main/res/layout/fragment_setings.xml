@@ -111,7 +111,7 @@
             android:gravity="start"
             android:text="@string/delete_account"
             android:textAllCaps="false"
-            android:textColor="@color/design_default_color_error"
+            android:textColor="#DA0101"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/fragment_settings_change_password_button"
