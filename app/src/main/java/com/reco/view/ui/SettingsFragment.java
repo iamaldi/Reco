@@ -1,6 +1,7 @@
 package com.reco.view.ui;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,8 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -58,6 +61,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        CircleImageView profileImage =view.findViewById( R.id.fragment_settings_profile_circleimage );
         TextView displayName = view.findViewById(R.id.fragment_settings_name_edit_text);
         TextView messengerURL = view.findViewById(R.id.fragment_settings_messenger_url_edit_text);
         Button changePasswordButton = view.findViewById(R.id.fragment_settings_change_password_button);
@@ -75,6 +79,8 @@ public class SettingsFragment extends Fragment {
         // check if we have a copy of our data locally
         UserProfileModel user = Utilities.getLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()));
         if (user != null) {
+            if(user.getImgUrl()!=null)
+                profileImage.setImageURI( Uri.parse(user.getImgUrl()) );
             displayName.setText(user.getDisplayName());
             messengerURL.setText(user.getMessengerUrl());
         } else {

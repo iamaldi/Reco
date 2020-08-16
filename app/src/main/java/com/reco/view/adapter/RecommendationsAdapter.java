@@ -14,6 +14,7 @@ import com.reco.service.model.RecommendedUserModel;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,15 +40,18 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
     @Override
     public void onBindViewHolder(@NonNull RecommendationsAdapterViewHolder holder, int position) {
         RecommendedUserModel user = recommendedUsers.get(position);
-//        holder.image.setImageResource(images.get(position));
+        //holder.image.setImageResource(images.get(position));
         holder.mName.setText(user.getDisplayName());
-        // TODO: use percentage placeholder on the user item
-//        holder.mSimilarity.setText(user.getSimilarityMatch() + "%");
         holder.mSimilarity.setText(String.format(context.getString(R.string.similarity_placeholder), user.getSimilarityMatch()));
-        // TODO: implement this - open messenger app when clicked.
         holder.sendMessageButton.setOnClickListener(view -> {
-            Toast.makeText(view.getContext(), "DEBUG: SEND MESSAGE", Toast.LENGTH_SHORT).show();
-        });
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle( R.string.open_in_messenger)
+                    .setPositiveButton(R.string.delete_account_dialog_option_cancel, (dialog1, id) -> {
+                        // cancel - do nothing
+                    }).setNegativeButton( R.string.open_option, (dialog2, id) -> {
+            }).create().show();
+
+            });
 
     }
 

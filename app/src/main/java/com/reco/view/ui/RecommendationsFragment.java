@@ -8,11 +8,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.reco.R;
+import com.reco.service.model.TrackModel;
 import com.reco.util.Utilities;
 import com.reco.view.adapter.RecommendationsAdapter;
 import com.reco.view.callback.APIErrorCallbacks;
 import com.reco.viewmodel.RecommendationsViewModel;
 
+import java.util.List;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -59,12 +61,18 @@ public class RecommendationsFragment extends Fragment implements APIErrorCallbac
             @Override
             public void onChanged() {
                 super.onChanged();
-                if (mRecommendationsAdapter.getItemCount() == 0 || Utilities.getLocalLibrary((AppCompatActivity) Objects.requireNonNull(getActivity())).isEmpty()) {
+                List<TrackModel> trackModelList = Utilities.getLocalLibrary((AppCompatActivity) Objects.requireNonNull(getActivity()));
+                if (trackModelList != null) {
+                    if (mRecommendationsAdapter.getItemCount() == 0 || trackModelList.isEmpty()) {
+                        mRecyclerView.setVisibility(View.INVISIBLE);
+                        noRecommendationsMessage.setVisibility(View.VISIBLE);
+                    } else {
+                        noRecommendationsMessage.setVisibility(View.INVISIBLE);
+                        mRecyclerView.setVisibility(View.VISIBLE);
+                    }
+                } else {
                     mRecyclerView.setVisibility(View.INVISIBLE);
                     noRecommendationsMessage.setVisibility(View.VISIBLE);
-                } else {
-                    noRecommendationsMessage.setVisibility(View.INVISIBLE);
-                    mRecyclerView.setVisibility(View.VISIBLE);
                 }
             }
         });

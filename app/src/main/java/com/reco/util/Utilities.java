@@ -1,13 +1,19 @@
 package com.reco.util;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.reco.service.model.TrackModel;
 import com.reco.service.model.UserProfileModel;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,4 +95,29 @@ public class Utilities {
             saveLocalLibrary(appCompatActivity, tracksList);
         }
     }
+
+
+
+    public static String saveToInternalStorage(AppCompatActivity appCompatActivity, Bitmap bitmap){
+        ContextWrapper cw = new ContextWrapper(appCompatActivity.getApplicationContext());
+        File directory = cw.getDir("profileImage", Context.MODE_PRIVATE);
+        File profileImagePath=new File(directory,"profile.jpg");
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(profileImagePath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return profileImagePath.toString();
+    }
+
 }
