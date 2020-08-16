@@ -48,4 +48,6 @@
     <string name="my_library">My Library</string>
     <string name="current_password">Current Password</string>
     <string name="new_password">New Password</string>
+    <string name="open_in_messenger">Open in Messenger</string>
+    <string name="open_option">Open</string>
 </resources>
