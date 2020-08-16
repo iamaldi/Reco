@@ -1,6 +1,6 @@
 This repository contains the code for the Reco Android application - a university assignment. 
 
-<p align="center"><img src="https://github.com/iamaldi/Reco/blob/dev/app/src/main/res/drawable/reco_logo.png" /></p>
+<p align="center"><img src="https://github.com/iamaldi/Reco/blob/master/app/src/main/res/drawable/reco_logo.png" /></p>
 
 Reco is an android application that matches users based on their music preferences.
 It allows users to search for music and build up a library.
