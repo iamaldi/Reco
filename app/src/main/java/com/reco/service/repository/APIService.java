@@ -5,7 +5,6 @@ import com.reco.service.model.TrackModel;
 import com.reco.service.model.UserLoginModel;
 import com.reco.service.model.UserPasswordChangeModel;
 import com.reco.service.model.UserProfileModel;
-import com.reco.service.model.UserProfileUpdateModel;
 import com.reco.service.model.UserRegisterModel;
 
 import java.util.List;
@@ -35,7 +34,7 @@ public interface APIService {
 
     // update user profile
     @PUT("/users/me")
-    Call<UserProfileModel> updateUserProfile(@Body UserProfileUpdateModel user);
+    Call<UserProfileModel> updateUserProfile(@Body UserProfileModel user);
 
     // delete user profile
     @DELETE("/users/me")

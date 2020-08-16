@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.reco.R;
 import com.reco.service.model.UserProfileModel;
-import com.reco.service.model.UserProfileUpdateModel;
 import com.reco.service.repository.APIService;
 import com.reco.util.Utilities;
 
@@ -115,9 +114,8 @@ public class UpdateProfileFragment extends Fragment {
                 displayName.setError( getResources().getString( R.string.field_required ) );
             } else {
                 // disable the button once passed checks - fixes null pointer exception
-                applyChangesButton.setEnabled( false );
-                UserProfileUpdateModel updateUser = new UserProfileUpdateModel( userDisplayName, selectedImage.toString(), userMessengerURL );
-
+                applyChangesButton.setEnabled(false);
+                UserProfileModel updateUser = new UserProfileModel(user.getUsername(), userDisplayName, null, userMessengerURL);
                 // call api to update user
                 apiService.updateUserProfile( updateUser ).enqueue( new Callback<UserProfileModel>() {
                     @Override
