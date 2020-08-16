@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // check if user is logged in
-        if (Utilities.isUserLoggedIn(this)) {
+        if (Utilities.getLoggedInStatus(this)) {
             // start home activity
             startActivity(new Intent(this, HomeActivity.class));
             finish();

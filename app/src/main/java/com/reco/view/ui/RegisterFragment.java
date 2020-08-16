@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -63,53 +62,42 @@ public class RegisterFragment extends Fragment {
         TextView mLoginInstead = view.findViewById(R.id.fragment_register_go_to_login);
         Button mRegisterButton = view.findViewById(R.id.fragment_register_signup_button);
         NavController navController = Navigation.findNavController(view);
-        ImageButton passwordVisibility = view.findViewById( R.id.fragment_register_password_visibility_button );
-        ImageButton repeatPasswordVisibility = view.findViewById( R.id.fragment_register_repeat_password_visibility_button );
+        ImageButton passwordVisibility = view.findViewById(R.id.fragment_register_password_visibility_button);
+        ImageButton repeatPasswordVisibility = view.findViewById(R.id.fragment_register_repeat_password_visibility_button);
 
 
-
-        passwordVisibility.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mPassword.getTransformationMethod()== PasswordTransformationMethod.getInstance()){
-                    mPassword.setTransformationMethod( HideReturnsTransformationMethod.getInstance() );
-                    passwordVisibility.setImageResource( R.drawable.ic_baseline_visibility_off_24 );
-                }else {
-                    mPassword.setTransformationMethod( PasswordTransformationMethod.getInstance() );
-                    passwordVisibility.setImageResource( R.drawable.ic_baseline_remove_red_eye_24 );
-                }
+        passwordVisibility.setOnClickListener(view13 -> {
+            if (mPassword.getTransformationMethod() == PasswordTransformationMethod.getInstance()) {
+                mPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                passwordVisibility.setImageResource(R.drawable.ic_baseline_visibility_off_24);
+            } else {
+                mPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                passwordVisibility.setImageResource(R.drawable.ic_baseline_remove_red_eye_24);
             }
-        } );
+        });
 
 
-
-        repeatPasswordVisibility.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mRepeatPassword.getTransformationMethod()== PasswordTransformationMethod.getInstance()){
-                    mRepeatPassword.setTransformationMethod( HideReturnsTransformationMethod.getInstance() );
-                    repeatPasswordVisibility.setImageResource( R.drawable.ic_baseline_visibility_off_24 );
-                }else {
-                    mRepeatPassword.setTransformationMethod( PasswordTransformationMethod.getInstance() );
-                    repeatPasswordVisibility.setImageResource( R.drawable.ic_baseline_remove_red_eye_24 );
-                }
+        repeatPasswordVisibility.setOnClickListener(view14 -> {
+            if (mRepeatPassword.getTransformationMethod() == PasswordTransformationMethod.getInstance()) {
+                mRepeatPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                repeatPasswordVisibility.setImageResource(R.drawable.ic_baseline_visibility_off_24);
+            } else {
+                mRepeatPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                repeatPasswordVisibility.setImageResource(R.drawable.ic_baseline_remove_red_eye_24);
             }
-        } );
+        });
 
-
-        mPassword.setOnTouchListener( (view1, motionEvent) -> {
-            mPassword.setError( null );
-            passwordVisibility.setVisibility( View.VISIBLE );
+        mPassword.setOnTouchListener((view1, motionEvent) -> {
+            mPassword.setError(null);
+            passwordVisibility.setVisibility(View.VISIBLE);
             return false;
-        } );
+        });
 
-
-        mRepeatPassword.setOnTouchListener( (view12, motionEvent) -> {
-            mRepeatPassword.setError( null );
-            repeatPasswordVisibility.setVisibility( View.VISIBLE );
+        mRepeatPassword.setOnTouchListener((view12, motionEvent) -> {
+            mRepeatPassword.setError(null);
+            repeatPasswordVisibility.setVisibility(View.VISIBLE);
             return false;
-        } );
-
+        });
 
         mRegisterButton.setOnClickListener(mView -> {
             String username = mUsername.getText().toString();
@@ -126,11 +114,11 @@ public class RegisterFragment extends Fragment {
                 mUsername.setError(getString(R.string.field_required));
                 mUsername.requestFocus();
             } else if (password.isEmpty()) {
-                passwordVisibility.setVisibility( View.INVISIBLE );
+                passwordVisibility.setVisibility(View.INVISIBLE);
                 mPassword.setError(getString(R.string.field_required));
                 mPassword.requestFocus();
             } else if (repeatPassword.isEmpty()) {
-                repeatPasswordVisibility.setVisibility( View.INVISIBLE );
+                repeatPasswordVisibility.setVisibility(View.INVISIBLE);
                 mRepeatPassword.setError(getString(R.string.field_required));
                 mRepeatPassword.requestFocus();
             } else {
@@ -145,14 +133,17 @@ public class RegisterFragment extends Fragment {
                             if (response.isSuccessful()) {
                                 if (getActivity() != null) {
                                     UserProfileModel user = response.body();
-                                    // delete any previous we might have saved data locally
-                                    Utilities.clearLocalData((AppCompatActivity) Objects.requireNonNull(getActivity()));
-                                    // save user to shared preferences
-                                    Utilities.saveLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()), user);
-                                    // start home activity
-                                    startActivity(new Intent(getActivity(), HomeActivity.class));
-                                    getActivity().finish();
-
+                                    if (user != null) {
+                                        // set login flag
+                                        Utilities.setLoggedInStatus((AppCompatActivity) getActivity(), true);
+                                        // delete any previous we might have saved data locally
+                                        Utilities.clearLocalData((AppCompatActivity) Objects.requireNonNull(getActivity()));
+                                        // save user to shared preferences
+                                        Utilities.saveLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()), user);
+                                        // start home activity
+                                        startActivity(new Intent(getActivity(), HomeActivity.class));
+                                        getActivity().finish();
+                                    }
                                 }
                             } else {
                                 // enable the button
@@ -169,7 +160,7 @@ public class RegisterFragment extends Fragment {
                         }
                     });
                 } else {
-                    repeatPasswordVisibility.setVisibility( View.INVISIBLE );
+                    repeatPasswordVisibility.setVisibility(View.INVISIBLE);
                     mRepeatPassword.setError(getString(R.string.passwords_do_not_match));
                     mRepeatPassword.requestFocus();
                 }

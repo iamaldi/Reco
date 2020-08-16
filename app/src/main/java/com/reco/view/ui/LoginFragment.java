@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.text.method.TransformationMethod;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -67,39 +65,39 @@ public class LoginFragment extends Fragment {
         TextView mPassword = view.findViewById(R.id.fragment_login_password);
         Button mLoginButton = view.findViewById(R.id.fragment_login_login_button);
         TextView mRegisterInstead = view.findViewById(R.id.fragment_login_register_instead_button);
-        ImageButton mPasswordVisibility = view.findViewById( R.id.fragment_login_password_visibility );
+        ImageButton mPasswordVisibility = view.findViewById(R.id.fragment_login_password_visibility);
 
 
         NavController navController = Navigation.findNavController(view);
 
-        mPasswordVisibility.setOnClickListener( view12 -> {
-            if(mPassword.getTransformationMethod()==PasswordTransformationMethod.getInstance()){
-                mPassword.setTransformationMethod( HideReturnsTransformationMethod.getInstance() );
-                mPasswordVisibility.setImageResource( R.drawable.ic_baseline_visibility_off_24 );
-            }else {
-                mPassword.setTransformationMethod( PasswordTransformationMethod.getInstance() );
-                mPasswordVisibility.setImageResource( R.drawable.ic_baseline_remove_red_eye_24 );
+        mPasswordVisibility.setOnClickListener(view12 -> {
+            if (mPassword.getTransformationMethod() == PasswordTransformationMethod.getInstance()) {
+                mPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                mPasswordVisibility.setImageResource(R.drawable.ic_baseline_visibility_off_24);
+            } else {
+                mPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                mPasswordVisibility.setImageResource(R.drawable.ic_baseline_remove_red_eye_24);
             }
-        } );
+        });
 
-        mPassword.setOnTouchListener( (view13, motionEvent) -> {
-            mPassword.setError( null );
-            mPasswordVisibility.setVisibility( View.VISIBLE );
+        mPassword.setOnTouchListener((view13, motionEvent) -> {
+            view13.performClick();
+            mPassword.setError(null);
+            mPasswordVisibility.setVisibility(View.VISIBLE);
             return false;
-        } );
+        });
 
         mLoginButton.setOnClickListener(view1 -> {
-
-
             String username = mUsername.getText().toString();
             String password = mPassword.getText().toString();
 
+            UserProfileModel localUser = Utilities.getLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()));
             // check if fields are empty
             if (username.isEmpty()) {
                 mUsername.setError(getString(R.string.field_required));
                 mUsername.requestFocus();
             } else if (password.isEmpty()) {
-                mPasswordVisibility.setVisibility( View.INVISIBLE );
+                mPasswordVisibility.setVisibility(View.INVISIBLE);
                 mPassword.setError(getString(R.string.field_required));
                 mPassword.requestFocus();
             } else {
@@ -112,8 +110,12 @@ public class LoginFragment extends Fragment {
                         if (response.isSuccessful()) {
                             if (getActivity() != null) {
                                 UserProfileModel user = response.body();
-                                // save user to shared preferences
-                                Utilities.saveLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()), user);
+                                // set flag
+                                Utilities.setLoggedInStatus((AppCompatActivity) getActivity(), true);
+                                if (localUser == null) {
+                                    // save user to shared preferences
+                                    Utilities.saveLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()), user);
+                                }
                                 // start home activity
                                 startActivity(new Intent(getActivity(), HomeActivity.class));
                                 getActivity().finish();

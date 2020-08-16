@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -21,8 +20,15 @@ import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Utilities {
-    public static boolean isUserLoggedIn(AppCompatActivity mActivity) {
-        return getLocalUser(mActivity) != null;
+    public static void setLoggedInStatus(AppCompatActivity appCompatActivity, boolean loggedInStatus) {
+        appCompatActivity.getSharedPreferences("hasLocalProfile", Context.MODE_PRIVATE)
+                .edit()
+                .putBoolean("hasLocalProfile", loggedInStatus)
+                .apply();
+    }
+
+    public static boolean getLoggedInStatus(AppCompatActivity appCompatActivity) {
+        return appCompatActivity.getSharedPreferences("hasLocalProfile", Context.MODE_PRIVATE).getBoolean("hasLocalProfile", false);
     }
 
     public static void clearLocalData(AppCompatActivity appCompatActivity) {
@@ -97,26 +103,24 @@ public class Utilities {
     }
 
 
-
-    public static String saveToInternalStorage(AppCompatActivity appCompatActivity, Bitmap bitmap){
-        ContextWrapper cw = new ContextWrapper(appCompatActivity.getApplicationContext());
-        File directory = cw.getDir("profileImage", Context.MODE_PRIVATE);
-        File profileImagePath=new File(directory,"profile.jpg");
-        FileOutputStream fos = null;
+    public static String saveToInternalStorage(AppCompatActivity appCompatActivity, Bitmap bitmap) {
+        ContextWrapper contextWrapper = new ContextWrapper(appCompatActivity.getApplicationContext());
+        File dataDirectory = contextWrapper.getDir("profileImage", Context.MODE_PRIVATE);
+        File profileImagePath = new File(dataDirectory, "profile.jpg");
+        FileOutputStream fileOutputStream = null;
         try {
-            fos = new FileOutputStream(profileImagePath);
+            fileOutputStream = new FileOutputStream(profileImagePath);
             // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
-                fos.close();
+                fileOutputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
         return profileImagePath.toString();
     }
 
