@@ -102,7 +102,6 @@ public class Utilities {
         }
     }
 
-
     public static String saveToInternalStorage(AppCompatActivity appCompatActivity, Bitmap bitmap) {
         ContextWrapper contextWrapper = new ContextWrapper(appCompatActivity.getApplicationContext());
         File dataDirectory = contextWrapper.getDir("profileImage", Context.MODE_PRIVATE);

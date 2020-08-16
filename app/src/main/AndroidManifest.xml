@@ -3,6 +3,8 @@
     package="com.reco">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/reco_logo"
@@ -13,14 +15,13 @@
         <activity
             android:name=".view.ui.MainActivity"
             android:exported="true"
-            android:theme="@style/SplashScreenTheme" >
+            android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.ui.HomeActivity"/>
-
+        <activity android:name=".view.ui.HomeActivity" />
     </application>
 
 </manifest>
