@@ -70,6 +70,9 @@ public class RecommendationsFragment extends Fragment implements APIErrorCallbac
                         noRecommendationsMessage.setVisibility(View.INVISIBLE);
                         mRecyclerView.setVisibility(View.VISIBLE);
                     }
+                } else {
+                    mRecyclerView.setVisibility(View.INVISIBLE);
+                    noRecommendationsMessage.setVisibility(View.VISIBLE);
                 }
             }
         });
