@@ -2,10 +2,13 @@ package com.reco.view.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +62,39 @@ public class RegisterFragment extends Fragment {
         TextView mLoginInstead = view.findViewById(R.id.fragment_register_go_to_login);
         Button mRegisterButton = view.findViewById(R.id.fragment_register_signup_button);
         NavController navController = Navigation.findNavController(view);
+        ImageButton passwordVisibility = view.findViewById( R.id.fragment_register_password_visibility_button );
+        ImageButton repeatPasswordVisibility = view.findViewById( R.id.fragment_register_repeat_password_visibility_button );
+
+
+
+        passwordVisibility.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mPassword.getTransformationMethod()== PasswordTransformationMethod.getInstance()){
+                    mPassword.setTransformationMethod( HideReturnsTransformationMethod.getInstance() );
+                    passwordVisibility.setImageResource( R.drawable.ic_baseline_visibility_off_24 );
+                }else {
+                    mPassword.setTransformationMethod( PasswordTransformationMethod.getInstance() );
+                    passwordVisibility.setImageResource( R.drawable.ic_baseline_remove_red_eye_24 );
+                }
+            }
+        } );
+
+
+
+        repeatPasswordVisibility.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mRepeatPassword.getTransformationMethod()== PasswordTransformationMethod.getInstance()){
+                    mRepeatPassword.setTransformationMethod( HideReturnsTransformationMethod.getInstance() );
+                    repeatPasswordVisibility.setImageResource( R.drawable.ic_baseline_visibility_off_24 );
+                }else {
+                    mRepeatPassword.setTransformationMethod( PasswordTransformationMethod.getInstance() );
+                    repeatPasswordVisibility.setImageResource( R.drawable.ic_baseline_remove_red_eye_24 );
+                }
+            }
+        } );
+
 
         mRegisterButton.setOnClickListener(mView -> {
             String username = mUsername.getText().toString();

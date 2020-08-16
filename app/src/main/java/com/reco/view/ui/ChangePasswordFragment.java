@@ -1,9 +1,12 @@
 package com.reco.view.ui;
 
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,8 +55,55 @@ public class ChangePasswordFragment extends Fragment {
         TextView oldPassword = view.findViewById(R.id.fragment_change_password_current_password);
         TextView newPassword = view.findViewById(R.id.fragment_change_password_new_password);
         TextView repeatPassword = view.findViewById(R.id.fragment_change_password_repeat_password);
+
+        ImageButton mOldPasswordVisibility = view.findViewById( R.id.fragment_change_password_current_password_visibility_button );
+        ImageButton mNewPasswordVisibility = view.findViewById( R.id.fragment_change_password_new_password_visibility_button );
+        ImageButton mRepeatPasswordVisibility = view.findViewById( R.id.fragment_change_password_repeat_password_visibility_button );
+
         AppCompatButton changePasswordButton = view.findViewById(R.id.fragment_change_password_change_password_button);
         NavController navController = Navigation.findNavController(view);
+
+
+        mOldPasswordVisibility.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(oldPassword.getTransformationMethod()== PasswordTransformationMethod.getInstance()){
+                    oldPassword.setTransformationMethod( HideReturnsTransformationMethod.getInstance() );
+                    mOldPasswordVisibility.setImageResource( R.drawable.ic_baseline_visibility_off_24 );
+                }else {
+                    oldPassword.setTransformationMethod( PasswordTransformationMethod.getInstance() );
+                    mOldPasswordVisibility.setImageResource( R.drawable.ic_baseline_remove_red_eye_24 );
+                }
+            }
+        } );
+
+        mNewPasswordVisibility.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(newPassword.getTransformationMethod()== PasswordTransformationMethod.getInstance()){
+                    newPassword.setTransformationMethod( HideReturnsTransformationMethod.getInstance() );
+                    mNewPasswordVisibility.setImageResource( R.drawable.ic_baseline_visibility_off_24 );
+                }else {
+                    newPassword.setTransformationMethod( PasswordTransformationMethod.getInstance() );
+                    mNewPasswordVisibility.setImageResource( R.drawable.ic_baseline_remove_red_eye_24 );
+                }
+            }
+        } );
+
+        mRepeatPasswordVisibility.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(repeatPassword.getTransformationMethod()== PasswordTransformationMethod.getInstance()){
+                    repeatPassword.setTransformationMethod( HideReturnsTransformationMethod.getInstance() );
+                    mRepeatPasswordVisibility.setImageResource( R.drawable.ic_baseline_visibility_off_24 );
+                }else {
+                    repeatPassword.setTransformationMethod( PasswordTransformationMethod.getInstance() );
+                    mRepeatPasswordVisibility.setImageResource( R.drawable.ic_baseline_remove_red_eye_24 );
+                }
+            }
+        } );
+
+
 
         changePasswordButton.setOnClickListener(view1 -> {
             String oldPass, newPass, repeatPass;

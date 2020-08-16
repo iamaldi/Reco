@@ -74,7 +74,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:drawableStart="@drawable/ic_baseline_lock_24"
-            android:drawableEnd="@drawable/ic_baseline_remove_red_eye_24"
             android:drawablePadding="10dp"
             android:ems="10"
             android:hint="@string/password_hint"
@@ -92,7 +91,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
+            android:background="@drawable/button_shape"
             android:text="@string/login"
+            android:textColor="#ffff"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -117,13 +118,27 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:clickable="true"
+            android:focusable="true"
             android:text="@string/register"
+            android:layout_marginBottom="20dp"
             android:textSize="20sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/fragment_login_register_suggestion"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_login_register_suggestion"
-            android:focusable="true" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_login_register_suggestion" />
+
+        <ImageButton
+            android:id="@+id/fragment_login_password_visibility"
+            android:layout_width="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:src="@drawable/ic_baseline_remove_red_eye_24"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_login_password"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_login_password"
+            app:layout_constraintTop_toTopOf="@+id/fragment_login_password" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.core.widget.NestedScrollView>

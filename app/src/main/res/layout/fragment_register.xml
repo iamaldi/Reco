@@ -104,7 +104,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:drawableStart="@drawable/ic_baseline_lock_24"
-            android:drawableEnd="@drawable/ic_baseline_remove_red_eye_24"
             android:drawablePadding="10dp"
             android:ems="10"
             android:hint="@string/password_hint"
@@ -138,7 +137,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:drawableStart="@drawable/ic_baseline_lock_24"
-            android:drawableEnd="@drawable/ic_baseline_remove_red_eye_24"
             android:drawablePadding="10dp"
             android:ems="10"
             android:hint="@string/password_hint"
@@ -189,7 +187,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20sp"
             android:text="@string/sign_up"
+            android:textColor="#ffff"
+            android:background="@drawable/button_shape"
             android:textSize="24sp"
+            android:padding="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/fragment_register_messenger_url"
             app:layout_constraintHorizontal_bias="0.498"
@@ -221,6 +222,28 @@
             app:layout_constraintEnd_toEndOf="@+id/fragment_register_login_instead"
             app:layout_constraintTop_toBottomOf="@id/fragment_register_login_instead"
             android:focusable="true" />
+
+        <ImageButton
+            android:id="@+id/fragment_register_password_visibility_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_baseline_remove_red_eye_24"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_register_password"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_register_password"
+            app:layout_constraintTop_toTopOf="@+id/fragment_register_password" />
+
+        <ImageButton
+            android:id="@+id/fragment_register_repeat_password_visibility_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_baseline_remove_red_eye_24"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_register_repeat_password"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_register_repeat_password"
+            app:layout_constraintTop_toTopOf="@+id/fragment_register_repeat_password" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
