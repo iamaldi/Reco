@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -96,6 +97,20 @@ public class RegisterFragment extends Fragment {
         } );
 
 
+        mPassword.setOnTouchListener( (view1, motionEvent) -> {
+            mPassword.setError( null );
+            passwordVisibility.setVisibility( View.VISIBLE );
+            return false;
+        } );
+
+
+        mRepeatPassword.setOnTouchListener( (view12, motionEvent) -> {
+            mRepeatPassword.setError( null );
+            repeatPasswordVisibility.setVisibility( View.VISIBLE );
+            return false;
+        } );
+
+
         mRegisterButton.setOnClickListener(mView -> {
             String username = mUsername.getText().toString();
             String displayName = mDisplayName.getText().toString();
@@ -111,9 +126,11 @@ public class RegisterFragment extends Fragment {
                 mUsername.setError(getString(R.string.field_required));
                 mUsername.requestFocus();
             } else if (password.isEmpty()) {
+                passwordVisibility.setVisibility( View.INVISIBLE );
                 mPassword.setError(getString(R.string.field_required));
                 mPassword.requestFocus();
             } else if (repeatPassword.isEmpty()) {
+                repeatPasswordVisibility.setVisibility( View.INVISIBLE );
                 mRepeatPassword.setError(getString(R.string.field_required));
                 mRepeatPassword.requestFocus();
             } else {
@@ -152,6 +169,7 @@ public class RegisterFragment extends Fragment {
                         }
                     });
                 } else {
+                    repeatPasswordVisibility.setVisibility( View.INVISIBLE );
                     mRepeatPassword.setError(getString(R.string.passwords_do_not_match));
                     mRepeatPassword.requestFocus();
                 }
