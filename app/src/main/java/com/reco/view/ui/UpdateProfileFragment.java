@@ -1,6 +1,12 @@
 package com.reco.view.ui;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +23,7 @@ import com.reco.util.Utilities;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -25,6 +32,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,6 +42,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UpdateProfileFragment extends Fragment {
     private APIService apiService;
+    private static  final int IMAG_PICK = 1000 ;
+    private static final int PERMISION_CODE = 1001 ;
+    private CircleImageView profilePhoto;
+    private Uri selectedImage = null;
+
 
     public UpdateProfileFragment() {
         // Required empty public constructor
@@ -65,6 +79,8 @@ public class UpdateProfileFragment extends Fragment {
         Button changePhotoButton;
         EditText displayName, messengerURL;
 
+        profilePhoto=view.findViewById( R.id.fragment_update_profile_profile_photo );
+
         cancelButton = view.findViewById(R.id.fragment_update_profile_cancel_button);
         applyChangesButton = view.findViewById(R.id.fragment_update_profile_apply_changes_button);
         changePhotoButton = view.findViewById(R.id.fragment_update_profile_change_photo_button);
@@ -96,7 +112,7 @@ public class UpdateProfileFragment extends Fragment {
             } else {
                 // disable the button once passed checks - fixes null pointer exception
                 applyChangesButton.setEnabled(false);
-                UserProfileUpdateModel updateUser = new UserProfileUpdateModel(userDisplayName, null, userMessengerURL);
+                UserProfileUpdateModel updateUser = new UserProfileUpdateModel(userDisplayName, selectedImage.toString(), userMessengerURL);
                 // call api to update user
                 apiService.updateUserProfile(updateUser).enqueue(new Callback<UserProfileModel>() {
                     @Override
@@ -127,7 +143,24 @@ public class UpdateProfileFragment extends Fragment {
         });
 
         changePhotoButton.setOnClickListener(view4 -> {
-            Toast.makeText(getContext(), "Change photo", Toast.LENGTH_SHORT).show();
+
+            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+            photoPickerIntent.setType("image/*");
+            startActivityForResult(photoPickerIntent, IMAG_PICK);
+
         });
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK)
+            switch (requestCode){
+                case IMAG_PICK:
+                    selectedImage = data.getData();
+                    profilePhoto.setImageURI( selectedImage );
+                    break;
+            }
     }
 }

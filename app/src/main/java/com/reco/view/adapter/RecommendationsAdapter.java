@@ -39,10 +39,8 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
     @Override
     public void onBindViewHolder(@NonNull RecommendationsAdapterViewHolder holder, int position) {
         RecommendedUserModel user = recommendedUsers.get(position);
-//        holder.image.setImageResource(images.get(position));
+        //holder.image.setImageResource(images.get(position));
         holder.mName.setText(user.getDisplayName());
-        // TODO: use percentage placeholder on the user item
-//        holder.mSimilarity.setText(user.getSimilarityMatch() + "%");
         holder.mSimilarity.setText(String.format(context.getString(R.string.similarity_placeholder), user.getSimilarityMatch()));
         // TODO: implement this - open messenger app when clicked.
         holder.sendMessageButton.setOnClickListener(view -> {

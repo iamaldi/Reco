@@ -89,4 +89,9 @@ public class Utilities {
             saveLocalLibrary(appCompatActivity, tracksList);
         }
     }
+
+
+    public static void saveProfileImage(){
+
+    }
 }
