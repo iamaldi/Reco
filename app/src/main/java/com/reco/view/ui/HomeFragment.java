@@ -63,6 +63,9 @@ public class HomeFragment extends Fragment implements APIErrorCallbacks {
                 findViewById(R.id.activity_main_bottomNavigationView);
         mBottomNav.setVisibility(View.VISIBLE);
 
+        mRecyclerView.setVisibility(View.INVISIBLE);
+        noRecommendationsMessage.setVisibility(View.VISIBLE);
+
         // use AI/ML to greet the user
         UserProfileModel user = Utilities.getLocalUser((AppCompatActivity) Objects.requireNonNull(getActivity()));
         if (user != null) {

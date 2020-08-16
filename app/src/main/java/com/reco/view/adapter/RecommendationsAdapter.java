@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.reco.R;
 import com.reco.service.model.RecommendedUserModel;
@@ -45,13 +44,13 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
         holder.mSimilarity.setText(String.format(context.getString(R.string.similarity_placeholder), user.getSimilarityMatch()));
         holder.sendMessageButton.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle( R.string.open_in_messenger)
+            builder.setTitle(R.string.open_in_messenger)
                     .setPositiveButton(R.string.delete_account_dialog_option_cancel, (dialog1, id) -> {
                         // cancel - do nothing
-                    }).setNegativeButton( R.string.open_option, (dialog2, id) -> {
+                    }).setNegativeButton(R.string.open_option, (dialog2, id) -> {
             }).create().show();
 
-            });
+        });
 
     }
 
