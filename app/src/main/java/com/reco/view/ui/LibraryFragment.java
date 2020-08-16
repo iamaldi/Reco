@@ -80,7 +80,7 @@ public class LibraryFragment extends Fragment implements AdapterCallbacks, APIEr
                 if (mLibraryAdapter.getItemCount() == 0) {
                     noDataAvailableMessage.setVisibility(View.VISIBLE);
                 } else {
-                    noDataAvailableMessage.setVisibility(View.GONE);
+                    noDataAvailableMessage.setVisibility(View.INVISIBLE);
                 }
             }
         });
