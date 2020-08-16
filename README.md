@@ -4,7 +4,10 @@ This repository contains the code for the Reco Android application - a universit
 
 Reco is an android application that matches users based on their music preferences.
 It allows users to search for music and build up a library.
-Based on the contents of the library, Reco mathes a user with others and creates recommendations.
+Based on the contents of the library, Reco matches a user with others and creates recommendations.
+
+## Installation
+Download and install **Reco v1.0-beta** directly from https://github.com/iamaldi/Reco/releases/download/v1.0-beta/reco-v1.0-beta.apk
 
 ## Infrastructure
 Reco is an android application written in Java utilizing the MVVM architecture.
