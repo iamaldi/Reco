@@ -6,6 +6,7 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.TransformationMethod;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -71,17 +72,20 @@ public class LoginFragment extends Fragment {
 
         NavController navController = Navigation.findNavController(view);
 
-        mPasswordVisibility.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mPassword.getTransformationMethod()==PasswordTransformationMethod.getInstance()){
-                    mPassword.setTransformationMethod( HideReturnsTransformationMethod.getInstance() );
-                    mPasswordVisibility.setImageResource( R.drawable.ic_baseline_visibility_off_24 );
-                }else {
-                    mPassword.setTransformationMethod( PasswordTransformationMethod.getInstance() );
-                    mPasswordVisibility.setImageResource( R.drawable.ic_baseline_remove_red_eye_24 );
-                }
+        mPasswordVisibility.setOnClickListener( view12 -> {
+            if(mPassword.getTransformationMethod()==PasswordTransformationMethod.getInstance()){
+                mPassword.setTransformationMethod( HideReturnsTransformationMethod.getInstance() );
+                mPasswordVisibility.setImageResource( R.drawable.ic_baseline_visibility_off_24 );
+            }else {
+                mPassword.setTransformationMethod( PasswordTransformationMethod.getInstance() );
+                mPasswordVisibility.setImageResource( R.drawable.ic_baseline_remove_red_eye_24 );
             }
+        } );
+
+        mPassword.setOnTouchListener( (view13, motionEvent) -> {
+            mPassword.setError( null );
+            mPasswordVisibility.setVisibility( View.VISIBLE );
+            return false;
         } );
 
         mLoginButton.setOnClickListener(view1 -> {
@@ -95,6 +99,7 @@ public class LoginFragment extends Fragment {
                 mUsername.setError(getString(R.string.field_required));
                 mUsername.requestFocus();
             } else if (password.isEmpty()) {
+                mPasswordVisibility.setVisibility( View.INVISIBLE );
                 mPassword.setError(getString(R.string.field_required));
                 mPassword.requestFocus();
             } else {
