@@ -1,165 +1,251 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.ui.RegisterFragment">
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/fragment_register_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Register"
-            android:textSize="40sp"
+            android:text="@string/register"
+            android:textStyle="bold"
+            android:textSize="35sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+            android:id="@+id/fragment_register_name_title"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="28dp"
-            android:text="Name"
-            android:textSize="30sp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="30dp"
+            android:maxLength="25"
+            android:singleLine="true"
+            android:text="@string/name_title"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView1" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_register_title" />
 
 
         <EditText
-            android:id="@+id/fragment_register_name"
-            android:layout_width="wrap_content"
+            android:id="@+id/fragment_register_display_name"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:ems="10"
+            android:hint="@string/name_hint"
             android:inputType="textPersonName"
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:maxLength="25"
+            android:singleLine="true"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_register_name_title"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/textView2"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
+            app:layout_constraintStart_toStartOf="@+id/fragment_register_name_title"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_register_name_title"
+            android:importantForAutofill="no" />
 
         <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
+            android:id="@+id/fragment_register_username_title"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Username"
-            android:textSize="30sp"
-            app:layout_constraintStart_toStartOf="@id/fragment_register_name"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_register_name" />
+            android:text="@string/username"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_register_display_name"
+            app:layout_constraintStart_toStartOf="@id/fragment_register_display_name"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_register_display_name" />
 
         <EditText
             android:id="@+id/fragment_register_username"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:drawableStart="@drawable/ic_baseline_account_circle_24"
+            android:drawablePadding="10dp"
             android:ems="10"
+            android:hint="@string/username_hint"
             android:inputType="textPersonName"
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:maxLength="25"
+            android:singleLine="true"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_register_username_title"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/textView3"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintStart_toStartOf="@+id/fragment_register_username_title"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_register_username_title"
+            android:importantForAutofill="no" />
 
         <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
+            android:id="@+id/fragment_register_password_title"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Password"
-            android:textSize="30sp"
+            android:layout_marginTop="20dp"
+            android:text="@string/password"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_register_username"
             app:layout_constraintStart_toStartOf="@id/fragment_register_username"
             app:layout_constraintTop_toBottomOf="@+id/fragment_register_username" />
 
         <EditText
             android:id="@+id/fragment_register_password"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:drawableStart="@drawable/ic_baseline_lock_24"
+            android:drawablePadding="10dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:hint="@string/password_hint"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            android:maxLength="25"
+            android:singleLine="true"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_register_password_title"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/textView4"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            app:layout_constraintStart_toStartOf="@+id/fragment_register_password_title"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_register_password_title" />
 
 
         <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
+            android:id="@+id/fragment_register_repeat_password_title"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Repeat password"
-            android:textSize="30sp"
+            android:layout_marginTop="20dp"
+            android:text="@string/repeat_password"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_register_password"
             app:layout_constraintStart_toStartOf="@id/fragment_register_password"
             app:layout_constraintTop_toBottomOf="@+id/fragment_register_password" />
 
+
         <EditText
             android:id="@+id/fragment_register_repeat_password"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:drawableStart="@drawable/ic_baseline_lock_24"
+            android:drawablePadding="10dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:hint="@string/password_hint"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            android:maxLength="25"
+            android:singleLine="true"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_register_repeat_password_title"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/textView5"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-        <Button
-            android:id="@+id/fragment_register_signIn_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sign in"
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="10sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_register_repeat_password"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintStart_toStartOf="@+id/fragment_register_repeat_password_title"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_register_repeat_password_title" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/fragment_register_messenger_url_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/messenger_url_title"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_register_repeat_password"
+            app:layout_constraintStart_toStartOf="@+id/fragment_register_repeat_password"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_register_repeat_password" />
+
+        <EditText
+            android:id="@+id/fragment_register_messenger_url"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:drawableStart="@drawable/ic_baseline_link_24"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="@string/messenger_hint"
+            android:importantForAutofill="no"
+            android:inputType="textUri"
+            android:maxLength="25"
+            android:singleLine="true"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_register_messenger_url_title"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/fragment_register_messenger_url_title"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_register_messenger_url_title" />
+
+        <Button
+            android:id="@+id/fragment_register_signup_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Have an accout?"
+            android:layout_marginTop="20sp"
+            android:text="@string/sign_up"
+            android:textColor="#ffff"
+            android:background="@drawable/button_shape"
+            android:textSize="24sp"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_register_messenger_url"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="@+id/fragment_register_messenger_url"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_register_messenger_url"
+            app:layout_constraintVertical_bias="0.168" />
 
+        <TextView
+            android:id="@+id/fragment_register_login_instead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/suggest_login"
             android:textSize="20sp"
-
             app:layout_constraintEnd_toEndOf="@+id/fragment_register_repeat_password"
-            app:layout_constraintTop_toBottomOf="@id/fragment_register_signIn_button" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_register_signup_button" />
 
         <TextView
             android:id="@+id/fragment_register_go_to_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:text="Login"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp"
+            android:clickable="true"
+            android:text="@string/login"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="@+id/textView6"
-            app:layout_constraintTop_toBottomOf="@id/textView6" />
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_register_login_instead"
+            app:layout_constraintTop_toBottomOf="@id/fragment_register_login_instead"
+            android:focusable="true" />
+
+        <ImageButton
+            android:id="@+id/fragment_register_password_visibility_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_baseline_remove_red_eye_24"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_register_password"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_register_password"
+            app:layout_constraintTop_toTopOf="@+id/fragment_register_password" />
+
+        <ImageButton
+            android:id="@+id/fragment_register_repeat_password_visibility_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_baseline_remove_red_eye_24"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_register_repeat_password"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_register_repeat_password"
+            app:layout_constraintTop_toTopOf="@+id/fragment_register_repeat_password" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.core.widget.NestedScrollView>
-
-</FrameLayout>
+</androidx.core.widget.NestedScrollView>

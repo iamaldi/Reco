@@ -1,60 +1,120 @@
 package com.reco.view.ui;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.reco.R;
+import com.reco.service.model.TrackModel;
+import com.reco.service.repository.APIService;
+import com.reco.util.Utilities;
+import com.reco.view.adapter.SearchAdapter;
+import com.reco.view.callback.APIErrorCallbacks;
+import com.reco.view.callback.AdapterCallbacks;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SearchFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class SearchFragment extends Fragment {
+import org.jetbrains.annotations.NotNull;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import java.util.List;
+import java.util.Objects;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class SearchFragment extends Fragment implements AdapterCallbacks, APIErrorCallbacks {
+    private SearchAdapter mSearchAdapter;
+    private APIService mAPIService;
 
     public SearchFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SearchFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            return;
+        }
+        Retrofit mRetrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.API_URL))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        mAPIService = mRetrofit.create(APIService.class);
+        mSearchAdapter = new SearchAdapter(this);
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        RecyclerView mRecyclerView = view.findViewById(R.id.fragment_search_recyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setAdapter(mSearchAdapter);
+        mRecyclerView.setVisibility(View.INVISIBLE);
+
+        SearchView searchView = view.findViewById(R.id.fragment_search_searchView);
+        searchView.setQueryHint(getString(R.string.search_bar_hint));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // hide keyboard when query is submitted
+                searchView.clearFocus();
+                searchView.setEnabled(false);
+                if (!query.isEmpty()) {
+                    // query the api for results
+                    mAPIService.searchTracks(query).enqueue(new Callback<List<TrackModel>>() {
+                        @Override
+                        public void onResponse(@NotNull Call<List<TrackModel>> call, @NotNull Response<List<TrackModel>> response) {
+                            if (response.isSuccessful()) {
+                                List<TrackModel> tracks = response.body();
+                                if (tracks != null) {
+                                    if (getActivity() != null) {
+                                        mSearchAdapter.setLocalLibrary(Utilities.getLocalLibrary((AppCompatActivity) Objects.requireNonNull(getActivity())));
+                                        mSearchAdapter.setSearchTracksList(tracks);
+                                        mSearchAdapter.notifyDataSetChanged();
+                                        mRecyclerView.setVisibility(View.VISIBLE);
+                                        searchView.setEnabled(true);
+                                    }
+                                }
+                            } else {
+                                searchView.setEnabled(true);
+                                Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(@NotNull Call<List<TrackModel>> call, @NotNull Throwable t) {
+                            searchView.setEnabled(true);
+                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                if (query.isEmpty()) {
+                    mSearchAdapter.setSearchTracksList(null);
+                    mSearchAdapter.notifyDataSetChanged();
+                    mRecyclerView.setVisibility(View.INVISIBLE);
+                    searchView.setEnabled(true);
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -62,5 +122,58 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search, container, false);
+    }
+
+    @Override
+    public void onAddTrackToLibraryCallback(TrackModel track) {
+        // call repository to save the track/song to library
+        mAPIService.addTrackToLibrary(track).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
+                if (response.isSuccessful()) {
+                    if (getActivity() != null) {
+                        // add track to local library
+                        Utilities.addTrackToLocalLibrary((AppCompatActivity) getActivity(), track);
+                        Toast.makeText(getContext(), "Added to library!", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<Void> call, @NotNull Throwable t) {
+                // things went bazooka here - or maybe there's not internet connection available
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onRemoveTrackFromLibraryCallback(TrackModel track, int position) {
+        // call API to remove the track
+        mAPIService.removeTrackFromLibrary(position).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
+                if (response.isSuccessful()) {
+                    if (getActivity() != null) {
+                        // remove track from local library
+                        Utilities.removeTrackFromLocalLibrary((AppCompatActivity) getActivity(), track);
+                        Toast.makeText(getContext(), "Removed from library!", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<Void> call, @NotNull Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onAPIError(String errorMsg) {
     }
 }
