@@ -16,12 +16,6 @@ More details on the API can be found at https://github.com/iamaldi/reco-api
 
 
 ## Application Screenshots
-<img src="./images/reco-login.png" alt='Login' width="320" height="640">
-<img src="./images/reco-register.png" alt='Register' width="320" height="640">
-<img src="./images/reco-home.png" alt='Home' width="320" height="640">
-<img src="./images/reco-search.png" alt='Search' width="320" height="640">
-<img src="./images/reco-library.png" alt='Library' width="320" height="640">
-<img src="./images/reco-mmendations.png" alt='Recommendations' width="320" height="640">
-<img src="./images/reco-settings.png" alt='Settings' width="320" height="640">
-<img src="./images/reco-update-profile.png" alt='Update Profile' width="320" height="640">
-<img src="./images/reco-change-password.png" alt='Change Password' width="320" height="640">
+<img src="./images/reco-login.png" alt='Login' width="320" height="640"><img src="./images/reco-register.png" alt='Register' width="320" height="640"><img src="./images/reco-home.png" alt='Home' width="320" height="640">
+<img src="./images/reco-search.png" alt='Search' width="320" height="640"><img src="./images/reco-library.png" alt='Library' width="320" height="640"><img src="./images/reco-mmendations.png" alt='Recommendations' width="320" height="640">
+<img src="./images/reco-settings.png" alt='Settings' width="320" height="640"><img src="./images/reco-update-profile.png" alt='Update Profile' width="320" height="640"><img src="./images/reco-change-password.png" alt='Change Password' width="320" height="640">
